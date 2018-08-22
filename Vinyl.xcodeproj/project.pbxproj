@@ -50,6 +50,7 @@
 		1A828A2F21148E6400CA4D81 /* BodyWIthTitle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A828A2E21148E6400CA4D81 /* BodyWIthTitle.swift */; };
 		1A828A312114F60700CA4D81 /* UITapGestureRecognizer+UITextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A828A302114F60700CA4D81 /* UITapGestureRecognizer+UITextView.swift */; };
 		1A9B592D212E118600A7A9E3 /* ObservableType+Nil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A9B592C212E118600A7A9E3 /* ObservableType+Nil.swift */; };
+		1A9B592F212E164A00A7A9E3 /* Discogs+Keys.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A9B592E212E164A00A7A9E3 /* Discogs+Keys.swift */; };
 		1A9FB6E7210BC6DA00598509 /* UITextField+Styled.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A9FB6E6210BC6DA00598509 /* UITextField+Styled.swift */; };
 		1A9FB6E9210BD2BD00598509 /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A9FB6E8210BD2BD00598509 /* SearchViewController.swift */; };
 		1A9FB6EB210C408F00598509 /* SearchCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A9FB6EA210C408F00598509 /* SearchCell.swift */; };
@@ -104,6 +105,7 @@
 		1A828A2E21148E6400CA4D81 /* BodyWIthTitle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BodyWIthTitle.swift; sourceTree = "<group>"; };
 		1A828A302114F60700CA4D81 /* UITapGestureRecognizer+UITextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITapGestureRecognizer+UITextView.swift"; sourceTree = "<group>"; };
 		1A9B592C212E118600A7A9E3 /* ObservableType+Nil.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ObservableType+Nil.swift"; sourceTree = "<group>"; };
+		1A9B592E212E164A00A7A9E3 /* Discogs+Keys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Discogs+Keys.swift"; sourceTree = "<group>"; };
 		1A9FB6E6210BC6DA00598509 /* UITextField+Styled.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITextField+Styled.swift"; sourceTree = "<group>"; };
 		1A9FB6E8210BD2BD00598509 /* SearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
 		1A9FB6EA210C408F00598509 /* SearchCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchCell.swift; sourceTree = "<group>"; };
@@ -181,6 +183,7 @@
 				1A60F05A211647C0000C606B /* MFMailComposeViewController.swift */,
 				1A60F05C2116C6A2000C606B /* UITextView+Tappable.swift */,
 				1A9B592C212E118600A7A9E3 /* ObservableType+Nil.swift */,
+				1A9B592E212E164A00A7A9E3 /* Discogs+Keys.swift */,
 			);
 			path = Vinyl;
 			sourceTree = "<group>";
@@ -434,6 +437,7 @@
 				1A103217211398F1005FFF94 /* NavigationController.swift in Sources */,
 				1A51666721032A92006213A2 /* UIImage+Assets.swift in Sources */,
 				1A51669421047449006213A2 /* TracklistViewController.swift in Sources */,
+				1A9B592F212E164A00A7A9E3 /* Discogs+Keys.swift in Sources */,
 				1A516663210326AE006213A2 /* UIFont+Vinyl.swift in Sources */,
 				1A10321521135D77005FFF94 /* UIImage+Multiply.swift in Sources */,
 			);

@@ -18,8 +18,6 @@ enum DiscogsError: Error {
 class Discogs {
     
     private let base = "https://api.discogs.com"
-    private let key = ""
-    private let secret = ""
     
     func search(query: String) -> Observable<[SearchResult]> {
         guard let query = query.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed) else {
