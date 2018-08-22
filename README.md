@@ -12,3 +12,5 @@ To build and run an app:
 ## Dependencies
 This project is using *RxSwift* and *RxCocoa* for defining observable streams and reactive programming.
 
+## License
+Vinyl is distributed under the MIT [license](https://github.com/iblagajic/Vinyl/blob/develop/LICENSE).
