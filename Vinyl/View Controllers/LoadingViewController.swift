@@ -97,7 +97,7 @@ class LoadingViewController: UIViewController {
             self?.errorMessageLabel.isHidden = false
         }
         let close = closeButton.rx.tap.flatMap { _ -> Observable<Void> in Observable.error(error) }
-        let retry = tapGestureRecognizer.rx.event.filter { $0.didTap(text: .retry) }.flatMap { _ in Observable.just(()) }
+        let retry = tapGestureRecognizer.rx.event.map { $0.didTap(oneOf: [.retry]) }.flatMap { _ in Observable.just(()) }
             .do(onNext: {
                 UIView.animate(withDuration: 0.3) { [weak self] in
                     self?.closeButton.alpha = 0

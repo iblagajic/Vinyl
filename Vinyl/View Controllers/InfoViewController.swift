@@ -23,13 +23,13 @@ class InfoViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        thanksGroup.bodyLabel.didTap(text: .discogs)
+        thanksGroup.bodyLabel.didTap(oneOf: [.discogs])
             .subscribe(onNext: { _ in
-                guard let url = URL(string: .discogs) else { return }
+                guard let url = URL(string: "https://www.discogs.com") else { return }
                 UIApplication.shared.open(url, options: [:])
             }).disposed(by: bag)
         
-        privacyGroup.bodyLabel.didTap(text: .email)
+        privacyGroup.bodyLabel.didTap(oneOf: [.email])
             .flatMap { [weak self] _ -> Observable<MFMailComposeResult> in
                 guard MFMailComposeViewController.canSendMail() else {
                     return Observable.just(.failed)
@@ -70,14 +70,18 @@ class InfoViewController: UIViewController {
             }
         }
         
-        let freepikTap = creditsGroup.bodyLabel.didTap(text: .freepik).map { _ in Credits.freepik }
-        let smashiconsTap = creditsGroup.bodyLabel.didTap(text: .smashicons).map { _ in Credits.smashicons }
-        let iconmonstrTap = creditsGroup.bodyLabel.didTap(text: .alexanderKahlkopf).map { _ in Credits.iconmonstr }
-        
-        Observable.merge(freepikTap, smashiconsTap).subscribe(onNext: { credits in
-            guard let url = credits.url else { return }
-            UIApplication.shared.open(url, options: [:])
-        }).disposed(by: bag)
+        creditsGroup.bodyLabel.didTap(oneOf: [.freepik, .smashicons, .alexanderKahlkopf])
+            .map { tappedText -> Credits? in
+                switch tappedText {
+                case .freepik: return Credits.freepik
+                case .smashicons: return Credits.smashicons
+                case .alexanderKahlkopf: return Credits.iconmonstr
+                default: return nil
+                }
+            }.subscribe(onNext: { credits in
+                guard let url = credits?.url else { return }
+                UIApplication.shared.open(url, options: [:])
+            }).disposed(by: bag)
         
         backButton.rx.tap.subscribe(onNext: { [weak self] in
             self?.navigationController?.popViewController(animated: true)

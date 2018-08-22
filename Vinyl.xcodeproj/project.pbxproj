@@ -45,10 +45,11 @@
 		1A51669821048881006213A2 /* TrackCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A51669721048881006213A2 /* TrackCell.swift */; };
 		1A60F05921161CA9000C606B /* UITextView+Styled.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A60F05821161CA9000C606B /* UITextView+Styled.swift */; };
 		1A60F05B211647C0000C606B /* MFMailComposeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A60F05A211647C0000C606B /* MFMailComposeViewController.swift */; };
-		1A60F05D2116C6A2000C606B /* UILabel+Tappable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A60F05C2116C6A2000C606B /* UILabel+Tappable.swift */; };
+		1A60F05D2116C6A2000C606B /* UITextView+Tappable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A60F05C2116C6A2000C606B /* UITextView+Tappable.swift */; };
 		1A828A2D211487EC00CA4D81 /* InfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A828A2C211487EC00CA4D81 /* InfoViewController.swift */; };
 		1A828A2F21148E6400CA4D81 /* BodyWIthTitle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A828A2E21148E6400CA4D81 /* BodyWIthTitle.swift */; };
-		1A828A312114F60700CA4D81 /* UITapGestureRecognizer+UILabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A828A302114F60700CA4D81 /* UITapGestureRecognizer+UILabel.swift */; };
+		1A828A312114F60700CA4D81 /* UITapGestureRecognizer+UITextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A828A302114F60700CA4D81 /* UITapGestureRecognizer+UITextView.swift */; };
+		1A9B592D212E118600A7A9E3 /* ObservableType+Nil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A9B592C212E118600A7A9E3 /* ObservableType+Nil.swift */; };
 		1A9FB6E7210BC6DA00598509 /* UITextField+Styled.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A9FB6E6210BC6DA00598509 /* UITextField+Styled.swift */; };
 		1A9FB6E9210BD2BD00598509 /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A9FB6E8210BD2BD00598509 /* SearchViewController.swift */; };
 		1A9FB6EB210C408F00598509 /* SearchCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A9FB6EA210C408F00598509 /* SearchCell.swift */; };
@@ -98,10 +99,11 @@
 		1A51669721048881006213A2 /* TrackCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackCell.swift; sourceTree = "<group>"; };
 		1A60F05821161CA9000C606B /* UITextView+Styled.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITextView+Styled.swift"; sourceTree = "<group>"; };
 		1A60F05A211647C0000C606B /* MFMailComposeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MFMailComposeViewController.swift; sourceTree = "<group>"; };
-		1A60F05C2116C6A2000C606B /* UILabel+Tappable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UILabel+Tappable.swift"; sourceTree = "<group>"; };
+		1A60F05C2116C6A2000C606B /* UITextView+Tappable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITextView+Tappable.swift"; sourceTree = "<group>"; };
 		1A828A2C211487EC00CA4D81 /* InfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoViewController.swift; sourceTree = "<group>"; };
 		1A828A2E21148E6400CA4D81 /* BodyWIthTitle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BodyWIthTitle.swift; sourceTree = "<group>"; };
-		1A828A302114F60700CA4D81 /* UITapGestureRecognizer+UILabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITapGestureRecognizer+UILabel.swift"; sourceTree = "<group>"; };
+		1A828A302114F60700CA4D81 /* UITapGestureRecognizer+UITextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITapGestureRecognizer+UITextView.swift"; sourceTree = "<group>"; };
+		1A9B592C212E118600A7A9E3 /* ObservableType+Nil.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ObservableType+Nil.swift"; sourceTree = "<group>"; };
 		1A9FB6E6210BC6DA00598509 /* UITextField+Styled.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITextField+Styled.swift"; sourceTree = "<group>"; };
 		1A9FB6E8210BD2BD00598509 /* SearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
 		1A9FB6EA210C408F00598509 /* SearchCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchCell.swift; sourceTree = "<group>"; };
@@ -175,9 +177,10 @@
 				1A51667E2103C24F006213A2 /* Discogs.swift */,
 				1A10321421135D77005FFF94 /* UIImage+Multiply.swift */,
 				1A103216211398F1005FFF94 /* NavigationController.swift */,
-				1A828A302114F60700CA4D81 /* UITapGestureRecognizer+UILabel.swift */,
+				1A828A302114F60700CA4D81 /* UITapGestureRecognizer+UITextView.swift */,
 				1A60F05A211647C0000C606B /* MFMailComposeViewController.swift */,
-				1A60F05C2116C6A2000C606B /* UILabel+Tappable.swift */,
+				1A60F05C2116C6A2000C606B /* UITextView+Tappable.swift */,
+				1A9B592C212E118600A7A9E3 /* ObservableType+Nil.swift */,
 			);
 			path = Vinyl;
 			sourceTree = "<group>";
@@ -393,7 +396,7 @@
 				1A516671210337A4006213A2 /* UIView+Convenience.swift in Sources */,
 				1A51668F210470DA006213A2 /* Track.swift in Sources */,
 				1A51669121047167006213A2 /* Format.swift in Sources */,
-				1A60F05D2116C6A2000C606B /* UILabel+Tappable.swift in Sources */,
+				1A60F05D2116C6A2000C606B /* UITextView+Tappable.swift in Sources */,
 				1AA860E221102BAE00F2BC1C /* NavigationControllerDelegate.swift in Sources */,
 				1A1901982112592B00390AF7 /* ActivityIndicatorView.swift in Sources */,
 				1A5166872103D98C006213A2 /* SearchResult.swift in Sources */,
@@ -423,10 +426,11 @@
 				1A60F05921161CA9000C606B /* UITextView+Styled.swift in Sources */,
 				1A51665F21032057006213A2 /* UIView+Layout.swift in Sources */,
 				1A9FB6E7210BC6DA00598509 /* UITextField+Styled.swift in Sources */,
-				1A828A312114F60700CA4D81 /* UITapGestureRecognizer+UILabel.swift in Sources */,
+				1A828A312114F60700CA4D81 /* UITapGestureRecognizer+UITextView.swift in Sources */,
 				1A5166732103759F006213A2 /* PresentScanAnimationController.swift in Sources */,
 				1A5166852103D4E5006213A2 /* PresentLoadingAnimationController.swift in Sources */,
 				1A828A2F21148E6400CA4D81 /* BodyWIthTitle.swift in Sources */,
+				1A9B592D212E118600A7A9E3 /* ObservableType+Nil.swift in Sources */,
 				1A103217211398F1005FFF94 /* NavigationController.swift in Sources */,
 				1A51666721032A92006213A2 /* UIImage+Assets.swift in Sources */,
 				1A51669421047449006213A2 /* TracklistViewController.swift in Sources */,

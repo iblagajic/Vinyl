@@ -12,10 +12,10 @@ import RxCocoa
 
 extension UITextView {
     
-    func didTap(text: String) -> Observable<String> {
+    func didTap(oneOf texts: [String]) -> Observable<String> {
         let tap = UITapGestureRecognizer()
         addGestureRecognizer(tap)
         isUserInteractionEnabled = true
-        return tap.rx.event.filter { $0.didTap(text: text) }.map { _ in text }
+        return tap.rx.event.map { $0.didTap(oneOf: texts) }.filterNil()
     }
 }

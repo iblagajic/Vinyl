@@ -18,6 +18,7 @@ extension UITextField {
         textField.tintColor = .dark
         textField.autocorrectionType = .no
         textField.autocapitalizationType = .none
+        textField.returnKeyType = .search
         let line = UIView.separator
         textField.addSubview(line)
         line.leadingAnchor.constraint(equalTo: textField.leadingAnchor).isActive = true
