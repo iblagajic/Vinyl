@@ -31,9 +31,13 @@ class AlbumViewController: UIViewController {
         titleLabel.text = release.title
         artistLabel.text = release.artists_sort
         dateLabel.text = release.released_formatted
-        let priceString = "$\(release.lowest_price)" + " + shipping" // TODO: localize
-        let sellsForString = String(format: .sellsFor, priceString)
-        priceLabel.set(bodyText: sellsForString, boldPart: priceString)
+        if let price = release.lowest_price {
+            let priceString = "$\(price)" // TODO: localize
+            let sellsForString = String(format: .sellsFor, priceString)
+            priceLabel.set(bodyText: sellsForString, boldPart: priceString)
+        } else {
+            priceLabel.text = .notAvailable
+        }
         disclosureButton.titleLabel.text = .tracklist
         descriptionTitleLabel.text = .description
         if let notes = release.notes {
@@ -113,14 +117,14 @@ class AlbumViewController: UIViewController {
         contentView.pinToSuperview()
         contentView.widthAnchor.constraint(equalTo: root.widthAnchor).isActive = true
         
-        titleLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 44).isActive = true
+        titleLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 33).isActive = true
         titleLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 44).isActive = true
         artistLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 6).isActive = true
         artistLabel.leadingAnchor.constraint(equalTo: titleLabel.leadingAnchor).isActive = true
         artistLabel.trailingAnchor.constraint(equalTo: titleLabel.trailingAnchor).isActive = true
         dateLabel.leadingAnchor.constraint(equalTo: artistLabel.leadingAnchor).isActive = true
         dateLabel.topAnchor.constraint(equalTo: artistLabel.bottomAnchor, constant: 11).isActive = true
-        closeButton.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 33).isActive = true
+        closeButton.topAnchor.constraint(equalTo: titleLabel.topAnchor).isActive = true
         closeButton.leadingAnchor.constraint(equalTo: titleLabel.trailingAnchor, constant: 22).isActive = true
         closeButton.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -33).isActive = true
         albumWithVinyl.topAnchor.constraint(equalTo: dateLabel.bottomAnchor, constant: 44).isActive = true

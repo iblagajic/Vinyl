@@ -11,7 +11,7 @@ import Foundation
 struct Release: Codable {
     let title: String
     let artists_sort: String
-    let lowest_price: Double
+    let lowest_price: Double?
     let notes: String?
     let images: [Image]
     let tracklist: [Track]

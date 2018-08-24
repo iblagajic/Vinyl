@@ -65,6 +65,7 @@ class SearchCell: UITableViewCell {
         
         titleLabel.numberOfLines = 2
         albumImageView.contentMode = .scaleAspectFill
+        albumImageView.clipsToBounds = true
     }
     
     override func prepareForReuse() {

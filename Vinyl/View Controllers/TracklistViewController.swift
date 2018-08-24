@@ -59,8 +59,8 @@ class TracklistViewController: UIViewController {
         [backButton, titleLabel, artistLabel, tracklistLabel, firstSeparator].forEach(header.addSubview)
         
         backButton.topAnchor.constraint(equalTo: header.safeAreaLayoutGuide.topAnchor, constant: 33).isActive = true
-        backButton.leadingAnchor.constraint(equalTo: header.leadingAnchor, constant: 44).isActive = true
-        titleLabel.topAnchor.constraint(equalTo: header.safeAreaLayoutGuide.topAnchor, constant: 44).isActive = true
+        backButton.leadingAnchor.constraint(equalTo: header.leadingAnchor, constant: 33).isActive = true
+        titleLabel.topAnchor.constraint(equalTo: backButton.topAnchor).isActive = true
         titleLabel.leadingAnchor.constraint(equalTo: backButton.trailingAnchor, constant: 44).isActive = true
         titleLabel.trailingAnchor.constraint(equalTo: header.trailingAnchor, constant: -33).isActive = true
         artistLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 6).isActive = true
