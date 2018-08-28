@@ -45,13 +45,13 @@
     {
       "size" : "60x60",
       "idiom" : "iphone",
-      "filename" : "icon-1.png",
+      "filename" : "icon@2x-4.png",
       "scale" : "2x"
     },
     {
       "size" : "60x60",
       "idiom" : "iphone",
-      "filename" : "icon-2.png",
+      "filename" : "icon@3x-3.png",
       "scale" : "3x"
     },
     {
