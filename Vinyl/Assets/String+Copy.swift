@@ -32,7 +32,7 @@ extension String {
     static let privacyMessageHighlighted = NSLocalizedString("app doesn’t collect any user information or use any 3rd party services that do so.", comment: "")
     static let email = "vinylapp@protonmail.com"
     static let instructionsTitle = NSLocalizedString("How to use", comment: "")
-    static let instructionsMessage = NSLocalizedString("You can find a specific vinyl release in 2 different ways: newer releases usually have barcodes on the back which you can scan, while you can search the older ones by entering release code or album title. I recommend using %@ since it’s more accurate and only user album name as a last resort.", comment: "")
+    static let instructionsMessage = NSLocalizedString("You can find a specific vinyl release in 2 different ways: newer releases usually have barcodes on the back which you can scan, while you can search the older ones by entering release code or album title. I recommend using %@ since it’s more accurate and only use album name as a last resort.", comment: "")
     static let releaseCode = NSLocalizedString("release code", comment: "")
     static let credits = NSLocalizedString("Credits", comment: "")
     static let vinylIcon = NSLocalizedString("Vinyl loader icon by %@.", comment: "")
