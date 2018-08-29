@@ -34,6 +34,7 @@ class SearchViewController: UITableViewController {
         albumInputField.heightAnchor.constraint(equalToConstant: 44).isActive = true
         
         tableView.tableHeaderView = header
+        tableView.tableFooterView = UIView(frame: CGRect(x: 0, y: 0, width: 1, height: 1))
         
         tableView.tableHeaderView?.layoutIfNeeded()
         tableView.separatorInset = UIEdgeInsets(top: 0, left: 22, bottom: 0, right: 0)

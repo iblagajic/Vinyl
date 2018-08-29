@@ -50,7 +50,7 @@ extension UIButton {
         let button = UIButton(forAutoLayout: ())
         button.setImage(.info, for: .normal)
         button.tintColor = .dark
-        button.widthAnchor.constraint(equalToConstant: 33).isActive = true
+        button.widthAnchor.constraint(equalToConstant: 44).isActive = true
         button.heightAnchor.constraint(equalTo: button.widthAnchor).isActive = true
         return button
     }

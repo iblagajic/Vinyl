@@ -42,7 +42,7 @@ class DisclosureButton: UIControl {
         separator.bottomAnchor.constraint(equalTo: bottomAnchor).isActive = true
         
         disclosureImageView.image = .disclosure
-        disclosureImageView.tintColor = .steelGrey
+        disclosureImageView.tintColor = .dark
     }
 }
 

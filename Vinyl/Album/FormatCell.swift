@@ -28,9 +28,5 @@ class FormatCell: UICollectionViewCell {
         titleLabel.pinToSuperview(withInsets: UIEdgeInsets(top: 0, left: 11, bottom: 0, right: -11))
         backgroundColor = .melon
         layer.cornerRadius = 11
-        layer.shadowColor = .dark
-        layer.shadowOffset = CGSize(width: 0, height: 3)
-        layer.shadowRadius = 11
-        layer.shadowOpacity = 0.15
     }
 }
