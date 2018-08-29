@@ -87,6 +87,13 @@ extension UILabel {
         return label
     }
     
+    static var position: UILabel {
+        let label = UILabel(forAutoLayout: ())
+        label.font = .bodyBold
+        label.textColor = .dark
+        return label
+    }
+    
     func set(headerText: String, highlightPart: String? = nil) {
         let paragraphStyle = NSMutableParagraphStyle()
         paragraphStyle.lineSpacing = 6

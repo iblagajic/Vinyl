@@ -10,8 +10,8 @@ import UIKit
 
 class TrackCell: UITableViewCell {
     
-    let positionLabel = UILabel.body
-    let titleLabel = UILabel.header3
+    let positionLabel = UILabel.position
+    let titleLabel = UILabel.body
     let durationLabel = UILabel.bodyLight
     
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
@@ -30,7 +30,7 @@ class TrackCell: UITableViewCell {
         positionLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 22).isActive = true
         positionLabel.lastBaselineAnchor.constraint(equalTo: titleLabel.lastBaselineAnchor).isActive = true
         positionLabel.widthAnchor.constraint(greaterThanOrEqualToConstant: 22).isActive = true
-        titleLabel.leadingAnchor.constraint(equalTo: positionLabel.trailingAnchor, constant: 6).isActive = true
+        titleLabel.leadingAnchor.constraint(equalTo: positionLabel.trailingAnchor, constant: 11).isActive = true
         titleLabel.centerYAnchor.constraint(equalTo: centerYAnchor).isActive = true
         durationLabel.leadingAnchor.constraint(greaterThanOrEqualTo: titleLabel.trailingAnchor, constant: 22).isActive = true
         durationLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -22).isActive = true

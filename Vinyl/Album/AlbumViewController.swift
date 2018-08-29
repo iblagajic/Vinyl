@@ -32,7 +32,7 @@ class AlbumViewController: UIViewController {
         artistLabel.text = release.artists_sort
         dateLabel.text = release.released_formatted
         if let price = release.lowest_price {
-            let priceString = "$\(price)" // TODO: localize
+            let priceString = "$\(price) + shipping" // TODO: localize
             let sellsForString = String(format: .sellsFor, priceString)
             priceLabel.set(bodyText: sellsForString, boldPart: priceString)
         } else {
