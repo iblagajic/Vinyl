@@ -18,6 +18,7 @@ class InfoViewController: UIViewController {
     let thanksGroup = BodyWithTitle(forAutoLayout: ())
     let privacyGroup = BodyWithTitle(forAutoLayout: ())
     let instructionsGroup = BodyWithTitle(forAutoLayout: ())
+    let openSourceGroup = BodyWithTitle(forAutoLayout: ())
     let creditsGroup = BodyWithTitle(forAutoLayout: ())
     private let bag = DisposeBag()
     
@@ -53,6 +54,9 @@ class InfoViewController: UIViewController {
                 }
             }).disposed(by: bag)
         
+        let tapGithub = openSourceGroup.bodyLabel.didTap(oneOf: [.github])
+            .map { _ in return URL(string: "https://github.com/iblagajic/Vinyl") }
+        
         enum Credits {
             case freepik
             case smashicons
@@ -70,16 +74,19 @@ class InfoViewController: UIViewController {
             }
         }
         
-        creditsGroup.bodyLabel.didTap(oneOf: [.freepik, .smashicons, .alexanderKahlkopf])
-            .map { tappedText -> Credits? in
+        let tapCredits = creditsGroup.bodyLabel.didTap(oneOf: [.freepik, .smashicons, .alexanderKahlkopf])
+            .map { tappedText -> URL? in
                 switch tappedText {
-                case .freepik: return Credits.freepik
-                case .smashicons: return Credits.smashicons
-                case .alexanderKahlkopf: return Credits.iconmonstr
+                case .freepik: return Credits.freepik.url
+                case .smashicons: return Credits.smashicons.url
+                case .alexanderKahlkopf: return Credits.iconmonstr.url
                 default: return nil
                 }
-            }.subscribe(onNext: { credits in
-                guard let url = credits?.url else { return }
+            }
+        
+        Observable.merge(tapGithub, tapCredits)
+            .subscribe(onNext: { url in
+                guard let url = url else { return }
                 UIApplication.shared.open(url, options: [:])
             }).disposed(by: bag)
         
@@ -123,7 +130,7 @@ class InfoViewController: UIViewController {
         contentView.widthAnchor.constraint(equalTo: root.widthAnchor).isActive = true
         
         [backButton, stackView].forEach(contentView.addSubview)
-        [greetingLabel, thanksGroup, privacyGroup, instructionsGroup, creditsGroup].forEach(stackView.addArrangedSubview)
+        [greetingLabel, thanksGroup, privacyGroup, instructionsGroup, openSourceGroup, creditsGroup].forEach(stackView.addArrangedSubview)
         
         backButton.topAnchor.constraint(equalTo: contentView.safeAreaLayoutGuide.topAnchor, constant: 33).isActive = true
         backButton.leadingAnchor.constraint(equalTo: stackView.leadingAnchor).isActive = true
@@ -144,6 +151,9 @@ class InfoViewController: UIViewController {
         instructionsGroup.titleLabel.text = .instructionsTitle
         let instructionsBody = String(format: .instructionsMessage, String.releaseCode)
         instructionsGroup.bodyLabel.set(bodyText: instructionsBody, highlightPart: .releaseCode)
+        openSourceGroup.titleLabel.text = .openSourceTitle
+        let openSourceBody = String(format: .openSourceMessage, String.github)
+        openSourceGroup.bodyLabel.set(bodyText: openSourceBody, underlineParts: [.github])
         creditsGroup.titleLabel.text = .credits
         let creditsBody = String(format: .vinylIcon + "\n" + .cameraIcon + "\n" + .appIcon, String.freepik, String.smashicons, String.alexanderKahlkopf)
         creditsGroup.bodyLabel.set(bodyText: creditsBody, underlineParts: [.freepik, .smashicons, .alexanderKahlkopf])
