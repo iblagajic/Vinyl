@@ -40,13 +40,13 @@ extension UITextView {
         paragraphStyle.alignment = textAlignment
         paragraphStyle.lineBreakMode = .byWordWrapping
         let attributedTitle = NSMutableAttributedString(string: headerText,
-                                                        attributes: [NSAttributedStringKey.paragraphStyle : paragraphStyle,
-                                                                     NSAttributedStringKey.font : .header ?? UIFont(),
-                                                                     NSAttributedStringKey.foregroundColor : UIColor.dark])
+                                                        attributes: [NSAttributedString.Key.paragraphStyle : paragraphStyle,
+                                                                     NSAttributedString.Key.font : .header ?? UIFont(),
+                                                                     NSAttributedString.Key.foregroundColor : UIColor.dark])
         if let highlightPart = highlightPart {
-            attributedTitle.addAttributes([NSAttributedStringKey.underlineStyle : NSUnderlineStyle.styleSingle.rawValue,
-                                           NSAttributedStringKey.foregroundColor : UIColor.melon,
-                                           NSAttributedStringKey.font : .headerBold ?? UIFont()],
+            attributedTitle.addAttributes([NSAttributedString.Key.underlineStyle : NSUnderlineStyle.single.rawValue,
+                                           NSAttributedString.Key.foregroundColor : UIColor.melon,
+                                           NSAttributedString.Key.font : .headerBold ?? UIFont()],
                                           range: (headerText as NSString).range(of: highlightPart))
         }
         attributedText = attributedTitle
@@ -61,20 +61,20 @@ extension UITextView {
         paragraphStyle.alignment = textAlignment
         paragraphStyle.lineBreakMode = .byWordWrapping
         let attributedTitle = NSMutableAttributedString(string: bodyText,
-                                                        attributes: [NSAttributedStringKey.paragraphStyle : paragraphStyle,
-                                                                     NSAttributedStringKey.font : font ?? UIFont(),
-                                                                     NSAttributedStringKey.foregroundColor : textColor ?? UIColor()])
+                                                        attributes: [NSAttributedString.Key.paragraphStyle : paragraphStyle,
+                                                                     NSAttributedString.Key.font : font ?? UIFont(),
+                                                                     NSAttributedString.Key.foregroundColor : textColor ?? UIColor()])
         
         if let boldText = boldPart {
-            attributedTitle.addAttribute(NSAttributedStringKey.font, value: UIFont.bodyBold ?? UIFont(), range: (bodyText as NSString).range(of: boldText))
+            attributedTitle.addAttribute(NSAttributedString.Key.font, value: UIFont.bodyBold ?? UIFont(), range: (bodyText as NSString).range(of: boldText))
         }
         underlineParts.forEach { underlineText in
-            attributedTitle.addAttribute(NSAttributedStringKey.underlineStyle, value: NSUnderlineStyle.styleSingle.rawValue, range: (bodyText as NSString).range(of: underlineText))
+            attributedTitle.addAttribute(NSAttributedString.Key.underlineStyle, value: NSUnderlineStyle.single.rawValue, range: (bodyText as NSString).range(of: underlineText))
         }
         if let highlightPart = highlightPart {
-            attributedTitle.addAttributes([NSAttributedStringKey.underlineStyle : NSUnderlineStyle.styleSingle.rawValue,
-                                           NSAttributedStringKey.foregroundColor : UIColor.melon,
-                                           NSAttributedStringKey.font : UIFont.bodyBold ?? UIFont()],
+            attributedTitle.addAttributes([NSAttributedString.Key.underlineStyle : NSUnderlineStyle.single.rawValue,
+                                           NSAttributedString.Key.foregroundColor : UIColor.melon,
+                                           NSAttributedString.Key.font : UIFont.bodyBold ?? UIFont()],
                                           range: (bodyText as NSString).range(of: highlightPart))
         }
         

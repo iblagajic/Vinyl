@@ -33,14 +33,14 @@ extension UITextField {
 class PaddedTextField: UITextField {
     
     override func textRect(forBounds bounds: CGRect) -> CGRect {
-        return UIEdgeInsetsInsetRect(bounds, UIEdgeInsets(top: 0, left: 6, bottom: 6, right: 0))
+        return bounds.inset(by: UIEdgeInsets(top: 0, left: 6, bottom: 6, right: 0))
     }
     
     override func placeholderRect(forBounds bounds: CGRect) -> CGRect {
-        return UIEdgeInsetsInsetRect(bounds, UIEdgeInsets(top: 0, left: 6, bottom: 6, right: 0))
+        return bounds.inset(by: UIEdgeInsets(top: 0, left: 6, bottom: 6, right: 0))
     }
     
     override func editingRect(forBounds bounds: CGRect) -> CGRect {
-        return UIEdgeInsetsInsetRect(bounds, UIEdgeInsets(top: 0, left: 6, bottom: 6, right: 0))
+        return bounds.inset(by: UIEdgeInsets(top: 0, left: 6, bottom: 6, right: 0))
     }
 }

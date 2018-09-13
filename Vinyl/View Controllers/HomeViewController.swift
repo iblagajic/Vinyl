@@ -53,16 +53,21 @@ class HomeViewController: UIViewController {
         
         [infoButton, greetingLabel, scanLabel, orSearchLabel, cameraButton].forEach(root.addSubview)
         
-        infoButton.topAnchor.constraint(equalTo: root.safeAreaLayoutGuide.topAnchor, constant: 44).isActive = true
-        infoButton.leadingAnchor.constraint(equalTo: root.leadingAnchor, constant: 44).isActive = true
-        greetingLabel.leadingAnchor.constraint(equalTo: scanLabel.leadingAnchor).isActive = true
-        scanLabel.topAnchor.constraint(equalTo: greetingLabel.bottomAnchor, constant: 22).isActive = true
-        scanLabel.leadingAnchor.constraint(equalTo: infoButton.leadingAnchor).isActive = true
-        scanLabel.centerYAnchor.constraint(equalTo: root.centerYAnchor, constant: -50).isActive = true
-        orSearchLabel.topAnchor.constraint(equalTo: scanLabel.bottomAnchor, constant: 3).isActive = true
-        orSearchLabel.leadingAnchor.constraint(equalTo: scanLabel.leadingAnchor).isActive = true
-        cameraButton.bottomAnchor.constraint(equalTo: root.safeAreaLayoutGuide.bottomAnchor, constant: -66).isActive = true
-        cameraButton.centerXAnchor.constraint(equalTo: root.centerXAnchor).isActive = true
+        let scanCenter = scanLabel.centerYAnchor.constraint(equalTo: root.centerYAnchor, constant: -50)
+        scanCenter.priority = .defaultLow
+        NSLayoutConstraint.activate([
+            infoButton.topAnchor.constraint(equalTo: root.safeAreaLayoutGuide.topAnchor, constant: 44),
+            infoButton.leadingAnchor.constraint(equalTo: root.leadingAnchor, constant: 44),
+            greetingLabel.topAnchor.constraint(greaterThanOrEqualTo: infoButton.bottomAnchor, constant: 22),
+            greetingLabel.leadingAnchor.constraint(equalTo: scanLabel.leadingAnchor),
+            scanLabel.topAnchor.constraint(equalTo: greetingLabel.bottomAnchor, constant: 22),
+            scanLabel.leadingAnchor.constraint(equalTo: infoButton.leadingAnchor),
+            scanCenter,
+            orSearchLabel.topAnchor.constraint(equalTo: scanLabel.bottomAnchor, constant: 3),
+            orSearchLabel.leadingAnchor.constraint(equalTo: scanLabel.leadingAnchor),
+            cameraButton.bottomAnchor.constraint(equalTo: root.safeAreaLayoutGuide.bottomAnchor, constant: -66),
+            cameraButton.centerXAnchor.constraint(equalTo: root.centerXAnchor)
+        ])
         
         self.view = root
         

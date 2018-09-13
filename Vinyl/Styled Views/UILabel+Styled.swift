@@ -92,13 +92,13 @@ extension UILabel {
         paragraphStyle.alignment = textAlignment
         paragraphStyle.lineBreakMode = .byWordWrapping
         let attributedTitle = NSMutableAttributedString(string: headerText,
-                                                        attributes: [NSAttributedStringKey.paragraphStyle : paragraphStyle,
-                                                                     NSAttributedStringKey.font : font,
-                                                                     NSAttributedStringKey.foregroundColor : textColor])
+                                                        attributes: [NSAttributedString.Key.paragraphStyle : paragraphStyle,
+                                                                     NSAttributedString.Key.font : font,
+                                                                     NSAttributedString.Key.foregroundColor : textColor])
         if let highlightPart = highlightPart {
-            attributedTitle.addAttributes([NSAttributedStringKey.underlineStyle : NSUnderlineStyle.styleSingle.rawValue,
-                                           NSAttributedStringKey.foregroundColor : UIColor.melon,
-                                           NSAttributedStringKey.font : UIFont.headerBold ?? UIFont()],
+            attributedTitle.addAttributes([NSAttributedString.Key.underlineStyle : NSUnderlineStyle.single.rawValue,
+                                           NSAttributedString.Key.foregroundColor : UIColor.melon,
+                                           NSAttributedString.Key.font : UIFont.headerBold ?? UIFont()],
                                              range: (headerText as NSString).range(of: highlightPart))
         }
         attributedText = attributedTitle
@@ -111,12 +111,12 @@ extension UILabel {
         paragraphStyle.alignment = textAlignment
         paragraphStyle.lineBreakMode = .byWordWrapping
         let attributedTitle = NSMutableAttributedString(string: bodyText,
-                                                        attributes: [NSAttributedStringKey.paragraphStyle : paragraphStyle,
-                                                                     NSAttributedStringKey.font : font,
-                                                                     NSAttributedStringKey.foregroundColor : textColor])
+                                                        attributes: [NSAttributedString.Key.paragraphStyle : paragraphStyle,
+                                                                     NSAttributedString.Key.font : font,
+                                                                     NSAttributedString.Key.foregroundColor : textColor])
         
         if let boldText = boldPart {
-            attributedTitle.addAttribute(NSAttributedStringKey.font, value: UIFont.bodyBold ?? UIFont(), range: (bodyText as NSString).range(of: boldText))
+            attributedTitle.addAttribute(NSAttributedString.Key.font, value: UIFont.bodyBold ?? UIFont(), range: (bodyText as NSString).range(of: boldText))
         }
         
         attributedText = attributedTitle
