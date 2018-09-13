@@ -41,14 +41,6 @@ extension UILabel {
         return label
     }
     
-    static var header3: UILabel {
-        let label = UILabel(forAutoLayout: ())
-        label.font = .header3
-        label.textColor = .dark
-        label.numberOfLines = 1
-        return label
-    }
-    
     static var subheader: UILabel {
         let label = UILabel(forAutoLayout: ())
         label.font = .subheader
@@ -82,7 +74,7 @@ extension UILabel {
     
     static var format: UILabel {
         let label = UILabel(forAutoLayout: ())
-        label.font = .bodyBold
+        label.font = .metadata
         label.textColor = .white
         return label
     }
@@ -96,7 +88,7 @@ extension UILabel {
     
     func set(headerText: String, highlightPart: String? = nil) {
         let paragraphStyle = NSMutableParagraphStyle()
-        paragraphStyle.lineSpacing = 6
+        paragraphStyle.lineSpacing = 5
         paragraphStyle.alignment = textAlignment
         paragraphStyle.lineBreakMode = .byWordWrapping
         let attributedTitle = NSMutableAttributedString(string: headerText,
