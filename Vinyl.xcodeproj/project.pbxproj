@@ -37,7 +37,6 @@
 		1A5166872103D98C006213A2 /* SearchResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5166862103D98C006213A2 /* SearchResult.swift */; };
 		1A5166892103E209006213A2 /* AlbumViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5166882103E209006213A2 /* AlbumViewController.swift */; };
 		1A51668B2103EF24006213A2 /* Image.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A51668A2103EF24006213A2 /* Image.swift */; };
-		1A51668D2103F230006213A2 /* UIViewController+Helper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A51668C2103F230006213A2 /* UIViewController+Helper.swift */; };
 		1A51668F210470DA006213A2 /* Track.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A51668E210470DA006213A2 /* Track.swift */; };
 		1A51669121047167006213A2 /* Format.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A51669021047167006213A2 /* Format.swift */; };
 		1A51669421047449006213A2 /* TracklistViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A51669321047449006213A2 /* TracklistViewController.swift */; };
@@ -92,7 +91,6 @@
 		1A5166862103D98C006213A2 /* SearchResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResult.swift; sourceTree = "<group>"; };
 		1A5166882103E209006213A2 /* AlbumViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumViewController.swift; sourceTree = "<group>"; };
 		1A51668A2103EF24006213A2 /* Image.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Image.swift; sourceTree = "<group>"; };
-		1A51668C2103F230006213A2 /* UIViewController+Helper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Helper.swift"; sourceTree = "<group>"; };
 		1A51668E210470DA006213A2 /* Track.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Track.swift; sourceTree = "<group>"; };
 		1A51669021047167006213A2 /* Format.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Format.swift; sourceTree = "<group>"; };
 		1A51669321047449006213A2 /* TracklistViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TracklistViewController.swift; sourceTree = "<group>"; };
@@ -194,7 +192,6 @@
 				1A51665C21031FC8006213A2 /* HomeViewController.swift */,
 				1A51666C21033621006213A2 /* ScanViewController.swift */,
 				1A5166822103D15B006213A2 /* LoadingViewController.swift */,
-				1A51668C2103F230006213A2 /* UIViewController+Helper.swift */,
 				1A51669321047449006213A2 /* TracklistViewController.swift */,
 				1A9FB6E8210BD2BD00598509 /* SearchViewController.swift */,
 				1AA860E121102BAE00F2BC1C /* NavigationControllerDelegate.swift */,
@@ -423,7 +420,6 @@
 				1A51667B2103BBEC006213A2 /* RxAVCaptureMetadataOutputObjectsDelegateProxy.swift in Sources */,
 				1A5166832103D15B006213A2 /* LoadingViewController.swift in Sources */,
 				1A51667D2103BD13006213A2 /* AVCaptureMetadataOutput+Rx.swift in Sources */,
-				1A51668D2103F230006213A2 /* UIViewController+Helper.swift in Sources */,
 				1A51667521038284006213A2 /* DismissScanAnimationController.swift in Sources */,
 				1A51667F2103C24F006213A2 /* Discogs.swift in Sources */,
 				1A60F05921161CA9000C606B /* UITextView+Styled.swift in Sources */,

@@ -41,12 +41,12 @@ extension UITextView {
         paragraphStyle.lineBreakMode = .byWordWrapping
         let attributedTitle = NSMutableAttributedString(string: headerText,
                                                         attributes: [NSAttributedStringKey.paragraphStyle : paragraphStyle,
-                                                                     NSAttributedStringKey.font : font ?? UIFont(),
-                                                                     NSAttributedStringKey.foregroundColor : textColor ?? UIColor()])
+                                                                     NSAttributedStringKey.font : .header ?? UIFont(),
+                                                                     NSAttributedStringKey.foregroundColor : UIColor.dark])
         if let highlightPart = highlightPart {
             attributedTitle.addAttributes([NSAttributedStringKey.underlineStyle : NSUnderlineStyle.styleSingle.rawValue,
                                            NSAttributedStringKey.foregroundColor : UIColor.melon,
-                                           NSAttributedStringKey.font : UIFont.headerBold ?? UIFont()],
+                                           NSAttributedStringKey.font : .headerBold ?? UIFont()],
                                           range: (headerText as NSString).range(of: highlightPart))
         }
         attributedText = attributedTitle
