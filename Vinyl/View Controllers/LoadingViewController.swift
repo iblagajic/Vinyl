@@ -51,9 +51,7 @@ class LoadingViewController: UIViewController {
     
     private func handleObservable(observable: Observable<Release>) {
         observable.timeout(3, scheduler: MainScheduler.instance)
-            .flatMap { _ -> Observable<Release> in
-                return Observable.error(DiscogsError.unavailable)
-            }.catchError { error in
+            .catchError { error in
                 guard let rxError = error as? RxError else {
                     return Observable.error(error)
                 }
