@@ -14,7 +14,7 @@ extension UIButton {
         let button = UIButton(forAutoLayout: ())
         button.setImage(.camera, for: .normal)
         button.tintColor = .melon
-        button.widthAnchor.constraint(equalToConstant: 110).isActive = true
+        button.widthAnchor.constraint(equalToConstant: UIScreen.main.bounds.width * 0.264).isActive = true
         button.heightAnchor.constraint(equalTo: button.widthAnchor).isActive = true
         return button
     }
