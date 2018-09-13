@@ -51,6 +51,19 @@ class LoadingViewController: UIViewController {
     
     private func handleObservable(observable: Observable<Release>) {
         observable.timeout(3, scheduler: MainScheduler.instance)
+            .flatMap { _ -> Observable<Release> in
+                return Observable.error(DiscogsError.unavailable)
+            }.catchError { error in
+                guard let rxError = error as? RxError else {
+                    return Observable.error(error)
+                }
+                switch rxError {
+                case .timeout:
+                    return Observable.error(DiscogsError.unavailable)
+                default:
+                    return Observable.error(error)
+                }
+            }
             .observeOn(MainScheduler.instance)
             .retryWhen(errorHandler)
             .subscribe(onNext: { [weak self] release in
@@ -70,8 +83,8 @@ class LoadingViewController: UIViewController {
         if let discogsError = error as? DiscogsError {
             switch discogsError {
             case .invalidUrl:
-                errorTitle = ""
-                errorMessage = ""
+                errorTitle = .genericErrorTitle
+                errorMessage = .genericErrorMessage
             case .noResults:
                 errorTitle = .noResultsErrorTitle
                 errorMessage = .noResultsErrorMessage
@@ -81,8 +94,8 @@ class LoadingViewController: UIViewController {
                 highlightPart = .retry
             }
         } else {
-            errorTitle = ""
-            errorMessage = ""
+            errorTitle = .genericErrorTitle
+            errorMessage = .genericErrorMessage
         }
         errorTitleLabel.text = errorTitle
         errorMessageLabel.set(headerText: errorMessage, highlightPart: highlightPart)
