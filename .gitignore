@@ -72,3 +72,4 @@ fastlane/test_output
 
 # Custom
 Vinyl/Discogs+Keys.swift
+.DS_Store
