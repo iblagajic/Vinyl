@@ -9,6 +9,7 @@
 import Foundation
 
 struct Release: Codable {
+    let id: Int
     let title: String
     let artists_sort: String
     let lowest_price: Double?

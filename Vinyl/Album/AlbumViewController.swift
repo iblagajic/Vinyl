@@ -35,6 +35,14 @@ class AlbumViewController: UIViewController {
             let priceString = "$\(price) + shipping" // TODO: localize
             let sellsForString = String(format: .sellsFor, priceString)
             priceLabel.set(bodyText: sellsForString, boldPart: priceString)
+            priceLabel.isUserInteractionEnabled = true
+            let tapGesture = UITapGestureRecognizer()
+            priceLabel.addGestureRecognizer(tapGesture)
+            tapGesture.rx.event.subscribe(onNext: { _ in
+                if let url = URL(string: "https://www.discogs.com/sell/release/\(release.id)") {
+                    UIApplication.shared.open(url, options: [:])
+                }
+            }).disposed(by: bag)
         } else {
             priceLabel.text = .notAvailable
         }
