@@ -23,15 +23,17 @@ class SearchViewController: UITableViewController {
     
     private func setup() {
         let header = UIView(forAutoLayout: ())
-        header.widthAnchor.constraint(equalToConstant: view.frame.width).isActive = true
         [backButton, albumInputField].forEach(header.addSubview)
-        backButton.topAnchor.constraint(equalTo: header.safeAreaLayoutGuide.topAnchor, constant: 33).isActive = true
-        backButton.leadingAnchor.constraint(equalTo: header.leadingAnchor, constant: 33).isActive = true
-        backButton.bottomAnchor.constraint(equalTo: header.bottomAnchor).isActive = true
-        albumInputField.leadingAnchor.constraint(equalTo: backButton.trailingAnchor, constant: 33).isActive = true
-        albumInputField.topAnchor.constraint(equalTo: header.safeAreaLayoutGuide.topAnchor, constant: 33).isActive = true
-        albumInputField.trailingAnchor.constraint(equalTo: header.trailingAnchor, constant: -44).isActive = true
-        albumInputField.heightAnchor.constraint(equalToConstant: 44).isActive = true
+        NSLayoutConstraint.activate([
+            header.widthAnchor.constraint(equalToConstant: view.frame.width),
+            backButton.topAnchor.constraint(equalTo: header.safeAreaLayoutGuide.topAnchor, constant: 33),
+            backButton.leadingAnchor.constraint(equalTo: header.leadingAnchor, constant: 33),
+            backButton.bottomAnchor.constraint(equalTo: header.bottomAnchor),
+            albumInputField.leadingAnchor.constraint(equalTo: backButton.trailingAnchor, constant: 33),
+            albumInputField.topAnchor.constraint(equalTo: header.safeAreaLayoutGuide.topAnchor, constant: 33),
+            albumInputField.trailingAnchor.constraint(equalTo: header.trailingAnchor, constant: -44),
+            albumInputField.heightAnchor.constraint(equalToConstant: 44)
+        ])
         
         tableView.tableHeaderView = header
         tableView.tableFooterView = UIView(frame: CGRect(x: 0, y: 0, width: 1, height: 1))

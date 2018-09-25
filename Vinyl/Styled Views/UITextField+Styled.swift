@@ -12,10 +12,11 @@ extension UITextField {
     
     static var standard: UITextField {
         let textField = PaddedTextField(forAutoLayout: ())
+        textField.clearButtonMode = .whileEditing
         textField.borderStyle = .none
         textField.font = UIFont.body
         textField.textColor = .dark
-        textField.tintColor = .dark
+        textField.tintColor = .steelGrey
         textField.autocorrectionType = .no
         textField.autocapitalizationType = .none
         textField.returnKeyType = .search
@@ -33,14 +34,14 @@ extension UITextField {
 class PaddedTextField: UITextField {
     
     override func textRect(forBounds bounds: CGRect) -> CGRect {
-        return bounds.inset(by: UIEdgeInsets(top: 0, left: 6, bottom: 6, right: 0))
+        return bounds.inset(by: UIEdgeInsets(top: 0, left: 6, bottom: 0, right: 22))
     }
     
     override func placeholderRect(forBounds bounds: CGRect) -> CGRect {
-        return bounds.inset(by: UIEdgeInsets(top: 0, left: 6, bottom: 6, right: 0))
+        return bounds.inset(by: UIEdgeInsets(top: 0, left: 6, bottom: 0, right: 22))
     }
     
     override func editingRect(forBounds bounds: CGRect) -> CGRect {
-        return bounds.inset(by: UIEdgeInsets(top: 0, left: 6, bottom: 6, right: 0))
+        return bounds.inset(by: UIEdgeInsets(top: 0, left: 6, bottom: 0, right: 22))
     }
 }
