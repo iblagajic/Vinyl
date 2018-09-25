@@ -125,8 +125,8 @@ class ScanViewController: UIViewController {
         targetView.backgroundColor = .clear
         targetView.layer.shadowColor = UIColor.dark.cgColor
         targetView.layer.shadowOffset = CGSize(width: 1, height: 1)
-        targetView.layer.shadowOpacity = 1
-        targetView.layer.shadowRadius = 0
+        targetView.layer.shadowOpacity = 0.9
+        targetView.layer.shadowRadius = 3
     }
 }
 
