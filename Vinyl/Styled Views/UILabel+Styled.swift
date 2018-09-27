@@ -25,6 +25,14 @@ extension UILabel {
         return label
     }
     
+    static var copyableHeader: CopyableLabel {
+        let label = CopyableLabel(forAutoLayout: ())
+        label.font = .header
+        label.textColor = .dark
+        label.numberOfLines = 0
+        return label
+    }
+    
     static var headerLight: UILabel {
         let label = UILabel(forAutoLayout: ())
         label.font = .header
@@ -121,4 +129,48 @@ extension UILabel {
         
         attributedText = attributedTitle
     }
+}
+
+import RxSwift
+
+class CopyableLabel: UILabel {
+    
+    let bag = DisposeBag()
+    
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        setup()
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+        setup()
+    }
+    
+    private func setup() {
+        isUserInteractionEnabled = true
+        let longPress = UILongPressGestureRecognizer()
+        addGestureRecognizer(longPress)
+        longPress.rx.event.subscribe(onNext: { [weak self] _ in
+            self?.becomeFirstResponder()
+            let menu = UIMenuController()
+            menu.arrowDirection = .default
+            if let superview = self?.superview,
+                let frame = self?.frame,
+                let `self` = self {
+                menu.setTargetRect(frame, in: superview)
+                menu.menuItems = [UIMenuItem(title: .copy, action: #selector(self.copyToPasteboard))]
+            }
+            menu.setMenuVisible(true, animated: true)
+        }).disposed(by: bag)
+    }
+    
+    override var canBecomeFirstResponder: Bool {
+        return true
+    }
+    
+    @objc private func copyToPasteboard() {
+        UIPasteboard.general.string = text
+    }
+    
 }

@@ -12,7 +12,7 @@ import RxCocoa
 
 class AlbumViewController: UIViewController {
     
-    let titleLabel = UILabel.header
+    let titleLabel = UILabel.copyableHeader
     let artistLabel = UILabel.subheader
     let dateLabel = UILabel.bodyLight
     let closeButton = UIButton.close
