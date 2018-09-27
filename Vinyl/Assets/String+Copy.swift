@@ -58,5 +58,6 @@ extension String {
     static let noResultsErrorMessage = NSLocalizedString("Sorry, we couldn’t find\nthe vinyl you’re\nlooking for.", comment: "")
     static let genericErrorTitle = NSLocalizedString("Ooops!", comment: "")
     static let genericErrorMessage = NSLocalizedString("Unfortunately, something went wrong. Please try again.", comment: "")
+    static let copy = NSLocalizedString("Copy", comment: "")
 }
 
