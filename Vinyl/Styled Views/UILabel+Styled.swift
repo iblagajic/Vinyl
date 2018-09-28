@@ -27,7 +27,7 @@ extension UILabel {
     
     static var copyableHeader: CopyableLabel {
         let label = CopyableLabel(forAutoLayout: ())
-        label.font = .header
+        label.font = .headerTimes
         label.textColor = .dark
         label.numberOfLines = 0
         return label

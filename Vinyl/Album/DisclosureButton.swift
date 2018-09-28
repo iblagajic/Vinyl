@@ -13,8 +13,6 @@ import RxCocoa
 class DisclosureButton: UIControl {
     
     let titleLabel = UILabel.header2
-    let disclosureImageView = UIImageView(forAutoLayout: ())
-    let separator = UIView.separator
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -27,19 +25,28 @@ class DisclosureButton: UIControl {
     }
     
     private func setup() {
-        [titleLabel, disclosureImageView, separator].forEach(addSubview)
+        let topSeparator = UIView.separator
+        let disclosureImageView = UIImageView(forAutoLayout: ())
+        let bottomSeparator = UIView.separator
         
-        titleLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 22).isActive = true
-        titleLabel.topAnchor.constraint(equalTo: topAnchor, constant: 16).isActive = true
-        disclosureImageView.leadingAnchor.constraint(greaterThanOrEqualTo: titleLabel.trailingAnchor, constant: 44).isActive = true
-        disclosureImageView.centerYAnchor.constraint(equalTo: titleLabel.centerYAnchor).isActive = true
-        disclosureImageView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -22).isActive = true
-        disclosureImageView.widthAnchor.constraint(equalToConstant: 10).isActive = true
-        disclosureImageView.heightAnchor.constraint(equalToConstant: 18).isActive = true
-        separator.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 16).isActive = true
-        separator.leadingAnchor.constraint(equalTo: leadingAnchor).isActive = true
-        separator.trailingAnchor.constraint(equalTo: trailingAnchor).isActive = true
-        separator.bottomAnchor.constraint(equalTo: bottomAnchor).isActive = true
+        [topSeparator, titleLabel, disclosureImageView, bottomSeparator].forEach(addSubview)
+        
+        NSLayoutConstraint.activate([
+            topSeparator.topAnchor.constraint(equalTo: topAnchor),
+            topSeparator.leadingAnchor.constraint(equalTo: leadingAnchor),
+            topSeparator.trailingAnchor.constraint(equalTo: trailingAnchor),
+            titleLabel.leadingAnchor.constraint(equalTo: leadingAnchor),
+            titleLabel.topAnchor.constraint(equalTo: topSeparator.bottomAnchor, constant: 16),
+            disclosureImageView.leadingAnchor.constraint(greaterThanOrEqualTo: titleLabel.trailingAnchor, constant: 44),
+            disclosureImageView.centerYAnchor.constraint(equalTo: titleLabel.centerYAnchor),
+            disclosureImageView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -22),
+            disclosureImageView.widthAnchor.constraint(equalToConstant: 9),
+            disclosureImageView.heightAnchor.constraint(equalToConstant: 15),
+            bottomSeparator.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 16),
+            bottomSeparator.leadingAnchor.constraint(equalTo: leadingAnchor),
+            bottomSeparator.trailingAnchor.constraint(equalTo: trailingAnchor),
+            bottomSeparator.bottomAnchor.constraint(equalTo: bottomAnchor)
+        ])
         
         disclosureImageView.image = .disclosure
         disclosureImageView.tintColor = .dark
