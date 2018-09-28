@@ -12,7 +12,7 @@ import RxCocoa
 
 class AlbumViewController: UIViewController {
     
-    let backButton = UIButton.back
+    let closeButton = UIButton.close
     let artistLabel = UILabel.subheader
     let titleLabel = UILabel.copyableHeader
     let albumImageView = UIImageView(forAutoLayout: ())
@@ -29,7 +29,7 @@ class AlbumViewController: UIViewController {
     init(release: Release) {
         super.init(nibName: nil, bundle: nil)
         titleLabel.text = release.title
-        artistLabel.text = release.artists_sort
+        artistLabel.text = release.artists_sort.uppercased()
         dateLabel.text = String(format: .releasedOn, release.released_formatted)
         if let price = release.lowest_price {
             let priceString = "$\(price) + shipping" // TODO: localize
@@ -71,7 +71,7 @@ class AlbumViewController: UIViewController {
             self?.vinylImageView.isHidden = false
         }).filter { $0 != nil }.drive(albumImageView.rx.image).disposed(by: bag)
         
-        backButton.rx.tap.subscribe(onNext: { [weak self] in
+        closeButton.rx.tap.subscribe(onNext: { [weak self] in
             self?.navigationController?.dismiss(animated: true)
         }).disposed(by: bag)
         
@@ -122,16 +122,16 @@ class AlbumViewController: UIViewController {
             vinylImageView.widthAnchor.constraint(equalTo: vinylImageView.widthAnchor)
         ])
         
-        [backButton, artistLabel, titleLabel, albumWithVinyl, dateLabel, formatsCollectionView, priceLabel, disclosureButton, descriptionTitleLabel, descriptionLabel].forEach(contentView.addSubview)
+        [closeButton, artistLabel, titleLabel, albumWithVinyl, dateLabel, formatsCollectionView, priceLabel, disclosureButton, descriptionTitleLabel, descriptionLabel].forEach(contentView.addSubview)
         
         contentView.pinToSuperview()
         
         NSLayoutConstraint.activate([
             contentView.widthAnchor.constraint(equalTo: root.widthAnchor),
-            backButton.topAnchor.constraint(equalTo: contentView.safeAreaLayoutGuide.topAnchor, constant: 33),
-            backButton.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 44),
-            artistLabel.topAnchor.constraint(equalTo: backButton.bottomAnchor, constant: 33),
-            artistLabel.leadingAnchor.constraint(equalTo: backButton.leadingAnchor),
+            closeButton.topAnchor.constraint(equalTo: contentView.safeAreaLayoutGuide.topAnchor, constant: 33),
+            closeButton.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 35),
+            artistLabel.topAnchor.constraint(equalTo: closeButton.bottomAnchor, constant: 33),
+            artistLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 44),
             artistLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -22),
             titleLabel.topAnchor.constraint(equalTo: artistLabel.bottomAnchor, constant: 5),
             titleLabel.leadingAnchor.constraint(equalTo: artistLabel.leadingAnchor),
