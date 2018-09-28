@@ -102,7 +102,7 @@ class ScanViewController: UIViewController {
         [backButton, previewView, targetView, permissionLabel, scanLabel].forEach(root.addSubview)
         
         backButton.topAnchor.constraint(equalTo: root.safeAreaLayoutGuide.topAnchor, constant: 33).isActive = true
-        backButton.leadingAnchor.constraint(equalTo: root.leadingAnchor, constant: 44).isActive = true
+        backButton.leadingAnchor.constraint(equalTo: root.leadingAnchor, constant: 35).isActive = true
         previewView.topAnchor.constraint(equalTo: backButton.bottomAnchor, constant: 22).isActive = true
         previewView.leadingAnchor.constraint(equalTo: root.leadingAnchor).isActive = true
         previewView.trailingAnchor.constraint(equalTo: root.trailingAnchor).isActive = true

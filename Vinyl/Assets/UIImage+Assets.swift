@@ -18,4 +18,5 @@ extension UIImage {
     static let vinyl = UIImage(named: "vinyl")
     static let realisticVinyl = UIImage(named: "realisticVinyl")
     static let placeholder = UIImage(named: "placeholder")
+    static let cancel = UIImage(named: "cancel")
 }

@@ -27,14 +27,15 @@ class TrackCell: UITableViewCell {
     private func setup() {
         [positionLabel, titleLabel, durationLabel].forEach(addSubview)
         
-        positionLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 22).isActive = true
-        positionLabel.lastBaselineAnchor.constraint(equalTo: titleLabel.lastBaselineAnchor).isActive = true
-        positionLabel.widthAnchor.constraint(greaterThanOrEqualToConstant: 22).isActive = true
-        titleLabel.leadingAnchor.constraint(equalTo: positionLabel.trailingAnchor, constant: 11).isActive = true
-        titleLabel.centerYAnchor.constraint(equalTo: centerYAnchor).isActive = true
-        durationLabel.leadingAnchor.constraint(greaterThanOrEqualTo: titleLabel.trailingAnchor, constant: 22).isActive = true
-        durationLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -22).isActive = true
-        durationLabel.centerYAnchor.constraint(equalTo: titleLabel.centerYAnchor).isActive = true
+        NSLayoutConstraint.activate([
+            positionLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 44),
+            positionLabel.lastBaselineAnchor.constraint(equalTo: titleLabel.lastBaselineAnchor),
+            titleLabel.leadingAnchor.constraint(equalTo: positionLabel.trailingAnchor, constant: 11),
+            titleLabel.centerYAnchor.constraint(equalTo: centerYAnchor),
+            durationLabel.leadingAnchor.constraint(greaterThanOrEqualTo: titleLabel.trailingAnchor, constant: 22),
+            durationLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -22),
+            durationLabel.centerYAnchor.constraint(equalTo: titleLabel.centerYAnchor)
+        ])
         durationLabel.setContentCompressionResistancePriority(.required, for: .horizontal)
         
         backgroundColor = .clear

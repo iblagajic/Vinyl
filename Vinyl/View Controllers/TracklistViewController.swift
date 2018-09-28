@@ -54,30 +54,32 @@ class TracklistViewController: UIViewController {
         tracklistTableView.pinToSuperview()
         
         let header = UIView(forAutoLayout: ())
-        header.widthAnchor.constraint(equalToConstant: root.frame.width).isActive = true
         
         [backButton, titleLabel, artistLabel, tracklistLabel, firstSeparator].forEach(header.addSubview)
         
-        backButton.topAnchor.constraint(equalTo: header.safeAreaLayoutGuide.topAnchor, constant: 33).isActive = true
-        backButton.leadingAnchor.constraint(equalTo: header.leadingAnchor, constant: 33).isActive = true
-        titleLabel.topAnchor.constraint(equalTo: backButton.topAnchor).isActive = true
-        titleLabel.leadingAnchor.constraint(equalTo: backButton.trailingAnchor, constant: 44).isActive = true
-        titleLabel.trailingAnchor.constraint(equalTo: header.trailingAnchor, constant: -33).isActive = true
-        artistLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 6).isActive = true
-        artistLabel.leadingAnchor.constraint(equalTo: titleLabel.leadingAnchor).isActive = true
-        artistLabel.trailingAnchor.constraint(equalTo: header.trailingAnchor, constant: -33).isActive = true
-        tracklistLabel.topAnchor.constraint(equalTo: artistLabel.bottomAnchor, constant: 44).isActive = true
-        tracklistLabel.leadingAnchor.constraint(equalTo: header.leadingAnchor, constant: 44).isActive = true
-        firstSeparator.topAnchor.constraint(equalTo: tracklistLabel.bottomAnchor, constant: 16).isActive = true
-        firstSeparator.leadingAnchor.constraint(equalTo: header.leadingAnchor, constant: 22).isActive = true
-        firstSeparator.trailingAnchor.constraint(equalTo: header.trailingAnchor).isActive = true
-        firstSeparator.heightAnchor.constraint(equalToConstant: 1/UIScreen.main.scale).isActive = true
-        firstSeparator.bottomAnchor.constraint(equalTo: header.bottomAnchor).isActive = true
+        NSLayoutConstraint.activate([
+            header.widthAnchor.constraint(equalToConstant: root.frame.width),
+            backButton.topAnchor.constraint(equalTo: header.safeAreaLayoutGuide.topAnchor, constant: 33),
+            backButton.leadingAnchor.constraint(equalTo: header.leadingAnchor, constant: 35),
+            artistLabel.topAnchor.constraint(equalTo: backButton.bottomAnchor, constant: 33),
+            artistLabel.leadingAnchor.constraint(equalTo: header.leadingAnchor, constant: 44),
+            artistLabel.trailingAnchor.constraint(equalTo: header.trailingAnchor, constant: -22),
+            titleLabel.topAnchor.constraint(equalTo: artistLabel.bottomAnchor, constant: 6),
+            titleLabel.leadingAnchor.constraint(equalTo: artistLabel.leadingAnchor),
+            titleLabel.trailingAnchor.constraint(equalTo: artistLabel.trailingAnchor),
+            tracklistLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 33),
+            tracklistLabel.leadingAnchor.constraint(equalTo: titleLabel.leadingAnchor),
+            firstSeparator.topAnchor.constraint(equalTo: tracklistLabel.bottomAnchor, constant: 14),
+            firstSeparator.leadingAnchor.constraint(equalTo: tracklistLabel.leadingAnchor),
+            firstSeparator.trailingAnchor.constraint(equalTo: header.trailingAnchor),
+            firstSeparator.heightAnchor.constraint(equalToConstant: 1/UIScreen.main.scale),
+            firstSeparator.bottomAnchor.constraint(equalTo: header.bottomAnchor)
+        ])
         
         tracklistTableView.tableHeaderView = header
-        tracklistTableView.separatorInset = UIEdgeInsets(top: 0, left: 22, bottom: 0, right: 0)
-        tracklistTableView.separatorColor = UIColor.steelGrey.withAlphaComponent(0.3)
-        tracklistTableView.rowHeight = 64
+        tracklistTableView.separatorInset = UIEdgeInsets(top: 0, left: 44, bottom: 0, right: 0)
+        tracklistTableView.separatorColor = .veryLightPink
+        tracklistTableView.rowHeight = 65
         tracklistTableView.backgroundColor = nil
         
         backgroundImageView.contentMode = .scaleAspectFill

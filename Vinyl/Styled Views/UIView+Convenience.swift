@@ -19,7 +19,7 @@ extension UIView {
     static var separator: UIView {
         let view = UIView(forAutoLayout: ())
         view.heightAnchor.constraint(equalToConstant: 1/UIScreen.main.scale).isActive = true
-        view.backgroundColor = .steelGrey
+        view.backgroundColor = .veryLightPink
         return view
     }
     

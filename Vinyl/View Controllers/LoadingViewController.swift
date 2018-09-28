@@ -16,7 +16,7 @@ class LoadingViewController: UIViewController {
     var activityIndicatorCenterY = NSLayoutConstraint()
     let errorTitleLabel = UILabel.block
     let errorMessageLabel = UITextView.header
-    let closeButton = UIButton.closeLarge
+    let cancelButton = UIButton.cancel
     private let bag = DisposeBag()
     
     init(code: String) {
@@ -102,16 +102,16 @@ class LoadingViewController: UIViewController {
         errorMessageLabel.addGestureRecognizer(tapGestureRecognizer)
         errorMessageLabel.isUserInteractionEnabled = true
         UIView.animate(withDuration: 0.3) { [weak self] in
-            self?.closeButton.alpha = 1
+            self?.cancelButton.alpha = 1
             self?.activityIndicatorView.alpha = 0
             self?.errorTitleLabel.isHidden = false
             self?.errorMessageLabel.isHidden = false
         }
-        let close = closeButton.rx.tap.flatMap { _ -> Observable<Void> in Observable.error(error) }
+        let close = cancelButton.rx.tap.flatMap { _ -> Observable<Void> in Observable.error(error) }
         let retry = tapGestureRecognizer.rx.event.map { $0.didTap(oneOf: [.retry]) }.flatMap { _ in Observable.just(()) }
             .do(onNext: {
                 UIView.animate(withDuration: 0.3) { [weak self] in
-                    self?.closeButton.alpha = 0
+                    self?.cancelButton.alpha = 0
                     self?.activityIndicatorView.alpha = 1
                     self?.errorTitleLabel.isHidden = true
                     self?.errorMessageLabel.isHidden = true
@@ -124,7 +124,7 @@ class LoadingViewController: UIViewController {
         super.viewDidLoad()
         activityIndicatorView.image = .vinyl
         activityIndicatorView.tintColor = .dark
-        closeButton.rx.tap.subscribe(onNext: { [weak self] in
+        cancelButton.rx.tap.subscribe(onNext: { [weak self] in
             self?.dismiss(animated: true)
         }).disposed(by: bag)
     }
@@ -135,7 +135,7 @@ class LoadingViewController: UIViewController {
         stackView.axis = .vertical
         stackView.spacing = 22
         let activityAndClose = UIView(forAutoLayout: ())
-        [activityIndicatorView, closeButton].forEach(activityAndClose.addSubview)
+        [activityIndicatorView, cancelButton].forEach(activityAndClose.addSubview)
         [errorTitleLabel, errorMessageLabel, activityAndClose].forEach(stackView.addArrangedSubview)
         
         errorTitleLabel.isHidden = true
@@ -148,13 +148,13 @@ class LoadingViewController: UIViewController {
         activityIndicatorCenterY.isActive = true
         stackView.leadingAnchor.constraint(equalTo: root.leadingAnchor, constant: 44).isActive = true
         activityAndClose.heightAnchor.constraint(equalToConstant: 99).isActive = true
-        closeButton.topAnchor.constraint(equalTo: activityAndClose.topAnchor, constant: 22).isActive = true
-        closeButton.bottomAnchor.constraint(equalTo: activityAndClose.bottomAnchor).isActive = true
-        closeButton.centerXAnchor.constraint(equalTo: activityAndClose.centerXAnchor).isActive = true
-        activityIndicatorView.pin(to: closeButton)
+        cancelButton.topAnchor.constraint(equalTo: activityAndClose.topAnchor, constant: 22).isActive = true
+        cancelButton.bottomAnchor.constraint(equalTo: activityAndClose.bottomAnchor).isActive = true
+        cancelButton.centerXAnchor.constraint(equalTo: activityAndClose.centerXAnchor).isActive = true
+        activityIndicatorView.pin(to: cancelButton)
         
         self.view = root
         
-        closeButton.alpha = 0
+        cancelButton.alpha = 0
     }
 }
