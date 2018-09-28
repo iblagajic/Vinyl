@@ -38,7 +38,7 @@ extension String {
     static let openSourceTitle = NSLocalizedString("Vinyl is open source", comment: "")
     static let openSourceMessage = NSLocalizedString("Since transparency is one of my core beliefs, the app is open source: %@.", comment: "")
     static let credits = NSLocalizedString("Credits", comment: "")
-    static let vinylIcon = NSLocalizedString("Vinyl loader icon by %@.", comment: "")
+    static let vinylIcon = NSLocalizedString("Vinyl loader and back icons by %@.", comment: "")
     static let freepik = "Freepik"
     static let cameraIcon = NSLocalizedString("Camera icon by %@.", comment: "")
     static let smashicons = "Smashicons"
@@ -59,5 +59,6 @@ extension String {
     static let genericErrorTitle = NSLocalizedString("Ooops!", comment: "")
     static let genericErrorMessage = NSLocalizedString("Unfortunately, something went wrong. Please try again.", comment: "")
     static let copy = NSLocalizedString("Copy", comment: "")
+    static let releasedOn = NSLocalizedString("Released on %@", comment: "")
 }
 

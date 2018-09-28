@@ -56,7 +56,7 @@ class HomeViewController: UIViewController {
         let scanCenter = scanLabel.centerYAnchor.constraint(equalTo: root.centerYAnchor, constant: -50)
         scanCenter.priority = .defaultLow
         NSLayoutConstraint.activate([
-            infoButton.topAnchor.constraint(equalTo: root.safeAreaLayoutGuide.topAnchor, constant: 44),
+            infoButton.topAnchor.constraint(equalTo: root.safeAreaLayoutGuide.topAnchor, constant: 33),
             infoButton.leadingAnchor.constraint(equalTo: root.leadingAnchor, constant: 44),
             greetingLabel.topAnchor.constraint(greaterThanOrEqualTo: infoButton.bottomAnchor, constant: 22),
             greetingLabel.leadingAnchor.constraint(equalTo: scanLabel.leadingAnchor),
