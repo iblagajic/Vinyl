@@ -42,7 +42,7 @@
 		1A51669421047449006213A2 /* TracklistViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A51669321047449006213A2 /* TracklistViewController.swift */; };
 		1A51669621047FD4006213A2 /* DisclosureButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A51669521047FD4006213A2 /* DisclosureButton.swift */; };
 		1A51669821048881006213A2 /* TrackCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A51669721048881006213A2 /* TrackCell.swift */; };
-		1A5B0019216F359100972F5C /* USerDefaults+Vinyl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5B0018216F359100972F5C /* USerDefaults+Vinyl.swift */; };
+		1A5B0019216F359100972F5C /* UserDefaults+Vinyl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5B0018216F359100972F5C /* UserDefaults+Vinyl.swift */; };
 		1A60F05921161CA9000C606B /* UITextView+Styled.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A60F05821161CA9000C606B /* UITextView+Styled.swift */; };
 		1A60F05B211647C0000C606B /* MFMailComposeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A60F05A211647C0000C606B /* MFMailComposeViewController.swift */; };
 		1A60F05D2116C6A2000C606B /* UITextView+Tappable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A60F05C2116C6A2000C606B /* UITextView+Tappable.swift */; };
@@ -97,7 +97,7 @@
 		1A51669321047449006213A2 /* TracklistViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TracklistViewController.swift; sourceTree = "<group>"; };
 		1A51669521047FD4006213A2 /* DisclosureButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisclosureButton.swift; sourceTree = "<group>"; };
 		1A51669721048881006213A2 /* TrackCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackCell.swift; sourceTree = "<group>"; };
-		1A5B0018216F359100972F5C /* USerDefaults+Vinyl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "USerDefaults+Vinyl.swift"; sourceTree = "<group>"; };
+		1A5B0018216F359100972F5C /* UserDefaults+Vinyl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UserDefaults+Vinyl.swift"; sourceTree = "<group>"; };
 		1A60F05821161CA9000C606B /* UITextView+Styled.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITextView+Styled.swift"; sourceTree = "<group>"; };
 		1A60F05A211647C0000C606B /* MFMailComposeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MFMailComposeViewController.swift; sourceTree = "<group>"; };
 		1A60F05C2116C6A2000C606B /* UITextView+Tappable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITextView+Tappable.swift"; sourceTree = "<group>"; };
@@ -131,13 +131,8 @@
 		1A417EED210510D7000CBB47 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				1A51666E210336E0006213A2 /* PreviewView.swift */,
-				1A51669721048881006213A2 /* TrackCell.swift */,
-				1A9FB6EA210C408F00598509 /* SearchCell.swift */,
-				1AA860DF210FADD200F2BC1C /* CameraTargetView.swift */,
 				1A1901972112592B00390AF7 /* ActivityIndicatorView.swift */,
 				1A828A2E21148E6400CA4D81 /* BodyWIthTitle.swift */,
-				1A60F05821161CA9000C606B /* UITextView+Styled.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -163,44 +158,39 @@
 		1A51664721031D40006213A2 /* Vinyl */ = {
 			isa = PBXGroup;
 			children = (
-				1A828A29211486D200CA4D81 /* AlbumDetails */,
-				1A417EED210510D7000CBB47 /* Views */,
-				1A516692210473F9006213A2 /* Model */,
-				1A51667921039AF2006213A2 /* Styled Views */,
-				1A51667821039AE2006213A2 /* Assets */,
-				1A51667721039AD3006213A2 /* Transitions */,
-				1A516676210399F7006213A2 /* View Controllers */,
-				1A51664821031D40006213A2 /* AppDelegate.swift */,
-				1A51665121031D42006213A2 /* LaunchScreen.storyboard */,
 				1A51665421031D42006213A2 /* Info.plist */,
-				1A51665E21032057006213A2 /* UIView+Layout.swift */,
-				1A51667A2103BBEC006213A2 /* RxAVCaptureMetadataOutputObjectsDelegateProxy.swift */,
-				1A51667C2103BD13006213A2 /* AVCaptureMetadataOutput+Rx.swift */,
-				1A51667E2103C24F006213A2 /* Discogs.swift */,
-				1A10321421135D77005FFF94 /* UIImage+Multiply.swift */,
-				1A103216211398F1005FFF94 /* NavigationController.swift */,
-				1A828A302114F60700CA4D81 /* UITapGestureRecognizer+UITextView.swift */,
-				1A60F05A211647C0000C606B /* MFMailComposeViewController.swift */,
-				1A60F05C2116C6A2000C606B /* UITextView+Tappable.swift */,
+				1A51664821031D40006213A2 /* AppDelegate.swift */,
 				1A9B592C212E118600A7A9E3 /* ObservableType+Nil.swift */,
-				1A9B592E212E164A00A7A9E3 /* Discogs+Keys.swift */,
-				1A5B0018216F359100972F5C /* USerDefaults+Vinyl.swift */,
+				1A10321421135D77005FFF94 /* UIImage+Multiply.swift */,
+				1A828A302114F60700CA4D81 /* UITapGestureRecognizer+UITextView.swift */,
+				1A60F05C2116C6A2000C606B /* UITextView+Tappable.swift */,
+				1A5B0018216F359100972F5C /* UserDefaults+Vinyl.swift */,
+				1A828A29211486D200CA4D81 /* AlbumDetails */,
+				1A51667821039AE2006213A2 /* Assets */,
+				1AF8B10C2176840E00689CE3 /* Info */,
+				1A51665121031D42006213A2 /* LaunchScreen.storyboard */,
+				1A516692210473F9006213A2 /* Model */,
+				1AF8B1082176832100689CE3 /* Scan */,
+				1AF8B1092176836700689CE3 /* Search */,
+				1AF8B10B217683F600689CE3 /* Services */,
+				1A51667921039AF2006213A2 /* Styled Views */,
+				1AF8B10A2176838D00689CE3 /* Tracklist */,
+				1A51667721039AD3006213A2 /* Transitions */,
+				1A516676210399F7006213A2 /* ViewControllers */,
+				1A417EED210510D7000CBB47 /* Views */,
 			);
 			path = Vinyl;
 			sourceTree = "<group>";
 		};
-		1A516676210399F7006213A2 /* View Controllers */ = {
+		1A516676210399F7006213A2 /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
 				1A51665C21031FC8006213A2 /* HomeViewController.swift */,
-				1A51666C21033621006213A2 /* ScanViewController.swift */,
 				1A5166822103D15B006213A2 /* LoadingViewController.swift */,
-				1A51669321047449006213A2 /* TracklistViewController.swift */,
-				1A9FB6E8210BD2BD00598509 /* SearchViewController.swift */,
 				1AA860E121102BAE00F2BC1C /* NavigationControllerDelegate.swift */,
-				1A828A2C211487EC00CA4D81 /* InfoViewController.swift */,
+				1A103216211398F1005FFF94 /* NavigationController.swift */,
 			);
-			path = "View Controllers";
+			path = ViewControllers;
 			sourceTree = "<group>";
 		};
 		1A51667721039AD3006213A2 /* Transitions */ = {
@@ -228,10 +218,12 @@
 		1A51667921039AF2006213A2 /* Styled Views */ = {
 			isa = PBXGroup;
 			children = (
+				1A60F05821161CA9000C606B /* UITextView+Styled.swift */,
 				1A516660210325CD006213A2 /* UILabel+Styled.swift */,
 				1A51666821032AE2006213A2 /* UIButton+Styled.swift */,
 				1A516670210337A4006213A2 /* UIView+Convenience.swift */,
 				1A9FB6E6210BC6DA00598509 /* UITextField+Styled.swift */,
+				1A51665E21032057006213A2 /* UIView+Layout.swift */,
 			);
 			path = "Styled Views";
 			sourceTree = "<group>";
@@ -257,6 +249,54 @@
 				1A5166882103E209006213A2 /* AlbumViewController.swift */,
 			);
 			path = AlbumDetails;
+			sourceTree = "<group>";
+		};
+		1AF8B1082176832100689CE3 /* Scan */ = {
+			isa = PBXGroup;
+			children = (
+				1A51667C2103BD13006213A2 /* AVCaptureMetadataOutput+Rx.swift */,
+				1AA860DF210FADD200F2BC1C /* CameraTargetView.swift */,
+				1A51666E210336E0006213A2 /* PreviewView.swift */,
+				1A51667A2103BBEC006213A2 /* RxAVCaptureMetadataOutputObjectsDelegateProxy.swift */,
+				1A51666C21033621006213A2 /* ScanViewController.swift */,
+			);
+			path = Scan;
+			sourceTree = "<group>";
+		};
+		1AF8B1092176836700689CE3 /* Search */ = {
+			isa = PBXGroup;
+			children = (
+				1A9FB6E8210BD2BD00598509 /* SearchViewController.swift */,
+				1A9FB6EA210C408F00598509 /* SearchCell.swift */,
+			);
+			path = Search;
+			sourceTree = "<group>";
+		};
+		1AF8B10A2176838D00689CE3 /* Tracklist */ = {
+			isa = PBXGroup;
+			children = (
+				1A51669321047449006213A2 /* TracklistViewController.swift */,
+				1A51669721048881006213A2 /* TrackCell.swift */,
+			);
+			path = Tracklist;
+			sourceTree = "<group>";
+		};
+		1AF8B10B217683F600689CE3 /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				1A51667E2103C24F006213A2 /* Discogs.swift */,
+				1A9B592E212E164A00A7A9E3 /* Discogs+Keys.swift */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
+		1AF8B10C2176840E00689CE3 /* Info */ = {
+			isa = PBXGroup;
+			children = (
+				1A828A2C211487EC00CA4D81 /* InfoViewController.swift */,
+				1A60F05A211647C0000C606B /* MFMailComposeViewController.swift */,
+			);
+			path = Info;
 			sourceTree = "<group>";
 		};
 		BB7106C185E325639D1164B0 /* Frameworks */ = {
@@ -424,7 +464,7 @@
 				1A51667B2103BBEC006213A2 /* RxAVCaptureMetadataOutputObjectsDelegateProxy.swift in Sources */,
 				1A5166832103D15B006213A2 /* LoadingViewController.swift in Sources */,
 				1A51667D2103BD13006213A2 /* AVCaptureMetadataOutput+Rx.swift in Sources */,
-				1A5B0019216F359100972F5C /* USerDefaults+Vinyl.swift in Sources */,
+				1A5B0019216F359100972F5C /* UserDefaults+Vinyl.swift in Sources */,
 				1A51667521038284006213A2 /* DismissScanAnimationController.swift in Sources */,
 				1A51667F2103C24F006213A2 /* Discogs.swift in Sources */,
 				1A60F05921161CA9000C606B /* UITextView+Styled.swift in Sources */,
