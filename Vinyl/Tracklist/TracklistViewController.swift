@@ -15,7 +15,7 @@ class TracklistViewController: UIViewController {
     let backgroundImageView = UIImageView(forAutoLayout: ())
     let visualEffectView = UIVisualEffectView(forAutoLayout: ())
     let backButton = UIButton.back
-    let titleLabel = UILabel.header
+    let titleLabel = UILabel.copyableHeader
     let artistLabel = UILabel.subheader
     let tracklistLabel = UILabel.header2
     let firstSeparator = UIView.separator
