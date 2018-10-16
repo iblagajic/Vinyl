@@ -29,7 +29,7 @@ class SearchViewController: UITableViewController {
             backButton.topAnchor.constraint(equalTo: header.safeAreaLayoutGuide.topAnchor, constant: 33),
             backButton.leadingAnchor.constraint(equalTo: header.leadingAnchor, constant: 35),
             backButton.bottomAnchor.constraint(equalTo: header.bottomAnchor),
-            albumInputField.leadingAnchor.constraint(equalTo: backButton.trailingAnchor, constant: 33),
+            albumInputField.leadingAnchor.constraint(equalTo: backButton.trailingAnchor, constant: 24),
             albumInputField.centerYAnchor.constraint(equalTo: backButton.centerYAnchor),
             albumInputField.trailingAnchor.constraint(equalTo: header.trailingAnchor, constant: -22),
             albumInputField.heightAnchor.constraint(equalToConstant: 44)
