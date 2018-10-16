@@ -9,6 +9,7 @@
 import UIKit
 import RxSwift
 import RxCocoa
+import StoreKit
 
 class AlbumViewController: UIViewController {
     
@@ -96,8 +97,12 @@ class AlbumViewController: UIViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        UIView.animate(withDuration: 0.5) { [weak self] in
+        UIView.animate(withDuration: 0.5, animations: { [weak self] in
             self?.vinylImageView.transform = .identity
+        }) { completed in
+            if completed && UserDefaults.shouldShowRateDialog {
+                SKStoreReviewController.requestReview()
+            }
         }
     }
     

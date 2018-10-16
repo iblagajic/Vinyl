@@ -49,7 +49,7 @@ class SearchCell: UITableViewCell {
     
     private func setup() {
         [albumImageView, titleLabel, releaseDetailsLabel, formatsLabel].forEach(addSubview)
-        albumImageView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 22).isActive = true
+        albumImageView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 44).isActive = true
         albumImageView.topAnchor.constraint(equalTo: topAnchor, constant: 33).isActive = true
         albumImageView.centerYAnchor.constraint(equalTo: centerYAnchor).isActive = true
         albumImageView.heightAnchor.constraint(equalTo: albumImageView.widthAnchor).isActive = true

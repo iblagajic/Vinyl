@@ -42,6 +42,7 @@
 		1A51669421047449006213A2 /* TracklistViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A51669321047449006213A2 /* TracklistViewController.swift */; };
 		1A51669621047FD4006213A2 /* DisclosureButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A51669521047FD4006213A2 /* DisclosureButton.swift */; };
 		1A51669821048881006213A2 /* TrackCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A51669721048881006213A2 /* TrackCell.swift */; };
+		1A5B0019216F359100972F5C /* USerDefaults+Vinyl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5B0018216F359100972F5C /* USerDefaults+Vinyl.swift */; };
 		1A60F05921161CA9000C606B /* UITextView+Styled.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A60F05821161CA9000C606B /* UITextView+Styled.swift */; };
 		1A60F05B211647C0000C606B /* MFMailComposeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A60F05A211647C0000C606B /* MFMailComposeViewController.swift */; };
 		1A60F05D2116C6A2000C606B /* UITextView+Tappable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A60F05C2116C6A2000C606B /* UITextView+Tappable.swift */; };
@@ -96,6 +97,7 @@
 		1A51669321047449006213A2 /* TracklistViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TracklistViewController.swift; sourceTree = "<group>"; };
 		1A51669521047FD4006213A2 /* DisclosureButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisclosureButton.swift; sourceTree = "<group>"; };
 		1A51669721048881006213A2 /* TrackCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackCell.swift; sourceTree = "<group>"; };
+		1A5B0018216F359100972F5C /* USerDefaults+Vinyl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "USerDefaults+Vinyl.swift"; sourceTree = "<group>"; };
 		1A60F05821161CA9000C606B /* UITextView+Styled.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITextView+Styled.swift"; sourceTree = "<group>"; };
 		1A60F05A211647C0000C606B /* MFMailComposeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MFMailComposeViewController.swift; sourceTree = "<group>"; };
 		1A60F05C2116C6A2000C606B /* UITextView+Tappable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITextView+Tappable.swift"; sourceTree = "<group>"; };
@@ -161,7 +163,7 @@
 		1A51664721031D40006213A2 /* Vinyl */ = {
 			isa = PBXGroup;
 			children = (
-				1A828A29211486D200CA4D81 /* Album */,
+				1A828A29211486D200CA4D81 /* AlbumDetails */,
 				1A417EED210510D7000CBB47 /* Views */,
 				1A516692210473F9006213A2 /* Model */,
 				1A51667921039AF2006213A2 /* Styled Views */,
@@ -182,6 +184,7 @@
 				1A60F05C2116C6A2000C606B /* UITextView+Tappable.swift */,
 				1A9B592C212E118600A7A9E3 /* ObservableType+Nil.swift */,
 				1A9B592E212E164A00A7A9E3 /* Discogs+Keys.swift */,
+				1A5B0018216F359100972F5C /* USerDefaults+Vinyl.swift */,
 			);
 			path = Vinyl;
 			sourceTree = "<group>";
@@ -245,7 +248,7 @@
 			path = Model;
 			sourceTree = "<group>";
 		};
-		1A828A29211486D200CA4D81 /* Album */ = {
+		1A828A29211486D200CA4D81 /* AlbumDetails */ = {
 			isa = PBXGroup;
 			children = (
 				1A51669521047FD4006213A2 /* DisclosureButton.swift */,
@@ -253,7 +256,7 @@
 				1A19019B2112642900390AF7 /* FormatCell.swift */,
 				1A5166882103E209006213A2 /* AlbumViewController.swift */,
 			);
-			path = Album;
+			path = AlbumDetails;
 			sourceTree = "<group>";
 		};
 		BB7106C185E325639D1164B0 /* Frameworks */ = {
@@ -421,6 +424,7 @@
 				1A51667B2103BBEC006213A2 /* RxAVCaptureMetadataOutputObjectsDelegateProxy.swift in Sources */,
 				1A5166832103D15B006213A2 /* LoadingViewController.swift in Sources */,
 				1A51667D2103BD13006213A2 /* AVCaptureMetadataOutput+Rx.swift in Sources */,
+				1A5B0019216F359100972F5C /* USerDefaults+Vinyl.swift in Sources */,
 				1A51667521038284006213A2 /* DismissScanAnimationController.swift in Sources */,
 				1A51667F2103C24F006213A2 /* Discogs.swift in Sources */,
 				1A60F05921161CA9000C606B /* UITextView+Styled.swift in Sources */,

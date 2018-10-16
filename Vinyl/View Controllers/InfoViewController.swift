@@ -133,10 +133,10 @@ class InfoViewController: UIViewController {
         [greetingLabel, thanksGroup, privacyGroup, instructionsGroup, openSourceGroup, creditsGroup].forEach(stackView.addArrangedSubview)
         
         backButton.topAnchor.constraint(equalTo: contentView.safeAreaLayoutGuide.topAnchor, constant: 33).isActive = true
-        backButton.leadingAnchor.constraint(equalTo: stackView.leadingAnchor).isActive = true
+        backButton.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 35).isActive = true
         stackView.topAnchor.constraint(equalTo: backButton.bottomAnchor, constant: 44).isActive = true
         stackView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 44).isActive = true
-        stackView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -55).isActive = true
+        stackView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -22).isActive = true
         stackView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -44).isActive = true
         
         self.view = root
