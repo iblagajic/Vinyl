@@ -30,9 +30,9 @@ class AlbumViewController: UIViewController {
     init(release: Release) {
         super.init(nibName: nil, bundle: nil)
         titleLabel.text = release.title
-        artistLabel.text = release.artists_sort.uppercased()
-        dateLabel.text = String(format: .releasedOn, release.released_formatted)
-        if let price = release.lowest_price {
+        artistLabel.text = release.artistsSort.uppercased()
+        dateLabel.text = String(format: .releasedOn, release.releasedFormatted)
+        if let price = release.lowestPrice {
             let priceString = "$\(price) + shipping" // TODO: localize
             let sellsForString = String(format: .sellsFor, priceString)
             disclosureButton.titleLabel.set(bodyText: sellsForString, boldPart: priceString, oneLine: true)
@@ -52,7 +52,7 @@ class AlbumViewController: UIViewController {
         let primaryImage = release.images.filter { $0.type == .primary }.first
         let anyImage = release.images.first
         let image = primaryImage ?? anyImage
-        if let imageUrlString = image?.resource_url,
+        if let imageUrlString = image?.resourceUrl,
             let imageUrl = URL(string: imageUrlString) {
             let request = URLRequest(url: imageUrl)
             imageDriver = URLSession.shared.rx.data(request: request).map(UIImage.init).asDriver(onErrorJustReturn: nil)

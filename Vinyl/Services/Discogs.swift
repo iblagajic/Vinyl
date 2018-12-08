@@ -31,7 +31,9 @@ class Discogs {
         request.setValue("Discogs key=\(key), secret=\(secret)", forHTTPHeaderField: "Authorization")
         return URLSession.shared.rx.data(request: request).flatMap { data -> Observable<[SearchResult]> in
             do {
-                let search = try JSONDecoder().decode(SearchResults.self, from: data)
+                let decoder = JSONDecoder()
+                decoder.keyDecodingStrategy = .convertFromSnakeCase
+                let search = try decoder.decode(SearchResults.self, from: data)
                 return Observable.just(search.results)
             } catch {
                 return Observable.error(DiscogsError.noResults)
@@ -53,7 +55,9 @@ class Discogs {
         request.setValue("Discogs key=\(key), secret=\(secret)", forHTTPHeaderField: "Authorization")
         return URLSession.shared.rx.data(request: request).retry(3).flatMap { data -> Observable<Release> in
             do {
-                let release = try JSONDecoder().decode(Release.self, from: data)
+                let decoder = JSONDecoder()
+                decoder.keyDecodingStrategy = .convertFromSnakeCase
+                let release = try decoder.decode(Release.self, from: data)
                 return Observable.just(release)
             } catch {
                 return Observable.error(DiscogsError.noResults)
@@ -66,4 +70,5 @@ class Discogs {
             return Observable.error(error)
         }
     }
+    
 }

@@ -11,11 +11,12 @@ import Foundation
 struct Release: Codable {
     let id: Int
     let title: String
-    let artists_sort: String
-    let lowest_price: Double?
+    let artistsSort: String
+    let lowestPrice: Double?
     let notes: String?
     let images: [Image]
     let tracklist: [Track]
-    let released_formatted: String
+    let releasedFormatted: String
     let formats: [Format]
+    let artists: [ArtistLite]
 }
