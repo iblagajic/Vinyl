@@ -69,7 +69,7 @@ class SearchViewController: UITableViewController {
             }.disposed(by: bag)
         
         tableView.rx.modelSelected(SearchResult.self).subscribe(onNext: { [weak self] searchResult in
-            let loadingViewController = LoadingViewController(resourceUrl: searchResult.resource_url)
+            let loadingViewController = LoadingViewController(resourceUrl: searchResult.resourceUrl)
             let navigationController = UINavigationController(rootViewController: loadingViewController)
             navigationController.isNavigationBarHidden = true
             self?.present(navigationController, animated: true)

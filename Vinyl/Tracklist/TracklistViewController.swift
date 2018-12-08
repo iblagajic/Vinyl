@@ -32,7 +32,7 @@ class TracklistViewController: UIViewController {
         }).disposed(by: bag)
         
         titleLabel.text = release.title
-        artistLabel.text = release.artists_sort.uppercased()
+        artistLabel.text = release.artistsSort.uppercased()
         tracklistLabel.text = .tracklist
     }
     

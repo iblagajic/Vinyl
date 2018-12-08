@@ -26,7 +26,7 @@ class LoadingViewController: UIViewController {
         
         let fetchRelease = discogs.search(query: code)
             .flatMap { searchResults -> Observable<Release> in
-                guard let firstUrl = searchResults.first?.resource_url else {
+                guard let firstUrl = searchResults.first?.resourceUrl else {
                     return Observable.error(DiscogsError.noResults)
                 }
                 return discogs.fetchRelease(for: firstUrl)

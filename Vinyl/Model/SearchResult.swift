@@ -13,7 +13,7 @@ struct SearchResults: Codable {
 }
 
 struct SearchResult: Codable {
-    let resource_url: String
+    let resourceUrl: String
     let format: [String]
     let title: String
     let thumb: String
