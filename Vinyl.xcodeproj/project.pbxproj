@@ -56,6 +56,12 @@
 		1A9FB6EB210C408F00598509 /* SearchCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A9FB6EA210C408F00598509 /* SearchCell.swift */; };
 		1AA860E0210FADD200F2BC1C /* CameraTargetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AA860DF210FADD200F2BC1C /* CameraTargetView.swift */; };
 		1AA860E221102BAE00F2BC1C /* NavigationControllerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AA860E121102BAE00F2BC1C /* NavigationControllerDelegate.swift */; };
+		1AF1D4F921BBBCA40010CFA4 /* CustomActionSheetViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AF1D4F821BBBCA40010CFA4 /* CustomActionSheetViewController.swift */; };
+		1AF1D4FC21BBBEB20010CFA4 /* CustomActionSheetCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AF1D4FB21BBBEB20010CFA4 /* CustomActionSheetCell.swift */; };
+		1AF1D4FE21BBC11D0010CFA4 /* ActionSheetOption.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AF1D4FD21BBC11D0010CFA4 /* ActionSheetOption.swift */; };
+		1AF1D50021BBCA690010CFA4 /* DynamicTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AF1D4FF21BBCA690010CFA4 /* DynamicTableView.swift */; };
+		1AF1D50221BBCD430010CFA4 /* CustomActionSheetHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AF1D50121BBCD430010CFA4 /* CustomActionSheetHeader.swift */; };
+		1AF1D50421BBDE330010CFA4 /* CopyableLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AF1D50321BBDE330010CFA4 /* CopyableLabel.swift */; };
 		7B25422F4723851548B86C09 /* Pods_Vinyl.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5250EEA51A2C9CBEFB01359D /* Pods_Vinyl.framework */; };
 /* End PBXBuildFile section */
 
@@ -111,6 +117,12 @@
 		1A9FB6EA210C408F00598509 /* SearchCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchCell.swift; sourceTree = "<group>"; };
 		1AA860DF210FADD200F2BC1C /* CameraTargetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraTargetView.swift; sourceTree = "<group>"; };
 		1AA860E121102BAE00F2BC1C /* NavigationControllerDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationControllerDelegate.swift; sourceTree = "<group>"; };
+		1AF1D4F821BBBCA40010CFA4 /* CustomActionSheetViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomActionSheetViewController.swift; sourceTree = "<group>"; };
+		1AF1D4FB21BBBEB20010CFA4 /* CustomActionSheetCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomActionSheetCell.swift; sourceTree = "<group>"; };
+		1AF1D4FD21BBC11D0010CFA4 /* ActionSheetOption.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionSheetOption.swift; sourceTree = "<group>"; };
+		1AF1D4FF21BBCA690010CFA4 /* DynamicTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DynamicTableView.swift; sourceTree = "<group>"; };
+		1AF1D50121BBCD430010CFA4 /* CustomActionSheetHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomActionSheetHeader.swift; sourceTree = "<group>"; };
+		1AF1D50321BBDE330010CFA4 /* CopyableLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CopyableLabel.swift; sourceTree = "<group>"; };
 		3BEF76C5164ED9C34F0349EC /* Pods-Vinyl.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Vinyl.release.xcconfig"; path = "Pods/Target Support Files/Pods-Vinyl/Pods-Vinyl.release.xcconfig"; sourceTree = "<group>"; };
 		5250EEA51A2C9CBEFB01359D /* Pods_Vinyl.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Vinyl.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		6CB6387327E5AE2CF0F4A4AE /* Pods-Vinyl.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Vinyl.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Vinyl/Pods-Vinyl.debug.xcconfig"; sourceTree = "<group>"; };
@@ -133,6 +145,8 @@
 			children = (
 				1A1901972112592B00390AF7 /* ActivityIndicatorView.swift */,
 				1A828A2E21148E6400CA4D81 /* BodyWIthTitle.swift */,
+				1AF1D4FF21BBCA690010CFA4 /* DynamicTableView.swift */,
+				1AF1D50321BBDE330010CFA4 /* CopyableLabel.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -158,6 +172,7 @@
 		1A51664721031D40006213A2 /* Vinyl */ = {
 			isa = PBXGroup;
 			children = (
+				1AF1D4FA21BBBE5E0010CFA4 /* Action Sheet */,
 				1A51665421031D42006213A2 /* Info.plist */,
 				1A51664821031D40006213A2 /* AppDelegate.swift */,
 				1A9B592C212E118600A7A9E3 /* ObservableType+Nil.swift */,
@@ -249,6 +264,17 @@
 				1A5166882103E209006213A2 /* AlbumViewController.swift */,
 			);
 			path = AlbumDetails;
+			sourceTree = "<group>";
+		};
+		1AF1D4FA21BBBE5E0010CFA4 /* Action Sheet */ = {
+			isa = PBXGroup;
+			children = (
+				1AF1D4F821BBBCA40010CFA4 /* CustomActionSheetViewController.swift */,
+				1AF1D4FB21BBBEB20010CFA4 /* CustomActionSheetCell.swift */,
+				1AF1D4FD21BBC11D0010CFA4 /* ActionSheetOption.swift */,
+				1AF1D50121BBCD430010CFA4 /* CustomActionSheetHeader.swift */,
+			);
+			path = "Action Sheet";
 			sourceTree = "<group>";
 		};
 		1AF8B1082176832100689CE3 /* Scan */ = {
@@ -411,6 +437,7 @@
 			inputPaths = (
 				"${SRCROOT}/Pods/Target Support Files/Pods-Vinyl/Pods-Vinyl-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/Differentiator/Differentiator.framework",
+				"${BUILT_PRODUCTS_DIR}/RxAtomic/RxAtomic.framework",
 				"${BUILT_PRODUCTS_DIR}/RxCocoa/RxCocoa.framework",
 				"${BUILT_PRODUCTS_DIR}/RxDataSources/RxDataSources.framework",
 				"${BUILT_PRODUCTS_DIR}/RxSwift/RxSwift.framework",
@@ -418,6 +445,7 @@
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Differentiator.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxAtomic.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxCocoa.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxDataSources.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxSwift.framework",
@@ -444,19 +472,25 @@
 				1AA860E221102BAE00F2BC1C /* NavigationControllerDelegate.swift in Sources */,
 				1A1901982112592B00390AF7 /* ActivityIndicatorView.swift in Sources */,
 				1A5166872103D98C006213A2 /* SearchResult.swift in Sources */,
+				1AF1D4FE21BBC11D0010CFA4 /* ActionSheetOption.swift in Sources */,
+				1AF1D50221BBCD430010CFA4 /* CustomActionSheetHeader.swift in Sources */,
 				1A51668B2103EF24006213A2 /* Image.swift in Sources */,
 				1A5166812103C298006213A2 /* Release.swift in Sources */,
 				1A9FB6E9210BD2BD00598509 /* SearchViewController.swift in Sources */,
 				1A516665210327E9006213A2 /* UIColor+Vinyl.swift in Sources */,
 				1A51666921032AE2006213A2 /* UIButton+Styled.swift in Sources */,
+				1AF1D4F921BBBCA40010CFA4 /* CustomActionSheetViewController.swift in Sources */,
 				1A51666B21032F24006213A2 /* String+Copy.swift in Sources */,
 				1A828A2D211487EC00CA4D81 /* InfoViewController.swift in Sources */,
 				1A51666D21033621006213A2 /* ScanViewController.swift in Sources */,
 				1AA860E0210FADD200F2BC1C /* CameraTargetView.swift in Sources */,
+				1AF1D50421BBDE330010CFA4 /* CopyableLabel.swift in Sources */,
 				1A51666F210336E0006213A2 /* PreviewView.swift in Sources */,
 				1A19019A2112639D00390AF7 /* FormatsCollectionView.swift in Sources */,
 				1A51664921031D40006213A2 /* AppDelegate.swift in Sources */,
+				1AF1D50021BBCA690010CFA4 /* DynamicTableView.swift in Sources */,
 				1A516661210325CD006213A2 /* UILabel+Styled.swift in Sources */,
+				1AF1D4FC21BBBEB20010CFA4 /* CustomActionSheetCell.swift in Sources */,
 				1A5166892103E209006213A2 /* AlbumViewController.swift in Sources */,
 				1A19019C2112642900390AF7 /* FormatCell.swift in Sources */,
 				1A51669621047FD4006213A2 /* DisclosureButton.swift in Sources */,

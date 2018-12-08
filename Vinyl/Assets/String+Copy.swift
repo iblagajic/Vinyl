@@ -60,5 +60,6 @@ extension String {
     static let genericErrorMessage = NSLocalizedString("Unfortunately, something went wrong. Please try again.", comment: "")
     static let copy = NSLocalizedString("Copy", comment: "")
     static let releasedOn = NSLocalizedString("Released on %@", comment: "")
+    static let artistDetails = NSLocalizedString("Artist details", comment: "")
 }
 
