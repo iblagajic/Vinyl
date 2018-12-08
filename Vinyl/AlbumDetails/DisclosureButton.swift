@@ -12,7 +12,7 @@ import RxCocoa
 
 class DisclosureButton: UIControl {
     
-    let titleLabel = UILabel.header2
+    let titleLabel = UILabel.body
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -25,24 +25,18 @@ class DisclosureButton: UIControl {
     }
     
     private func setup() {
-        let topSeparator = UIView.separator
         let disclosureImageView = UIImageView(forAutoLayout: ())
         let bottomSeparator = UIView.separator
         
-        [topSeparator, titleLabel, disclosureImageView, bottomSeparator].forEach(addSubview)
+        [titleLabel, disclosureImageView, bottomSeparator].forEach(addSubview)
         
         NSLayoutConstraint.activate([
-            topSeparator.topAnchor.constraint(equalTo: topAnchor),
-            topSeparator.leadingAnchor.constraint(equalTo: leadingAnchor),
-            topSeparator.trailingAnchor.constraint(equalTo: trailingAnchor),
             titleLabel.leadingAnchor.constraint(equalTo: leadingAnchor),
-            titleLabel.topAnchor.constraint(equalTo: topSeparator.bottomAnchor, constant: 16),
+            titleLabel.topAnchor.constraint(equalTo: topAnchor, constant: 21),
             disclosureImageView.leadingAnchor.constraint(greaterThanOrEqualTo: titleLabel.trailingAnchor, constant: 44),
             disclosureImageView.centerYAnchor.constraint(equalTo: titleLabel.centerYAnchor),
             disclosureImageView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -22),
-            disclosureImageView.widthAnchor.constraint(equalToConstant: 9),
-            disclosureImageView.heightAnchor.constraint(equalToConstant: 15),
-            bottomSeparator.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 16),
+            bottomSeparator.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 21),
             bottomSeparator.leadingAnchor.constraint(equalTo: leadingAnchor),
             bottomSeparator.trailingAnchor.constraint(equalTo: trailingAnchor),
             bottomSeparator.bottomAnchor.constraint(equalTo: bottomAnchor)

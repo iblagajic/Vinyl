@@ -13,17 +13,17 @@ import StoreKit
 
 class AlbumViewController: UIViewController {
     
-    let closeButton = UIButton.close
-    let artistLabel = UILabel.subheader
-    let titleLabel = UILabel.copyableHeader
-    let albumImageView = UIImageView(forAutoLayout: ())
-    let vinylImageView = UIImageView(forAutoLayout: ())
-    let dateLabel = UILabel.bodyLight
-    let formatsCollectionView = FormatsCollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
-    let priceLabel = UILabel.body
-    let disclosureButton = DisclosureButton(forAutoLayout: ())
-    let descriptionTitleLabel = UILabel.header2
-    let descriptionLabel = UILabel.body
+    private let closeButton = UIButton.close
+    private let moreButton = UIButton.more
+    private let artistLabel = UILabel.subheader
+    private let titleLabel = UILabel.copyableHeader
+    private let albumImageView = UIImageView(forAutoLayout: ())
+    private let vinylImageView = UIImageView(forAutoLayout: ())
+    private let dateLabel = UILabel.bodyLight
+    private let formatsCollectionView = FormatsCollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
+    private let disclosureButton = DisclosureButton(forAutoLayout: ())
+    private let descriptionTitleLabel = UILabel.header2
+    private let descriptionLabel = UILabel.body
     
     private let bag = DisposeBag()
     
@@ -35,19 +35,10 @@ class AlbumViewController: UIViewController {
         if let price = release.lowest_price {
             let priceString = "$\(price) + shipping" // TODO: localize
             let sellsForString = String(format: .sellsFor, priceString)
-            priceLabel.set(bodyText: sellsForString, boldPart: priceString)
-            priceLabel.isUserInteractionEnabled = true
-            let tapGesture = UITapGestureRecognizer()
-            priceLabel.addGestureRecognizer(tapGesture)
-            tapGesture.rx.event.subscribe(onNext: { _ in
-                if let url = URL(string: "https://www.discogs.com/sell/release/\(release.id)") {
-                    UIApplication.shared.open(url, options: [:])
-                }
-            }).disposed(by: bag)
+            disclosureButton.titleLabel.set(bodyText: sellsForString, boldPart: priceString, oneLine: true)
         } else {
-            priceLabel.text = .notAvailable
+            disclosureButton.titleLabel.text = .notAvailable
         }
-        disclosureButton.titleLabel.text = .tracklist
         descriptionTitleLabel.text = .description
         if let notes = release.notes {
             descriptionLabel.set(bodyText: notes)
@@ -76,6 +67,20 @@ class AlbumViewController: UIViewController {
             self?.navigationController?.dismiss(animated: true)
         }).disposed(by: bag)
         
+        moreButton.rx.tap
+            .map { [ActionSheetOption.artistDetails, .tracklist] }
+            .flatMap(presentCustomActionSheet)
+            .subscribe(onNext: { [weak self] option in
+                switch option {
+                case .artistDetails:
+                    break // TODO
+                case.tracklist:
+                    let tracklistViewController = TracklistViewController(release: release, image: imageDriver)
+                    self?.navigationController?.pushViewController(tracklistViewController, animated: true)
+                }
+            })
+            .disposed(by: bag)
+        
         let formatDescriptions = release.formats.reduce([]) { (result, format) -> [String] in
             var array = result
             array.append(contentsOf: format.descriptions)
@@ -83,9 +88,10 @@ class AlbumViewController: UIViewController {
         }
         Observable.just([FormatsSection(items: formatDescriptions)]).bind(to: formatsCollectionView.rx.sections).disposed(by: bag)
         
-        let tracklistViewController = TracklistViewController(release: release, image: imageDriver)
-        disclosureButton.rx.tap.subscribe(onNext: { [weak self] in
-            self?.navigationController?.pushViewController(tracklistViewController, animated: true)
+        disclosureButton.rx.tap.subscribe(onNext: {
+            if let url = URL(string: "https://www.discogs.com/sell/release/\(release.id)") {
+                UIApplication.shared.open(url, options: [:])
+            }
         }).disposed(by: bag)
         
         vinylImageView.transform = CGAffineTransform(translationX: -44, y: 0).rotated(by: -CGFloat.pi/4)
@@ -127,7 +133,7 @@ class AlbumViewController: UIViewController {
             vinylImageView.widthAnchor.constraint(equalTo: vinylImageView.widthAnchor)
         ])
         
-        [closeButton, artistLabel, titleLabel, albumWithVinyl, dateLabel, formatsCollectionView, priceLabel, disclosureButton, descriptionTitleLabel, descriptionLabel].forEach(contentView.addSubview)
+        [closeButton, moreButton, artistLabel, titleLabel, albumWithVinyl, dateLabel, formatsCollectionView, disclosureButton, descriptionTitleLabel, descriptionLabel].forEach(contentView.addSubview)
         
         contentView.pinToSuperview()
         
@@ -135,26 +141,25 @@ class AlbumViewController: UIViewController {
             contentView.widthAnchor.constraint(equalTo: root.widthAnchor),
             closeButton.topAnchor.constraint(equalTo: contentView.safeAreaLayoutGuide.topAnchor, constant: 33),
             closeButton.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 35),
+            moreButton.centerYAnchor.constraint(equalTo: closeButton.centerYAnchor),
+            moreButton.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -13),
             artistLabel.topAnchor.constraint(equalTo: closeButton.bottomAnchor, constant: 33),
             artistLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 44),
             artistLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -22),
-            titleLabel.topAnchor.constraint(equalTo: artistLabel.bottomAnchor, constant: 5),
+            titleLabel.topAnchor.constraint(equalTo: artistLabel.bottomAnchor, constant: 6),
             titleLabel.leadingAnchor.constraint(equalTo: artistLabel.leadingAnchor),
             titleLabel.trailingAnchor.constraint(equalTo: artistLabel.trailingAnchor),
             albumWithVinyl.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 44),
             albumWithVinyl.leadingAnchor.constraint(equalTo: titleLabel.leadingAnchor),
             albumWithVinyl.trailingAnchor.constraint(equalTo: titleLabel.trailingAnchor),
-            dateLabel.topAnchor.constraint(equalTo: albumWithVinyl.bottomAnchor, constant: 22),
+            dateLabel.topAnchor.constraint(equalTo: albumWithVinyl.bottomAnchor, constant: 33),
             dateLabel.leadingAnchor.constraint(equalTo: albumWithVinyl.leadingAnchor),
             formatsCollectionView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
             formatsCollectionView.topAnchor.constraint(equalTo: dateLabel.bottomAnchor, constant: 33),
             formatsCollectionView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
             formatsCollectionView.heightAnchor.constraint(equalToConstant: 29),
-            priceLabel.topAnchor.constraint(equalTo: formatsCollectionView.bottomAnchor, constant: 33),
-            priceLabel.leadingAnchor.constraint(equalTo: titleLabel.leadingAnchor),
-            priceLabel.trailingAnchor.constraint(equalTo: titleLabel.trailingAnchor),
-            disclosureButton.topAnchor.constraint(equalTo: priceLabel.bottomAnchor, constant: 22),
-            disclosureButton.leadingAnchor.constraint(equalTo: priceLabel.leadingAnchor),
+            disclosureButton.topAnchor.constraint(equalTo: formatsCollectionView.bottomAnchor, constant: 11),
+            disclosureButton.leadingAnchor.constraint(equalTo: titleLabel.leadingAnchor),
             disclosureButton.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
             descriptionTitleLabel.leadingAnchor.constraint(equalTo: disclosureButton.leadingAnchor),
             descriptionTitleLabel.topAnchor.constraint(equalTo: disclosureButton.bottomAnchor, constant: 33),
