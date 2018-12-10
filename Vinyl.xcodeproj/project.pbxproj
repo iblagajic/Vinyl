@@ -62,6 +62,12 @@
 		1AF1D50021BBCA690010CFA4 /* DynamicTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AF1D4FF21BBCA690010CFA4 /* DynamicTableView.swift */; };
 		1AF1D50221BBCD430010CFA4 /* CustomActionSheetHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AF1D50121BBCD430010CFA4 /* CustomActionSheetHeader.swift */; };
 		1AF1D50421BBDE330010CFA4 /* CopyableLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AF1D50321BBDE330010CFA4 /* CopyableLabel.swift */; };
+		1AF1D50621BC5F140010CFA4 /* ArtistViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AF1D50521BC5F140010CFA4 /* ArtistViewController.swift */; };
+		1AF1D50821BC611B0010CFA4 /* Artist.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AF1D50721BC611B0010CFA4 /* Artist.swift */; };
+		1AF1D50A21BC61EF0010CFA4 /* ArtistLite.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AF1D50921BC61EF0010CFA4 /* ArtistLite.swift */; };
+		1AF1D50C21BD468D0010CFA4 /* UIViewController+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AF1D50B21BD468D0010CFA4 /* UIViewController+Rx.swift */; };
+		1AF1D50E21BD46FB0010CFA4 /* ObservableType+Void.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AF1D50D21BD46FB0010CFA4 /* ObservableType+Void.swift */; };
+		1AF1D51021BE57580010CFA4 /* UIImageView+AspectRatio.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AF1D50F21BE57580010CFA4 /* UIImageView+AspectRatio.swift */; };
 		7B25422F4723851548B86C09 /* Pods_Vinyl.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5250EEA51A2C9CBEFB01359D /* Pods_Vinyl.framework */; };
 /* End PBXBuildFile section */
 
@@ -123,6 +129,12 @@
 		1AF1D4FF21BBCA690010CFA4 /* DynamicTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DynamicTableView.swift; sourceTree = "<group>"; };
 		1AF1D50121BBCD430010CFA4 /* CustomActionSheetHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomActionSheetHeader.swift; sourceTree = "<group>"; };
 		1AF1D50321BBDE330010CFA4 /* CopyableLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CopyableLabel.swift; sourceTree = "<group>"; };
+		1AF1D50521BC5F140010CFA4 /* ArtistViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArtistViewController.swift; sourceTree = "<group>"; };
+		1AF1D50721BC611B0010CFA4 /* Artist.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Artist.swift; sourceTree = "<group>"; };
+		1AF1D50921BC61EF0010CFA4 /* ArtistLite.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArtistLite.swift; sourceTree = "<group>"; };
+		1AF1D50B21BD468D0010CFA4 /* UIViewController+Rx.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Rx.swift"; sourceTree = "<group>"; };
+		1AF1D50D21BD46FB0010CFA4 /* ObservableType+Void.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ObservableType+Void.swift"; sourceTree = "<group>"; };
+		1AF1D50F21BE57580010CFA4 /* UIImageView+AspectRatio.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImageView+AspectRatio.swift"; sourceTree = "<group>"; };
 		3BEF76C5164ED9C34F0349EC /* Pods-Vinyl.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Vinyl.release.xcconfig"; path = "Pods/Target Support Files/Pods-Vinyl/Pods-Vinyl.release.xcconfig"; sourceTree = "<group>"; };
 		5250EEA51A2C9CBEFB01359D /* Pods_Vinyl.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Vinyl.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		6CB6387327E5AE2CF0F4A4AE /* Pods-Vinyl.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Vinyl.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Vinyl/Pods-Vinyl.debug.xcconfig"; sourceTree = "<group>"; };
@@ -193,6 +205,9 @@
 				1A51667721039AD3006213A2 /* Transitions */,
 				1A516676210399F7006213A2 /* ViewControllers */,
 				1A417EED210510D7000CBB47 /* Views */,
+				1AF1D50B21BD468D0010CFA4 /* UIViewController+Rx.swift */,
+				1AF1D50D21BD46FB0010CFA4 /* ObservableType+Void.swift */,
+				1AF1D50F21BE57580010CFA4 /* UIImageView+AspectRatio.swift */,
 			);
 			path = Vinyl;
 			sourceTree = "<group>";
@@ -204,6 +219,7 @@
 				1A5166822103D15B006213A2 /* LoadingViewController.swift */,
 				1AA860E121102BAE00F2BC1C /* NavigationControllerDelegate.swift */,
 				1A103216211398F1005FFF94 /* NavigationController.swift */,
+				1AF1D50521BC5F140010CFA4 /* ArtistViewController.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -251,6 +267,8 @@
 				1A51668A2103EF24006213A2 /* Image.swift */,
 				1A51668E210470DA006213A2 /* Track.swift */,
 				1A51669021047167006213A2 /* Format.swift */,
+				1AF1D50721BC611B0010CFA4 /* Artist.swift */,
+				1AF1D50921BC61EF0010CFA4 /* ArtistLite.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -475,12 +493,14 @@
 				1AF1D4FE21BBC11D0010CFA4 /* ActionSheetOption.swift in Sources */,
 				1AF1D50221BBCD430010CFA4 /* CustomActionSheetHeader.swift in Sources */,
 				1A51668B2103EF24006213A2 /* Image.swift in Sources */,
+				1AF1D50C21BD468D0010CFA4 /* UIViewController+Rx.swift in Sources */,
 				1A5166812103C298006213A2 /* Release.swift in Sources */,
 				1A9FB6E9210BD2BD00598509 /* SearchViewController.swift in Sources */,
 				1A516665210327E9006213A2 /* UIColor+Vinyl.swift in Sources */,
 				1A51666921032AE2006213A2 /* UIButton+Styled.swift in Sources */,
 				1AF1D4F921BBBCA40010CFA4 /* CustomActionSheetViewController.swift in Sources */,
 				1A51666B21032F24006213A2 /* String+Copy.swift in Sources */,
+				1AF1D50E21BD46FB0010CFA4 /* ObservableType+Void.swift in Sources */,
 				1A828A2D211487EC00CA4D81 /* InfoViewController.swift in Sources */,
 				1A51666D21033621006213A2 /* ScanViewController.swift in Sources */,
 				1AA860E0210FADD200F2BC1C /* CameraTargetView.swift in Sources */,
@@ -505,9 +525,13 @@
 				1A51665F21032057006213A2 /* UIView+Layout.swift in Sources */,
 				1A9FB6E7210BC6DA00598509 /* UITextField+Styled.swift in Sources */,
 				1A828A312114F60700CA4D81 /* UITapGestureRecognizer+UITextView.swift in Sources */,
+				1AF1D51021BE57580010CFA4 /* UIImageView+AspectRatio.swift in Sources */,
+				1AF1D50821BC611B0010CFA4 /* Artist.swift in Sources */,
 				1A5166732103759F006213A2 /* PresentScanAnimationController.swift in Sources */,
+				1AF1D50621BC5F140010CFA4 /* ArtistViewController.swift in Sources */,
 				1A5166852103D4E5006213A2 /* PresentLoadingAnimationController.swift in Sources */,
 				1A828A2F21148E6400CA4D81 /* BodyWIthTitle.swift in Sources */,
+				1AF1D50A21BC61EF0010CFA4 /* ArtistLite.swift in Sources */,
 				1A9B592D212E118600A7A9E3 /* ObservableType+Nil.swift in Sources */,
 				1A103217211398F1005FFF94 /* NavigationController.swift in Sources */,
 				1A51666721032A92006213A2 /* UIImage+Assets.swift in Sources */,

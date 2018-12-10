@@ -32,7 +32,11 @@ class LoadingViewController: UIViewController {
                 return discogs.fetchRelease(for: firstUrl)
             }
         
-        handleObservable(observable: fetchRelease)
+        handleObservable(observable: fetchRelease).subscribe(onNext: { [weak self] release in
+            let albumViewController = AlbumViewController(release: release)
+            self?.navigationController?.popViewController(animated: false)
+            self?.navigationController?.pushViewController(albumViewController, animated: true)
+        }).disposed(by: bag)
     }
     
     init(resourceUrl: String) {
@@ -42,15 +46,40 @@ class LoadingViewController: UIViewController {
         
         let fetchRelease = discogs.fetchRelease(for: resourceUrl)
         
-        handleObservable(observable: fetchRelease)
+        handleObservable(observable: fetchRelease).subscribe(onNext: { [weak self] release in
+            let albumViewController = AlbumViewController(release: release)
+            self?.navigationController?.popViewController(animated: false)
+            self?.navigationController?.pushViewController(albumViewController, animated: true)
+        }).disposed(by: bag)
+    }
+    
+    init(artistResourceUrl: String) {
+        super.init(nibName: nil, bundle: nil)
+        
+        let discogs = Discogs()
+        
+        let fetchRelease = discogs.fetchArtist(for: artistResourceUrl)
+        
+        handleObservable(observable: fetchRelease).flatMap { [weak self] artist -> ControlEvent<Void> in
+            let albumViewController = ArtistViewController(artist: artist)
+            self?.navigationController?.pushViewController(albumViewController, animated: true)
+            return albumViewController.rx.viewDidAppear
+        }.subscribe(onNext: { [weak self] in
+            guard let `self` = self,
+                let index = self.navigationController?.viewControllers.index(of: self) else {
+                    return
+            }
+            self.navigationController?.viewControllers.remove(at: index)
+        }).disposed(by: bag)
     }
     
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
     
-    private func handleObservable(observable: Observable<Release>) {
-        observable.timeout(3, scheduler: MainScheduler.instance)
+    private func handleObservable<T>(observable: Observable<T>) -> Observable<T> {
+        return rx.viewDidLoad.flatMap { observable }
+            .timeout(3, scheduler: MainScheduler.instance)
             .catchError { error in
                 guard let rxError = error as? RxError else {
                     return Observable.error(error)
@@ -61,13 +90,8 @@ class LoadingViewController: UIViewController {
                 default:
                     return Observable.error(error)
                 }
-            }
-            .observeOn(MainScheduler.instance)
+            }.observeOn(MainScheduler.instance)
             .retryWhen(errorHandler)
-            .subscribe(onNext: { [weak self] release in
-                let albumViewController = AlbumViewController(release: release)
-                self?.navigationController?.pushViewController(albumViewController, animated: true)
-            }).disposed(by: bag)
     }
     
     private func errorHandler(errorObservable: Observable<Error>) -> Observable<Void> {

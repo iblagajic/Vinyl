@@ -19,4 +19,8 @@ struct Release: Codable {
     let releasedFormatted: String
     let formats: [Format]
     let artists: [ArtistLite]
+    
+    var mainArtistResourceUrl: String {
+        return artists.first.map { $0.resourceUrl } ?? ""
+    }
 }

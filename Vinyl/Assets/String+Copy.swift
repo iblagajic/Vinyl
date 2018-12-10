@@ -61,5 +61,7 @@ extension String {
     static let copy = NSLocalizedString("Copy", comment: "")
     static let releasedOn = NSLocalizedString("Released on %@", comment: "")
     static let artistDetails = NSLocalizedString("Artist details", comment: "")
+    static let band = NSLocalizedString("Band", comment: "")
+    static let artist = NSLocalizedString("Artist", comment: "")
 }
 

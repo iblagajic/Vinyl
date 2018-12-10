@@ -73,7 +73,8 @@ class AlbumViewController: UIViewController {
             .subscribe(onNext: { [weak self] option in
                 switch option {
                 case .artistDetails:
-                    break // TODO
+                    let loadingViewController = LoadingViewController(artistResourceUrl: release.mainArtistResourceUrl)
+                    self?.navigationController?.pushViewController(loadingViewController, animated: true)
                 case.tracklist:
                     let tracklistViewController = TracklistViewController(release: release, image: imageDriver)
                     self?.navigationController?.pushViewController(tracklistViewController, animated: true)
