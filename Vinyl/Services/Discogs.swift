@@ -71,4 +71,27 @@ class Discogs {
         }
     }
     
+    func fetchArtist(for urlString: String) -> Observable<Artist> {
+        guard let url = URL(string: urlString) else {
+            return Observable.error(DiscogsError.invalidUrl)
+        }
+        var request = URLRequest(url: url)
+        request.setValue("Discogs key=\(key), secret=\(secret)", forHTTPHeaderField: "Authorization")
+        return URLSession.shared.rx.data(request: request).retry(3).flatMap { data -> Observable<Artist> in
+            do {
+                let decoder = JSONDecoder()
+                decoder.keyDecodingStrategy = .convertFromSnakeCase
+                let release = try decoder.decode(Artist.self, from: data)
+                return Observable.just(release)
+            } catch {
+                return Observable.error(DiscogsError.noResults)
+            }
+            }.catchError { error in
+                let error = error as NSError
+                if error.code == -1009 {
+                    return Observable.error(DiscogsError.unavailable)
+                }
+                return Observable.error(error)
+        }
+    }
 }
