@@ -40,7 +40,7 @@ class AlbumViewController: UIViewController {
             disclosureButton.titleLabel.text = .notAvailable
         }
         descriptionTitleLabel.text = .description
-        if let notes = release.notes {
+        if let notes = release.notesPlaintext {
             descriptionLabel.set(bodyText: notes)
         }
         vinylImageView.image = .realisticVinyl

@@ -13,7 +13,7 @@ struct Release: Codable {
     let title: String
     let artistsSort: String
     let lowestPrice: Double?
-    let notes: String?
+    let notesPlaintext: String?
     let images: [Image]
     let tracklist: [Track]
     let releasedFormatted: String

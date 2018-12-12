@@ -11,4 +11,5 @@ import Foundation
 struct ArtistLite: Codable {
     let resourceUrl: String
     let name: String
+    let active: Bool?
 }
