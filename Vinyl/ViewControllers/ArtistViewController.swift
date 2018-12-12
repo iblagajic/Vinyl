@@ -27,9 +27,10 @@ class ArtistViewController: UIViewController {
         super.init(nibName: nil, bundle: nil)
         artistTypeLabel.text = artist.type.uppercased()
         artistNameLabel.text = artist.name
-        let membersString = artist.members.map { $0.name }.joined(separator: ", ")
-        membersLabel.text = String(format: "Members: %@", membersString)
-        descriptionLabel.set(bodyText: artist.profile)
+        let members = artist.members.filter { $0.active == true}.map { $0.name }
+        let membersString = String.members + " " + members.joined(separator: ", ")
+        membersLabel.set(bodyText: membersString, boldPart: .members)
+        descriptionLabel.set(bodyText: artist.profilePlaintext)
         
         artistImageView.image = .placeholder
         artistImageView.contentMode = .scaleAspectFill
@@ -91,7 +92,7 @@ class ArtistViewController: UIViewController {
             membersLabel.leadingAnchor.constraint(equalTo: artistImageView.leadingAnchor),
             membersLabel.trailingAnchor.constraint(equalTo: artistImageView.trailingAnchor),
             descriptionLabel.leadingAnchor.constraint(equalTo: membersLabel.leadingAnchor),
-            descriptionLabel.topAnchor.constraint(equalTo: membersLabel.bottomAnchor, constant: 11),
+            descriptionLabel.topAnchor.constraint(equalTo: membersLabel.bottomAnchor, constant: 22),
             descriptionLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -33),
             descriptionLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -44)
         ])

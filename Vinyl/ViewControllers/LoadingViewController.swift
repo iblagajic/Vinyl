@@ -78,8 +78,7 @@ class LoadingViewController: UIViewController {
     }
     
     private func handleObservable<T>(observable: Observable<T>) -> Observable<T> {
-        return rx.viewDidLoad.flatMap { observable }
-            .timeout(3, scheduler: MainScheduler.instance)
+        return rx.viewDidLoad.flatMap { observable.timeout(3, scheduler: MainScheduler.instance) }
             .catchError { error in
                 guard let rxError = error as? RxError else {
                     return Observable.error(error)
