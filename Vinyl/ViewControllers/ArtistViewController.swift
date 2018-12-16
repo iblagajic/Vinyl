@@ -27,9 +27,11 @@ class ArtistViewController: UIViewController {
         super.init(nibName: nil, bundle: nil)
         artistTypeLabel.text = artist.type.uppercased()
         artistNameLabel.text = artist.name
-        let members = artist.members.filter { $0.active == true}.map { $0.name }
-        let membersString = String.members + " " + members.joined(separator: ", ")
-        membersLabel.set(bodyText: membersString, boldPart: .members)
+        let membersArray = artist.members?.filter { $0.active == true }.map { $0.name }
+        if let members = membersArray {
+            let membersString = String.members + " " + members.joined(separator: ", ")
+            membersLabel.set(bodyText: membersString, boldPart: .members)
+        }
         descriptionLabel.set(bodyText: artist.profilePlaintext)
         
         artistImageView.image = .placeholder
