@@ -11,10 +11,10 @@ import Foundation
 struct Artist: Codable {
     let name: String
     let profilePlaintext: String
-    let members: [ArtistLite]
+    let members: [ArtistLite]?
     let images: [Image]
     
     var type: String {
-        return members.count == 1 ? .artist : .band
+        return members?.count == 1 ? .artist : .band
     }
 }
