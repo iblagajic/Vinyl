@@ -157,7 +157,7 @@ class InfoViewController: UIViewController {
         privacyGroup.bodyLabel.set(bodyText: privacyBody, boldPart: .privacyMessageHighlighted, underlineParts: [.email])
         instructionsGroup.titleLabel.text = .instructionsTitle
         let instructionsBody = String(format: .instructionsMessage, String.catalogNumber)
-        instructionsGroup.bodyLabel.set(bodyText: instructionsBody, highlightPart: .releaseCode)
+        instructionsGroup.bodyLabel.set(bodyText: instructionsBody, underlineParts: [.catalogNumber])
         openSourceGroup.titleLabel.text = .openSourceTitle
         let openSourceBody = String(format: .openSourceMessage, String.github)
         openSourceGroup.bodyLabel.set(bodyText: openSourceBody, underlineParts: [.github])
