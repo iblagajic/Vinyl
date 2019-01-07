@@ -39,4 +39,5 @@ extension UIFont {
     static var body = UIFont.regularFont(with: 16)
     static var bodyBold = UIFont.demiBoldFont(with: 16)
     static var metadata = UIFont.boldFont(with: 14)
+    static var position = UIFont.mediumFont(with: 14)
 }
