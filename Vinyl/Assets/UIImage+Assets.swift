@@ -19,4 +19,7 @@ extension UIImage {
     static let realisticVinyl = UIImage(named: "realisticVinyl")
     static let placeholder = UIImage(named: "placeholder")
     static let cancel = UIImage(named: "cancel")
+    static let artist = UIImage(named: "artist")
+    static let list = UIImage(named: "list")
+    static let more = UIImage(named: "more")
 }

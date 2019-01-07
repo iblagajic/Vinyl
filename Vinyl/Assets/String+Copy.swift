@@ -32,9 +32,9 @@ extension String {
     static let privacyMessageHighlighted = NSLocalizedString("app doesn’t collect any user information or use any 3rd party services that do so.", comment: "")
     static let email = "vinylapp@protonmail.com"
     static let instructionsTitle = NSLocalizedString("How to use", comment: "")
-    static let instructionsMessage = NSLocalizedString("You can find a specific vinyl release in 2 different ways: newer releases usually have barcodes on the cover which you can scan, while you can search the older ones by entering the release code or album/artist name. I recommend using the %@ since it’ll identify the exact release you're looking for.", comment: "")
+    static let instructionsMessage = NSLocalizedString("You can find a specific vinyl release in 2 different ways: newer releases usually have barcodes on the cover which you can scan, while you can search the older ones by entering the %@ or album/artist name. I recommend using the %@ since it’ll identify the exact release you're looking for.", comment: "")
     static let github = "GitHub"
-    static let releaseCode = NSLocalizedString("release code", comment: "")
+    static let catalogNumber = NSLocalizedString("catalog number", comment: "")
     static let openSourceTitle = NSLocalizedString("Vinyl is open source", comment: "")
     static let openSourceMessage = NSLocalizedString("Since transparency is one of my core beliefs, the app is open source: %@.", comment: "")
     static let credits = NSLocalizedString("Credits", comment: "")
@@ -55,10 +55,14 @@ extension String {
     static let connectionErrorMessage = NSLocalizedString("Oops, looks like\nyou’re offline.\nWould you like to %@", comment: "")
     static let retry = NSLocalizedString("try again?", comment: "")
     static let noResultsErrorTitle = "(⊙.☉)7"
-    static let noResultsErrorMessage = NSLocalizedString("Sorry, we couldn’t find\nthe vinyl you’re\nlooking for.", comment: "")
+    static let noResultsErrorMessage = NSLocalizedString("Sorry, we couldn’t find\nwhat you’re\nlooking for.", comment: "")
     static let genericErrorTitle = NSLocalizedString("Ooops!", comment: "")
     static let genericErrorMessage = NSLocalizedString("Unfortunately, something went wrong. Please try again.", comment: "")
     static let copy = NSLocalizedString("Copy", comment: "")
     static let releasedOn = NSLocalizedString("Released on %@", comment: "")
+    static let artistDetails = NSLocalizedString("Artist details", comment: "")
+    static let band = NSLocalizedString("Band", comment: "")
+    static let artist = NSLocalizedString("Artist", comment: "")
+    static let members = NSLocalizedString("Members:", comment: "")
 }
 

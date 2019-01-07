@@ -55,4 +55,13 @@ extension UIButton {
         return button
     }
     
+    static var more: UIButton {
+        let button = UIButton(forAutoLayout: ())
+        button.setImage(.more, for: .normal)
+        button.tintColor = .dark
+        button.widthAnchor.constraint(equalToConstant: 44).isActive = true
+        button.heightAnchor.constraint(equalTo: button.widthAnchor).isActive = true
+        return button
+    }
+    
 }

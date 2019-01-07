@@ -93,6 +93,13 @@ class InfoViewController: UIViewController {
         backButton.rx.tap.subscribe(onNext: { [weak self] in
             self?.navigationController?.popViewController(animated: true)
         }).disposed(by: bag)
+        
+        instructionsGroup.bodyLabel.didTap(oneOf: [.catalogNumber]).subscribe(onNext: { _ in
+            guard let url = URL(string: "https://ourpastimes.com/catalog-numbers-vinyl-records-8518643.html") else {
+                return
+            }
+            UIApplication.shared.open(url)
+        }).disposed(by: bag)
     }
     
     private func showSendMailErrorAlert() {
@@ -149,7 +156,7 @@ class InfoViewController: UIViewController {
         let privacyBody = String(format: .privacyMessage, String.privacyMessageHighlighted, String.email)
         privacyGroup.bodyLabel.set(bodyText: privacyBody, boldPart: .privacyMessageHighlighted, underlineParts: [.email])
         instructionsGroup.titleLabel.text = .instructionsTitle
-        let instructionsBody = String(format: .instructionsMessage, String.releaseCode)
+        let instructionsBody = String(format: .instructionsMessage, String.catalogNumber)
         instructionsGroup.bodyLabel.set(bodyText: instructionsBody, highlightPart: .releaseCode)
         openSourceGroup.titleLabel.text = .openSourceTitle
         let openSourceBody = String(format: .openSourceMessage, String.github)
