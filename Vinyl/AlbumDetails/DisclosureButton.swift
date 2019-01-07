@@ -41,7 +41,7 @@ class DisclosureButton: UIControl {
             bottomSeparator.trailingAnchor.constraint(equalTo: trailingAnchor),
             bottomSeparator.bottomAnchor.constraint(equalTo: bottomAnchor)
         ])
-        
+        disclosureImageView.setContentCompressionResistancePriority(.required, for: .horizontal)
         disclosureImageView.image = .disclosure
         disclosureImageView.tintColor = .dark
     }
