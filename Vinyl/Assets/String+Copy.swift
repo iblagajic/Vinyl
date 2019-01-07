@@ -32,9 +32,9 @@ extension String {
     static let privacyMessageHighlighted = NSLocalizedString("app doesn’t collect any user information or use any 3rd party services that do so.", comment: "")
     static let email = "vinylapp@protonmail.com"
     static let instructionsTitle = NSLocalizedString("How to use", comment: "")
-    static let instructionsMessage = NSLocalizedString("You can find a specific vinyl release in 2 different ways: newer releases usually have barcodes on the cover which you can scan, while you can search the older ones by entering the release code or album/artist name. I recommend using the %@ since it’ll identify the exact release you're looking for.", comment: "")
+    static let instructionsMessage = NSLocalizedString("You can find a specific vinyl release in 2 different ways: newer releases usually have barcodes on the cover which you can scan, while you can search the older ones by entering the %@ or album/artist name. I recommend using the %@ since it’ll identify the exact release you're looking for.", comment: "")
     static let github = "GitHub"
-    static let releaseCode = NSLocalizedString("release code", comment: "")
+    static let catalogNumber = NSLocalizedString("catalog number", comment: "")
     static let openSourceTitle = NSLocalizedString("Vinyl is open source", comment: "")
     static let openSourceMessage = NSLocalizedString("Since transparency is one of my core beliefs, the app is open source: %@.", comment: "")
     static let credits = NSLocalizedString("Credits", comment: "")
