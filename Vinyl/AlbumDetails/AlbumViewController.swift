@@ -31,7 +31,9 @@ class AlbumViewController: UIViewController {
         super.init(nibName: nil, bundle: nil)
         titleLabel.text = release.title
         artistLabel.text = release.artistsSort.uppercased()
-        dateLabel.text = String(format: .releasedOn, release.releasedFormatted)
+        if let releasedFormatted = release.releasedFormatted {
+            dateLabel.text = String(format: .releasedOn, releasedFormatted)
+        }
         if let price = release.lowestPrice {
             let priceString = "$\(price) + shipping" // TODO: localize
             let sellsForString = String(format: .sellsFor, priceString)

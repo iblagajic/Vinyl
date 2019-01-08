@@ -16,7 +16,7 @@ struct Release: Codable {
     let notesPlaintext: String?
     let images: [Image]
     let tracklist: [Track]
-    let releasedFormatted: String
+    let releasedFormatted: String?
     let formats: [Format]
     let artists: [ArtistLite]
     
