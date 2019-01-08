@@ -15,6 +15,9 @@ struct Artist: Codable {
     let images: [Image]
     
     var type: String {
-        return members?.count == 1 ? .artist : .band
+        guard let members = members else {
+            return .artist
+        }
+        return members.count > 1 ? .band : .artist
     }
 }
