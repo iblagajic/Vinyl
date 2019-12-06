@@ -50,7 +50,7 @@ class RootRouter {
         let currentPage = pageControllerDelegate.currentPage.share()
         currentPage.map { [weak self] in
             if let navigationController = self?.pageController.viewControllers?.first as? UINavigationController,
-                let index = navigationControllers.index(of: navigationController) {
+                let index = navigationControllers.firstIndex(of: navigationController) {
                 return index
             } else {
                 return 0

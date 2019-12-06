@@ -51,6 +51,10 @@ class InfoViewController: UIViewController {
                     self?.dismiss(animated: true) { [weak self] in
                         self?.showSendMailSuccessAlert()
                     }
+                @unknown default:
+                    self?.dismiss(animated: true) { [weak self] in
+                        self?.showSendMailErrorAlert()
+                    }
                 }
             }).disposed(by: bag)
         

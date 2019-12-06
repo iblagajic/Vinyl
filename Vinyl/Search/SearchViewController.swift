@@ -36,7 +36,7 @@ class SearchViewController: UICollectionViewController {
         let discogs = Discogs()
         searchController.searchBar.rx.text.orEmpty
             .distinctUntilChanged()
-            .throttle(0.3, scheduler: MainScheduler.instance)
+            .throttle(.milliseconds(300), scheduler: MainScheduler.instance)
             .asDriver(onErrorJustReturn: "")
             .filter { !$0.isEmpty }
             .flatMapLatest { query -> Driver<[SearchResultsSection]> in

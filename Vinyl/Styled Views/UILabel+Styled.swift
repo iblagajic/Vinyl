@@ -126,8 +126,8 @@ extension UILabel {
         paragraphStyle.lineBreakMode = .byWordWrapping
         let attributedTitle = NSMutableAttributedString(string: headerText,
                                                         attributes: [NSAttributedString.Key.paragraphStyle : paragraphStyle,
-                                                                     NSAttributedString.Key.font : font,
-                                                                     NSAttributedString.Key.foregroundColor : textColor])
+                                                                     NSAttributedString.Key.font : font as Any,
+                                                                     NSAttributedString.Key.foregroundColor : textColor as Any])
         if let highlightPart = highlightPart {
             attributedTitle.addAttributes([NSAttributedString.Key.underlineStyle : NSUnderlineStyle.single.rawValue,
                                            NSAttributedString.Key.foregroundColor : UIColor.melon,
@@ -146,8 +146,8 @@ extension UILabel {
         paragraphStyle.lineBreakMode = .byWordWrapping
         let attributedTitle = NSMutableAttributedString(string: bodyText,
                                                         attributes: [NSAttributedString.Key.paragraphStyle : paragraphStyle,
-                                                                     NSAttributedString.Key.font : font,
-                                                                     NSAttributedString.Key.foregroundColor : textColor])
+                                                                     NSAttributedString.Key.font : font as Any,
+                                                                     NSAttributedString.Key.foregroundColor : textColor as Any])
         
         if let boldText = boldPart {
             attributedTitle.addAttribute(NSAttributedString.Key.font, value: UIFont.bodyBold ?? UIFont(), range: (bodyText as NSString).range(of: boldText))

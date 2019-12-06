@@ -22,7 +22,7 @@ class LoadingViewController: UIViewController {
     let bag = DisposeBag()
         
     func handleObservable<T>(observable: Observable<T>) -> Observable<T> {
-        return rx.viewDidLoad.flatMap { observable.timeout(3, scheduler: MainScheduler.instance) }
+        return rx.viewDidLoad.flatMap { observable.timeout(.seconds(3), scheduler: MainScheduler.instance) }
             .catchError { error in
                 guard let rxError = error as? RxError else {
                     return Observable.error(error)
@@ -88,7 +88,7 @@ class LoadingViewController: UIViewController {
                     self?.errorTitleLabel.isHidden = true
                     self?.errorMessageLabel.isHidden = true
                 }
-            }).delay(0.5, scheduler: MainScheduler.instance)
+            }).delay(.milliseconds(500), scheduler: MainScheduler.instance)
         return Observable.merge(close, retry)
     }
     

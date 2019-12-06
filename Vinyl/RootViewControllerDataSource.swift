@@ -17,7 +17,7 @@ class RootViewControllerDataSource: NSObject, UIPageViewControllerDataSource {
     }
     
     func pageViewController(_ pageViewController: UIPageViewController, viewControllerBefore viewController: UIViewController) -> UIViewController? {
-        if let index = viewControllers.index(of: viewController)?.advanced(by: -1),
+        if let index = viewControllers.firstIndex(of: viewController)?.advanced(by: -1),
             viewControllers.indices.contains(index) {
             let previousVC = viewControllers[index]
             previousVC.setNeedsStatusBarAppearanceUpdate()
@@ -27,7 +27,7 @@ class RootViewControllerDataSource: NSObject, UIPageViewControllerDataSource {
     }
     
     func pageViewController(_ pageViewController: UIPageViewController, viewControllerAfter viewController: UIViewController) -> UIViewController? {
-        if let index = viewControllers.index(of: viewController)?.advanced(by: 1),
+        if let index = viewControllers.firstIndex(of: viewController)?.advanced(by: 1),
             viewControllers.indices.contains(index) {
             let nextVC = viewControllers[index]
             nextVC.setNeedsStatusBarAppearanceUpdate()

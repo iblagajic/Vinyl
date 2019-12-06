@@ -7,8 +7,8 @@ target 'Vinyl' do
 
   # Pods for Vinyl
 
-    pod 'RxSwift',    '~> 4.0'
-    pod 'RxCocoa',    '~> 4.0'
-    pod 'RxDataSources', '~> 3.0'
+    pod 'RxSwift',    '~> 5.0'
+    pod 'RxCocoa',    '~> 5.0'
+    pod 'RxDataSources', '~> 4.0'
 
 end
