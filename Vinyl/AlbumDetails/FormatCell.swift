@@ -8,6 +8,11 @@
 
 import UIKit
 
+enum FormatCellType {
+    case format(String)
+    case date(String)
+}
+
 class FormatCell: UICollectionViewCell {
     
     let titleLabel = UILabel.format
@@ -22,11 +27,25 @@ class FormatCell: UICollectionViewCell {
         setup()
     }
     
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        layer.cornerRadius = frame.height/2
+    }
+    
+    func update(with formatCellType: FormatCellType) {
+        switch formatCellType {
+        case .format(let formatTitle):
+            titleLabel.text = formatTitle
+            backgroundColor = .dustyOrange
+        case .date(let dateString):
+            titleLabel.text = dateString
+            backgroundColor = .mediumGrey
+        }
+    }
+    
     private func setup() {
         addSubview(titleLabel)
-        heightAnchor.constraint(equalToConstant: 29).isActive = true
+        heightAnchor.constraint(equalToConstant: 30).isActive = true
         titleLabel.pinToSuperview(withInsets: UIEdgeInsets(top: 0, left: 11, bottom: 0, right: -11))
-        backgroundColor = .melon
-        layer.cornerRadius = 11
     }
 }

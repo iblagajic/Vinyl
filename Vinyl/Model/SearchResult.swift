@@ -19,4 +19,5 @@ struct SearchResult: Codable {
     let thumb: String
     let country: String
     let year: String?
+    let label: [String]
 }

@@ -15,21 +15,26 @@ extension UIView {
         translatesAutoresizingMaskIntoConstraints = false
     }
     
-    func pinToSuperview(withInsets insets: UIEdgeInsets = .zero) {
+    func pinToSuperview(anchors: UIRectEdge = .all, withInsets insets: UIEdgeInsets = .zero) {
         guard let superview = superview else {
             fatalError("Can't set constraints to a view which has no superview")
         }
-        leadingAnchor.constraint(equalTo: superview.leadingAnchor, constant: insets.left).isActive = true
-        topAnchor.constraint(equalTo: superview.topAnchor, constant: insets.top).isActive = true
-        trailingAnchor.constraint(equalTo: superview.trailingAnchor, constant: insets.right).isActive = true
-        bottomAnchor.constraint(equalTo: superview.bottomAnchor, constant: insets.bottom).isActive = true
+        pin(anchors: anchors, to: superview, withInsets: insets)
     }
     
-    func pin(to view: UIView, withInsets insets: UIEdgeInsets = .zero) {
-        leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: insets.left).isActive = true
-        topAnchor.constraint(equalTo: view.topAnchor, constant: insets.top).isActive = true
-        trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: insets.right).isActive = true
-        bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: insets.bottom).isActive = true
+    func pin(anchors: UIRectEdge = .all,to view: UIView, withInsets insets: UIEdgeInsets = .zero) {
+        if anchors.contains(.left) {
+            leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: insets.left).isActive = true
+        }
+        if anchors.contains(.top) {
+            topAnchor.constraint(equalTo: view.topAnchor, constant: insets.top).isActive = true
+        }
+        if anchors.contains(.right) {
+            trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: insets.right).isActive = true
+        }
+        if anchors.contains(.bottom) {
+            bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: insets.bottom).isActive = true
+        }
     }
     
     func centerInSuperview() {

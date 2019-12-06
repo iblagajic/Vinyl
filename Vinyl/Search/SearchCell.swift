@@ -10,21 +10,45 @@ import UIKit
 import RxSwift
 import RxCocoa
 
-class SearchCell: UITableViewCell {
+protocol SearchResultsUpdateable {
+    func update(with searchResult: SearchResult)
+}
+
+class SearchCell: UICollectionViewCell, SearchResultsUpdateable {
     private let albumImageView = UIImageView(forAutoLayout: ())
-    private let titleLabel = UILabel.subheader
-    private let releaseDetailsLabel = UILabel.body
-    private let formatsLabel = UILabel.bodyLight
+    private let releaseTitleLabel = UILabel.body
+    private let infoLabel = UILabel.metadata
     private var bag = DisposeBag()
     
-    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
-        super.init(style: style, reuseIdentifier: reuseIdentifier)
+    override init(frame: CGRect) {
+        super.init(frame: frame)
         setup()
     }
     
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         setup()
+    }
+    
+    private func setup() {
+        [albumImageView, releaseTitleLabel, infoLabel].forEach(contentView.addSubview)
+        albumImageView.pinToSuperview(anchors: [.left, .top, .bottom])
+        albumImageView.widthAnchor.constraint(equalTo: albumImageView.heightAnchor).isActive = true
+        releaseTitleLabel.pinToSuperview(anchors: [.top, .right], withInsets: UIEdgeInsets(top: .margin, left: 0, bottom: 0, right: -16))
+        releaseTitleLabel.leadingAnchor.constraint(equalTo: albumImageView.trailingAnchor, constant: .margin).isActive = true
+        infoLabel.pinToSuperview(anchors: [.bottom, .right], withInsets: UIEdgeInsets(top: 0, left: 0, bottom: -6, right: -16))
+        infoLabel.topAnchor.constraint(equalTo: releaseTitleLabel.bottomAnchor, constant: 5).isActive = true
+        infoLabel.leadingAnchor.constraint(equalTo: releaseTitleLabel.leadingAnchor).isActive = true
+        infoLabel.setContentHuggingPriority(.required, for: .vertical)
+        let width = UIScreen.main.bounds.width - 2 * 2 * .margin
+        contentView.widthAnchor.constraint(equalToConstant: width).isActive = true
+        contentView.heightAnchor.constraint(equalToConstant: 110).isActive = true
+        
+        releaseTitleLabel.numberOfLines = 3
+        contentView.backgroundColor = .white
+        contentView.layer.cornerRadius = 11
+        contentView.clipsToBounds = true
+        setShadow()
     }
     
     func update(with searchResult: SearchResult) {
@@ -38,37 +62,17 @@ class SearchCell: UITableViewCell {
             imageDriver = Driver.just(nil)
         }
         imageDriver.filter { $0 != nil }.drive(albumImageView.rx.image).disposed(by: bag)
-        titleLabel.text = searchResult.title
+        releaseTitleLabel.set(bodyText: searchResult.title)
         var releaseDetailsString = searchResult.country
         if let year = searchResult.year {
-             releaseDetailsString += ", " + year
+            releaseDetailsString += ", " + year
         }
-        releaseDetailsLabel.text = releaseDetailsString
-        formatsLabel.text = searchResult.format.joined(separator: ", ")
-    }
-    
-    private func setup() {
-        [albumImageView, titleLabel, releaseDetailsLabel, formatsLabel].forEach(addSubview)
-        albumImageView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 44).isActive = true
-        albumImageView.topAnchor.constraint(equalTo: topAnchor, constant: 33).isActive = true
-        albumImageView.centerYAnchor.constraint(equalTo: centerYAnchor).isActive = true
-        albumImageView.heightAnchor.constraint(equalTo: albumImageView.widthAnchor).isActive = true
-        titleLabel.topAnchor.constraint(equalTo: albumImageView.topAnchor, constant: 11).isActive = true
-        titleLabel.leadingAnchor.constraint(equalTo: albumImageView.trailingAnchor, constant: 22).isActive = true
-        titleLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -22).isActive = true
-        releaseDetailsLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 11).isActive = true
-        releaseDetailsLabel.leadingAnchor.constraint(equalTo: titleLabel.leadingAnchor).isActive = true
-        releaseDetailsLabel.trailingAnchor.constraint(equalTo: titleLabel.trailingAnchor).isActive = true
-        formatsLabel.topAnchor.constraint(equalTo: releaseDetailsLabel.bottomAnchor, constant: 11).isActive = true
-        formatsLabel.leadingAnchor.constraint(equalTo: titleLabel.leadingAnchor).isActive = true
-        formatsLabel.trailingAnchor.constraint(equalTo: titleLabel.trailingAnchor).isActive = true
-        
-        titleLabel.numberOfLines = 2
-        albumImageView.contentMode = .scaleAspectFill
-        albumImageView.clipsToBounds = true
+        infoLabel.text = releaseDetailsString
     }
     
     override func prepareForReuse() {
+        releaseTitleLabel.text = nil
+        infoLabel.text = nil
         albumImageView.image = .placeholder
     }
 }

@@ -11,24 +11,7 @@ import RxSwift
 import RxCocoa
 import RxDataSources
 
-struct FormatsSection {
-    var title: String?
-    var items: [String]
-    
-    init(items: [String], title: String? = nil) {
-        self.title = title
-        self.items = items
-    }
-}
-
-extension FormatsSection: SectionModelType {
-    typealias Item = String
-    
-    init(original: FormatsSection, items: [Item]) {
-        self = original
-        self.items = items
-    }
-}
+typealias FormatsSection = Section<FormatCellType>
 
 class FormatsCollectionView: UICollectionView {
     
@@ -50,7 +33,7 @@ class FormatsCollectionView: UICollectionView {
             layout.scrollDirection = .horizontal
             layout.minimumLineSpacing = 6
             layout.estimatedItemSize = CGSize(width: 94, height: 29)
-            layout.sectionInset = UIEdgeInsets(top: 0, left: 44, bottom: 0, right: 44)
+            layout.sectionInset = UIEdgeInsets(top: 0, left: 22, bottom: 0, right: 22)
         } 
         showsHorizontalScrollIndicator = false
     }
@@ -61,10 +44,10 @@ extension Reactive where Base: FormatsCollectionView {
     func sections(_ sections: Observable<[FormatsSection]>) -> Disposable {
         let FormatCellReuseId = "FormatsCollectionCellId"
         base.register(FormatCell.self, forCellWithReuseIdentifier: FormatCellReuseId)
-        let dataSource = RxCollectionViewSectionedReloadDataSource<FormatsSection>(configureCell: { (_, cv, ip, formatDescription) -> UICollectionViewCell in
+        let dataSource = RxCollectionViewSectionedReloadDataSource<FormatsSection>(configureCell: { (_, cv, ip, formatType) -> UICollectionViewCell in
             let cell = cv.dequeueReusableCell(withReuseIdentifier: FormatCellReuseId, for: ip)
-            if let FormatCell = cell as? FormatCell {
-                FormatCell.titleLabel.text = formatDescription
+            if let formatCell = cell as? FormatCell {
+                formatCell.update(with: formatType)
             }
             return cell
         })

@@ -11,22 +11,26 @@ import RxSwift
 import RxCocoa
 import StoreKit
 
-class ArtistViewController: UIViewController {
+class ArtistViewController: LoadingViewController {
     
-    private let backButton = UIButton.back
-    private let artistTypeLabel = UILabel.subheader
-    private let artistNameLabel = UILabel.copyableHeader
     private let artistImageView = UIImageView(forAutoLayout: ())
-    private let membersLabel = UILabel.bodyLight
+    private let membersLabel = UILabel.body
     private let descriptionLabel = UILabel.body
     private var artistImageViewRatio: NSLayoutConstraint?
     
-    private let bag = DisposeBag()
-    
-    init(artist: Artist) {
+    init(artistResourceUrl: String) {
         super.init(nibName: nil, bundle: nil)
-        artistTypeLabel.text = artist.type.uppercased()
-        artistNameLabel.text = artist.name
+        
+        let discogs = Discogs()
+        
+        let fetchRelease = discogs.fetchArtist(for: artistResourceUrl)
+        
+        handleObservable(observable: fetchRelease).subscribe(onNext: setup).disposed(by: bag)
+    }
+
+    
+    private func setup(with artist: Artist) {
+        title = artist.name
         let membersArray = artist.members?.filter { $0.active == true }.map { $0.name }
         if let members = membersArray {
             let membersString = String.members + " " + members.joined(separator: ", ")
@@ -57,39 +61,27 @@ class ArtistViewController: UIViewController {
             }
             self?.artistImageViewRatio = self?.artistImageView.constraintToKeepAspectRatio(of: image)
         }).drive(artistImageView.rx.image).disposed(by: bag)
-        
-        backButton.rx.tap.subscribe(onNext: { [weak self] in
-            self?.navigationController?.popViewController(animated: true)
-        }).disposed(by: bag)
     }
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    override func loadView() {
+    override func setupContentView() -> UIView {
         let root = UIScrollView(frame: UIScreen.main.bounds)
         root.backgroundColor = .white
         let contentView  = UIView(forAutoLayout: ())
         root.addSubview(contentView)
         
-        [backButton, artistTypeLabel, artistNameLabel, artistImageView, membersLabel, descriptionLabel].forEach(contentView.addSubview)
+        [artistImageView, membersLabel, descriptionLabel].forEach(contentView.addSubview)
         
         contentView.pinToSuperview()
         
         NSLayoutConstraint.activate([
             contentView.widthAnchor.constraint(equalTo: root.widthAnchor),
-            backButton.topAnchor.constraint(equalTo: contentView.safeAreaLayoutGuide.topAnchor, constant: 33),
-            backButton.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 35),
-            artistTypeLabel.topAnchor.constraint(equalTo: backButton.bottomAnchor, constant: 33),
-            artistTypeLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 44),
-            artistTypeLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -22),
-            artistNameLabel.topAnchor.constraint(equalTo: artistTypeLabel.bottomAnchor, constant: 6),
-            artistNameLabel.leadingAnchor.constraint(equalTo: artistTypeLabel.leadingAnchor),
-            artistNameLabel.trailingAnchor.constraint(equalTo: artistTypeLabel.trailingAnchor),
-            artistImageView.topAnchor.constraint(equalTo: artistNameLabel.bottomAnchor, constant: 44),
-            artistImageView.leadingAnchor.constraint(equalTo: artistNameLabel.leadingAnchor),
-            artistImageView.trailingAnchor.constraint(equalTo: artistNameLabel.trailingAnchor, constant: -22),
+            artistImageView.topAnchor.constraint(equalTo: contentView.safeAreaLayoutGuide.topAnchor, constant: 44),
+            artistImageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 22),
+            artistImageView.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
             membersLabel.topAnchor.constraint(equalTo: artistImageView.bottomAnchor, constant: 22),
             membersLabel.leadingAnchor.constraint(equalTo: artistImageView.leadingAnchor),
             membersLabel.trailingAnchor.constraint(equalTo: artistImageView.trailingAnchor),
@@ -99,9 +91,9 @@ class ArtistViewController: UIViewController {
             descriptionLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -44)
         ])
         
-        self.view = root
+        membersLabel.textColor = .mediumGrey
         
-        membersLabel.numberOfLines = 0
+        return root
     }
 }
 

@@ -10,9 +10,9 @@ import UIKit
 
 class TrackCell: UITableViewCell {
     
-    let positionLabel = UILabel.position
+    let positionLabel = UILabel.metadata
     let titleLabel = UILabel.body
-    let durationLabel = UILabel.bodyLight
+    let durationLabel = UILabel.metadata
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -28,7 +28,7 @@ class TrackCell: UITableViewCell {
         [positionLabel, titleLabel, durationLabel].forEach(addSubview)
         
         NSLayoutConstraint.activate([
-            positionLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 44),
+            positionLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 22),
             positionLabel.lastBaselineAnchor.constraint(equalTo: titleLabel.lastBaselineAnchor),
             titleLabel.leadingAnchor.constraint(equalTo: positionLabel.trailingAnchor, constant: 11),
             titleLabel.centerYAnchor.constraint(equalTo: centerYAnchor),
@@ -41,5 +41,6 @@ class TrackCell: UITableViewCell {
         backgroundColor = .clear
         titleLabel.numberOfLines = 1
         durationLabel.numberOfLines = 1
+        durationLabel.textColor = .mediumGrey
     }
 }
