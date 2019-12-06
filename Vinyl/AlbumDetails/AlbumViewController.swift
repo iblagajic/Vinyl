@@ -11,40 +11,52 @@ import RxSwift
 import RxCocoa
 import StoreKit
 
-class AlbumViewController: UIViewController {
+class AlbumViewController: LoadingViewController {
     
-    private let closeButton = UIButton.close
-    private let moreButton = UIButton.more
-    private let artistLabel = UILabel.subheader
-    private let titleLabel = UILabel.copyableHeader
     private let albumImageView = UIImageView(forAutoLayout: ())
     private let vinylImageView = UIImageView(forAutoLayout: ())
-    private let dateLabel = UILabel.bodyLight
     private let formatsCollectionView = FormatsCollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
-    private let disclosureButton = DisclosureButton(forAutoLayout: ())
-    private let descriptionTitleLabel = UILabel.header2
-    private let descriptionLabel = UILabel.body
+    private let infoTableView = DynamicTableView(forAutoLayout: ())
+    private let detailsTitleLabel = UILabel.metadata
+    private let detailsTextView = UITextView.body
     
-    private let bag = DisposeBag()
-    
-    init(release: Release) {
+    init(resourceUrl: String) {
         super.init(nibName: nil, bundle: nil)
-        titleLabel.text = release.title
-        artistLabel.text = release.artistsSort.uppercased()
-        if let releasedFormatted = release.releasedFormatted {
-            dateLabel.text = String(format: .releasedOn, releasedFormatted)
+        
+        navigationItem.largeTitleDisplayMode = .always
+        
+        let discogs = Discogs()
+        
+        let fetchRelease = discogs.fetchRelease(for: resourceUrl)
+        
+        handleObservable(observable: fetchRelease).subscribe(onNext: { [weak self] release in
+            self?.setup(with: release)
+        }).disposed(by: bag)
+    }
+
+    init(code: String) {
+        super.init(nibName: nil, bundle: nil)
+        
+        navigationItem.largeTitleDisplayMode = .always
+        
+        let discogs = Discogs()
+        
+        let fetchRelease = discogs.search(query: code)
+            .flatMap { searchResults -> Observable<Release> in
+                guard let firstUrl = searchResults.first?.items.first?.resourceUrl else {
+                    return Observable.error(DiscogsError.noResults)
+                }
+                return discogs.fetchRelease(for: firstUrl)
         }
-        if let price = release.lowestPrice {
-            let priceString = "$\(price) + shipping" // TODO: localize
-            let sellsForString = String(format: .sellsFor, priceString)
-            disclosureButton.titleLabel.set(bodyText: sellsForString, boldPart: priceString, oneLine: true)
-        } else {
-            disclosureButton.titleLabel.text = .notAvailable
-        }
-        descriptionTitleLabel.text = .description
-        if let notes = release.notesPlaintext {
-            descriptionLabel.set(bodyText: notes)
-        }
+        
+        handleObservable(observable: fetchRelease).subscribe(onNext: { [weak self] release in
+            self?.setup(with: release)
+        }).disposed(by: bag)
+    }
+    
+    private func setup(with release: Release) {
+        title = release.title
+
         vinylImageView.image = .realisticVinyl
         vinylImageView.isHidden = true
         
@@ -65,60 +77,79 @@ class AlbumViewController: UIViewController {
             self?.vinylImageView.isHidden = false
         }).filter { $0 != nil }.drive(albumImageView.rx.image).disposed(by: bag)
         
-        closeButton.rx.tap.subscribe(onNext: { [weak self] in
-            self?.navigationController?.dismiss(animated: true)
-        }).disposed(by: bag)
-        
-        moreButton.rx.tap
-            .map { [ActionSheetOption.artistDetails, .tracklist] }
-            .flatMap(presentCustomActionSheet)
-            .subscribe(onNext: { [weak self] option in
-                switch option {
-                case .artistDetails:
-                    let loadingViewController = LoadingViewController(artistResourceUrl: release.mainArtistResourceUrl)
-                    self?.navigationController?.pushViewController(loadingViewController, animated: true)
-                case.tracklist:
-                    let tracklistViewController = TracklistViewController(release: release, image: imageDriver)
-                    self?.navigationController?.pushViewController(tracklistViewController, animated: true)
-                }
-            })
-            .disposed(by: bag)
-        
-        let formatDescriptions = release.formats.reduce([]) { (result, format) -> [String] in
+        var formats = release.formats.reduce([]) { (result, format) -> [String] in
             var array = result
             array.append(contentsOf: format.descriptions)
             return array
+        }.map { FormatCellType.format($0) }
+        if let date = release.releasedFormatted {
+            formats.insert(FormatCellType.date(date), at: 0)
         }
-        Observable.just([FormatsSection(items: formatDescriptions)]).bind(to: formatsCollectionView.rx.sections).disposed(by: bag)
+        Observable.just([FormatsSection(items: formats)]).bind(to: formatsCollectionView.rx.sections).disposed(by: bag)
         
-        disclosureButton.rx.tap.subscribe(onNext: {
-            if let url = URL(string: "https://www.discogs.com/sell/release/\(release.id)") {
-                UIApplication.shared.open(url, options: [:])
+//        vinylImageView.transform = CGAffineTransform(translationX: -44, y: 0).rotated(by: -CGFloat.pi/4)
+        
+        let infoCellReuseId = "InfoCellReuseId"
+        infoTableView.register(AlbumInfoCell.self, forCellReuseIdentifier: infoCellReuseId)
+        var cells = [AlbumInfoCellType.tracks(count: release.tracklist.count, lenght: release.duration)]
+        if let artist = release.artists.first {
+            cells.insert(AlbumInfoCellType.artist(artist), at: 0)
+        }
+        if let price = release.lowestPrice {
+            cells.append(.discogs(price))
+        }
+        Observable.just(cells).bind(to: infoTableView.rx.items(cellIdentifier: infoCellReuseId)) { (_, albumInfoCellType, cell) in
+            if let cell = cell as? AlbumInfoCell {
+                cell.update(with: albumInfoCellType)
+            }
+        }.disposed(by: bag)
+        
+        infoTableView.rx.modelSelected(AlbumInfoCellType.self).subscribe(onNext: { [weak self] cell in
+            switch cell {
+            case .artist(let artist):
+                self?.navigationController?.pushViewController(ArtistViewController(artistResourceUrl: artist.resourceUrl), animated: true)
+            case .tracks:
+                self?.navigationController?.pushViewController(TracklistViewController(release: release), animated: true)
+            case .discogs:
+                if let url = URL(string: "https://www.discogs.com/sell/release/\(release.id)") {
+                    UIApplication.shared.open(url, options: [:])
+                }
             }
         }).disposed(by: bag)
         
-        vinylImageView.transform = CGAffineTransform(translationX: -44, y: 0).rotated(by: -CGFloat.pi/4)
+        var releasedString = String()
+        if let labelNames = release.labelNames {
+            releasedString += " " + String(format: .byLabels, labelNames)
+        }
+        if let countryName = release.country {
+            releasedString += " " + String(format: .inCountry, countryName)
+        }
+        if !releasedString.isEmpty {
+            releasedString = .released + releasedString + ".\n"
+        }
+        if let detailsText = release.notesPlaintext {
+            detailsTitleLabel.text = String.details.uppercased()
+            detailsTextView.set(bodyText: releasedString + detailsText)
+        }
+        
+        navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
     }
     
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
-    
+
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        UIView.animate(withDuration: 0.5, animations: { [weak self] in
-            self?.vinylImageView.transform = .identity
-        }) { completed in
-            if completed && UserDefaults.shouldShowRateDialog {
-                SKStoreReviewController.requestReview()
-            }
+        if UserDefaults.shouldShowRateDialog {
+            SKStoreReviewController.requestReview()
         }
     }
     
-    override func loadView() {
+    override func setupContentView() -> UIView {
         let root = UIScrollView(frame: UIScreen.main.bounds)
         root.backgroundColor = .white
-        let contentView  = UIView(forAutoLayout: ())
+        let contentView = UIView(forAutoLayout: ())
         root.addSubview(contentView)
         
         let albumWithVinyl = UIView(forAutoLayout: ())
@@ -136,42 +167,36 @@ class AlbumViewController: UIViewController {
             vinylImageView.widthAnchor.constraint(equalTo: vinylImageView.widthAnchor)
         ])
         
-        [closeButton, moreButton, artistLabel, titleLabel, albumWithVinyl, dateLabel, formatsCollectionView, disclosureButton, descriptionTitleLabel, descriptionLabel].forEach(contentView.addSubview)
+        [albumWithVinyl, formatsCollectionView, infoTableView, detailsTitleLabel, detailsTextView].forEach(contentView.addSubview)
         
         contentView.pinToSuperview()
         
         NSLayoutConstraint.activate([
             contentView.widthAnchor.constraint(equalTo: root.widthAnchor),
-            closeButton.topAnchor.constraint(equalTo: contentView.safeAreaLayoutGuide.topAnchor, constant: 33),
-            closeButton.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 35),
-            moreButton.centerYAnchor.constraint(equalTo: closeButton.centerYAnchor),
-            moreButton.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -13),
-            artistLabel.topAnchor.constraint(equalTo: closeButton.bottomAnchor, constant: 33),
-            artistLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 44),
-            artistLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -22),
-            titleLabel.topAnchor.constraint(equalTo: artistLabel.bottomAnchor, constant: 6),
-            titleLabel.leadingAnchor.constraint(equalTo: artistLabel.leadingAnchor),
-            titleLabel.trailingAnchor.constraint(equalTo: artistLabel.trailingAnchor),
-            albumWithVinyl.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 44),
-            albumWithVinyl.leadingAnchor.constraint(equalTo: titleLabel.leadingAnchor),
-            albumWithVinyl.trailingAnchor.constraint(equalTo: titleLabel.trailingAnchor),
-            dateLabel.topAnchor.constraint(equalTo: albumWithVinyl.bottomAnchor, constant: 33),
-            dateLabel.leadingAnchor.constraint(equalTo: albumWithVinyl.leadingAnchor),
+            albumWithVinyl.topAnchor.constraint(equalTo: contentView.safeAreaLayoutGuide.topAnchor, constant: 22),
+            albumWithVinyl.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 22),
+            albumWithVinyl.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
+            formatsCollectionView.topAnchor.constraint(equalTo: albumWithVinyl.bottomAnchor, constant: 22),
             formatsCollectionView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
-            formatsCollectionView.topAnchor.constraint(equalTo: dateLabel.bottomAnchor, constant: 33),
             formatsCollectionView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
-            formatsCollectionView.heightAnchor.constraint(equalToConstant: 29),
-            disclosureButton.topAnchor.constraint(equalTo: formatsCollectionView.bottomAnchor, constant: 11),
-            disclosureButton.leadingAnchor.constraint(equalTo: titleLabel.leadingAnchor),
-            disclosureButton.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
-            descriptionTitleLabel.leadingAnchor.constraint(equalTo: disclosureButton.leadingAnchor),
-            descriptionTitleLabel.topAnchor.constraint(equalTo: disclosureButton.bottomAnchor, constant: 33),
-            descriptionLabel.leadingAnchor.constraint(equalTo: descriptionTitleLabel.leadingAnchor),
-            descriptionLabel.topAnchor.constraint(equalTo: descriptionTitleLabel.bottomAnchor, constant: 22),
-            descriptionLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -33),
-            descriptionLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -44)
+            formatsCollectionView.heightAnchor.constraint(equalToConstant: 30),
+            infoTableView.topAnchor.constraint(equalTo: formatsCollectionView.bottomAnchor, constant: 11),
+            infoTableView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
+            infoTableView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
+            detailsTitleLabel.topAnchor.constraint(equalTo: infoTableView.bottomAnchor, constant: 11),
+            detailsTitleLabel.leadingAnchor.constraint(equalTo: albumWithVinyl.leadingAnchor),
+            detailsTextView.leadingAnchor.constraint(equalTo: detailsTitleLabel.leadingAnchor),
+            detailsTextView.topAnchor.constraint(equalTo: detailsTitleLabel.bottomAnchor, constant: 11),
+            detailsTextView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -33),
+            detailsTextView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -44)
         ])
         
-        self.view = root
+        infoTableView.estimatedRowHeight = 66
+        infoTableView.rowHeight = UITableView.automaticDimension
+        infoTableView.separatorInset = .zero
+        infoTableView.separatorColor = .pale
+        infoTableView.isScrollEnabled = false
+        
+        return root
     }
 }

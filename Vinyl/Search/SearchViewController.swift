@@ -9,81 +9,84 @@
 import UIKit
 import RxSwift
 import RxCocoa
+import RxDataSources
 
-class SearchViewController: UITableViewController {
+typealias SearchResultsSection = Section<SearchResult>
+
+class SearchViewController: UICollectionViewController {
     
-    private let backButton = UIButton.back
-    private let albumInputField = UITextField.standard
     private let bag = DisposeBag()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        setup()
-    }
+        
+        title = .search
+
+        collectionView.backgroundColor = .white
+        
+        collectionView.delegate = nil
+        collectionView.dataSource = nil
     
-    private func setup() {
-        let header = UIView(forAutoLayout: ())
-        [backButton, albumInputField].forEach(header.addSubview)
-        NSLayoutConstraint.activate([
-            header.widthAnchor.constraint(equalToConstant: view.frame.width),
-            backButton.topAnchor.constraint(equalTo: header.safeAreaLayoutGuide.topAnchor, constant: 33),
-            backButton.leadingAnchor.constraint(equalTo: header.leadingAnchor, constant: 35),
-            backButton.bottomAnchor.constraint(equalTo: header.bottomAnchor),
-            albumInputField.leadingAnchor.constraint(equalTo: backButton.trailingAnchor, constant: 24),
-            albumInputField.centerYAnchor.constraint(equalTo: backButton.centerYAnchor),
-            albumInputField.trailingAnchor.constraint(equalTo: header.trailingAnchor, constant: -22),
-            albumInputField.heightAnchor.constraint(equalToConstant: 44)
-        ])
-        
-        tableView.tableHeaderView = header
-        tableView.tableFooterView = UIView(frame: CGRect(x: 0, y: 0, width: 1, height: 1))
-        
-        tableView.tableHeaderView?.layoutIfNeeded()
-        tableView.separatorInset = UIEdgeInsets(top: 0, left: 22, bottom: 0, right: 0)
-        tableView.separatorColor = .steelGrey
-        tableView.rowHeight = 176
-        tableView.delegate = nil
-        tableView.dataSource = nil
-        
-        albumInputField.placeholder = .searchPlaceholder
-        
-        let searchResultCellId = "SearchResultCellId"
-        tableView.register(SearchCell.self, forCellReuseIdentifier: searchResultCellId)
+        let searchController = UISearchController(searchResultsController: nil)
+        searchController.dimsBackgroundDuringPresentation = false
+        searchController.searchBar.tintColor = .dark
+        definesPresentationContext = true
+        navigationItem.searchController = searchController
         
         let discogs = Discogs()
-        
-        albumInputField.rx.controlEvent(.editingDidEndOnExit)
-            .withLatestFrom(albumInputField.rx.text.orEmpty)
-            .asDriver(onErrorJustReturn: "")
+        searchController.searchBar.rx.text.orEmpty
             .distinctUntilChanged()
-            .flatMapLatest { query -> Driver<[SearchResult]> in
-                if query.isEmpty {
-                    return Driver.just([])
-                } else {
-                    return discogs.search(query: query)
-                        .startWith([])
-                        .asDriver(onErrorJustReturn: [])
-                }
-            }.drive(tableView.rx.items(cellIdentifier: searchResultCellId, cellType: SearchCell.self)) { (_, result, cell) in
-                cell.update(with: result)
-            }.disposed(by: bag)
+            .throttle(0.3, scheduler: MainScheduler.instance)
+            .asDriver(onErrorJustReturn: "")
+            .filter { !$0.isEmpty }
+            .flatMapLatest { query -> Driver<[SearchResultsSection]> in
+                return discogs.search(query: query)
+                    .startWith([])
+                    .asDriver(onErrorJustReturn: [])
+            }.drive(rx.sections)
+            .disposed(by: bag)
         
-        tableView.rx.modelSelected(SearchResult.self).subscribe(onNext: { [weak self] searchResult in
-            let loadingViewController = LoadingViewController(resourceUrl: searchResult.resourceUrl)
-            let navigationController = UINavigationController(rootViewController: loadingViewController)
-            navigationController.isNavigationBarHidden = true
-            self?.present(navigationController, animated: true)
+        rx.viewDidAppear.take(1).subscribe(onNext: { _ in
+            searchController.searchBar.becomeFirstResponder()
         }).disposed(by: bag)
         
-        backButton.rx.tap.subscribe(onNext: { [weak self] in
-            self?.albumInputField.resignFirstResponder()
-            self?.navigationController?.popViewController(animated: true)
+        navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
+        
+        collectionView.rx.modelSelected(SearchResult.self).subscribe(onNext: { [weak self] searchResult in
+            let albumViewController = AlbumViewController(resourceUrl: searchResult.resourceUrl)
+            self?.navigationController?.pushViewController(albumViewController, animated: true)
         }).disposed(by: bag)
         
-        tableView.rx.didScroll.skip(1).subscribe(onNext: { [weak self] in
-            self?.albumInputField.resignFirstResponder()
+        collectionView.rx.willBeginDragging.subscribe(onNext: {
+            searchController.searchBar.resignFirstResponder()
         }).disposed(by: bag)
-        
-        albumInputField.becomeFirstResponder()
+    }
+}
+
+extension Reactive where Base: SearchViewController {
+    
+    func sections(_ sections: Observable<[SearchResultsSection]>) -> Disposable {
+        let searchCellReuseId = "SearchCollectionCellId"
+        base.collectionView.register(SearchCell.self, forCellWithReuseIdentifier: searchCellReuseId)
+        let topSearchCellReuseId = "TopSearchCollectionCellId"
+        base.collectionView.register(TopResultSearchCell.self, forCellWithReuseIdentifier: topSearchCellReuseId)
+        let searchHeaderReuseId = "SearchCollectionHeaderId"
+        base.collectionView.register(UISearchCollectionViewHeader.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: searchHeaderReuseId)
+        let dataSource = RxCollectionViewSectionedReloadDataSource<SearchResultsSection>(configureCell: { (_, cv, ip, searchResult) -> UICollectionViewCell in
+            let identifier = ip.section == 0 ? topSearchCellReuseId : searchCellReuseId
+            let cell = cv.dequeueReusableCell(withReuseIdentifier: identifier, for: ip)
+            if let searchCell = cell as? SearchResultsUpdateable {
+                searchCell.update(with: searchResult)
+            }
+            return cell
+        }, configureSupplementaryView: { (ds, cv, kind, ip) -> UICollectionReusableView in
+            let header = cv.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: searchHeaderReuseId, for: ip)
+            if let searchHeader = header as? UISearchCollectionViewHeader,
+                let title = ds.sectionModels[ip.section].title {
+                searchHeader.update(with: title)
+            }
+            return header
+        })
+        return sections.bind(to: base.collectionView.rx.items(dataSource: dataSource))
     }
 }

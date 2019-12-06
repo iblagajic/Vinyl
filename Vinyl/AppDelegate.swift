@@ -11,15 +11,14 @@ import UIKit
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
-    private let window = UIWindow(frame: UIScreen.main.bounds)
+    private let rootRouter = RootRouter()
+    private var window: UIWindow?
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        
-        let homeViewController = HomeViewController()
-        let navigationController = NavigationController(rootViewController: homeViewController)
-        window.rootViewController = navigationController
+        let window = UIWindow(frame: UIScreen.main.bounds)
+        window.rootViewController = rootRouter.rootController
         window.makeKeyAndVisible()
-        
+        self.window = window
         return true
     }
 

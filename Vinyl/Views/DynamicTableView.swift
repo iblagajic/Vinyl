@@ -10,15 +10,15 @@ import UIKit
 
 class DynamicTableView: UITableView {
     
-    override func layoutSubviews() {
-        super.layoutSubviews()
-        if !__CGSizeEqualToSize(bounds.size, intrinsicContentSize) {
+    override var contentSize:CGSize {
+        didSet {
             invalidateIntrinsicContentSize()
         }
     }
     
     override var intrinsicContentSize: CGSize {
-        return contentSize
+        layoutIfNeeded()
+        return CGSize(width: UIView.noIntrinsicMetric, height: contentSize.height)
     }
     
 }

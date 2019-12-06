@@ -13,14 +13,16 @@ import RxCocoa
 
 class ScanViewController: UIViewController {
     
-    private let backButton = UIButton.back
     private let captureSession = AVCaptureSession()
-    let scanLabel = UILabel.header
+    private let scanLabel = UILabel.body
     private let permissionLabel = UILabel.header
     private let bag = DisposeBag()
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        navigationItem.largeTitleDisplayMode = .never
+        navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
         
         scanLabel.set(headerText: .scan)
         permissionLabel.text = .cameraPermission
@@ -36,10 +38,6 @@ class ScanViewController: UIViewController {
             metadataOutput.metadataObjectTypes = [.ean13]
         }
         
-        backButton.rx.tap.subscribe(onNext: { [weak self] in
-            self?.navigationController?.popViewController(animated: true)
-        }).disposed(by: bag)
-        
         metadataOutput.rx.didOutput.map { metadata in
             return metadata.compactMap { $0 as? AVMetadataMachineReadableCodeObject }.first
             }.do(onNext: { [weak self] _ in
@@ -54,10 +52,8 @@ class ScanViewController: UIViewController {
                 }
             }.observeOn(MainScheduler.instance)
             .subscribe(onNext: { [weak self] code in
-                let loadingViewController = LoadingViewController(code: code)
-                let navigationController = NavigationController(rootViewController: loadingViewController)
-                navigationController.transitioningDelegate = self
-                self?.present(navigationController, animated: true)
+                let albumViewController = AlbumViewController(code: code)
+                self?.navigationController?.pushViewController(albumViewController, animated: true)
             }).disposed(by: bag)
         
 #if targetEnvironment(simulator)
@@ -68,10 +64,8 @@ class ScanViewController: UIViewController {
         mockBarcodeButton.setTitle("Mock", for: .normal)
         mockBarcodeButton.setTitleColor(.dark, for: .normal)
         mockBarcodeButton.rx.tap.subscribe(onNext: { [weak self] in
-            let loadingViewController = LoadingViewController(code: "0190295643416")
-            let navigationController = NavigationController(rootViewController: loadingViewController)
-            navigationController.transitioningDelegate = self
-            self?.present(navigationController, animated: true)
+            let albumViewController = AlbumViewController(code: "0190295643416")
+            self?.navigationController?.pushViewController(albumViewController, animated: true)
         }).disposed(by: bag)
 #endif
     }
@@ -95,31 +89,32 @@ class ScanViewController: UIViewController {
     }
     
     override func loadView() {
-        let root = UIView.background
+        let root = UIView.whiteBackground
         let previewView = PreviewView(session: captureSession)
         let targetView = CameraTargetView(forAutoLayout: ())
         
-        [backButton, previewView, targetView, permissionLabel, scanLabel].forEach(root.addSubview)
+        [previewView, targetView, permissionLabel, scanLabel].forEach(root.addSubview)
         
-        backButton.topAnchor.constraint(equalTo: root.safeAreaLayoutGuide.topAnchor, constant: 33).isActive = true
-        backButton.leadingAnchor.constraint(equalTo: root.leadingAnchor, constant: 35).isActive = true
-        previewView.topAnchor.constraint(equalTo: backButton.bottomAnchor, constant: 22).isActive = true
-        previewView.leadingAnchor.constraint(equalTo: root.leadingAnchor).isActive = true
-        previewView.trailingAnchor.constraint(equalTo: root.trailingAnchor).isActive = true
-        targetView.heightAnchor.constraint(equalToConstant: 145).isActive = true
-        targetView.leadingAnchor.constraint(equalTo: previewView.leadingAnchor, constant: 55).isActive = true
-        targetView.centerXAnchor.constraint(equalTo: previewView.centerXAnchor).isActive = true
-        targetView.centerYAnchor.constraint(equalTo: previewView.centerYAnchor).isActive = true
-        permissionLabel.topAnchor.constraint(equalTo: previewView.topAnchor, constant: 44).isActive = true
-        permissionLabel.leftAnchor.constraint(equalTo: scanLabel.leftAnchor).isActive = true
-        permissionLabel.widthAnchor.constraint(equalToConstant: 220).isActive = true
-        scanLabel.topAnchor.constraint(equalTo: previewView.bottomAnchor, constant: 44).isActive = true
-        scanLabel.widthAnchor.constraint(equalToConstant: 287).isActive = true
-        scanLabel.leadingAnchor.constraint(equalTo: root.leadingAnchor, constant: 44).isActive = true
-        scanLabel.bottomAnchor.constraint(equalTo: root.safeAreaLayoutGuide.bottomAnchor, constant: -44).isActive = true
+        NSLayoutConstraint.activate([
+            previewView.topAnchor.constraint(equalTo: root.safeAreaLayoutGuide.topAnchor, constant: 22),
+            previewView.leadingAnchor.constraint(equalTo: root.leadingAnchor),
+            previewView.trailingAnchor.constraint(equalTo: root.trailingAnchor),
+            targetView.heightAnchor.constraint(equalToConstant: 145),
+            targetView.leadingAnchor.constraint(equalTo: previewView.leadingAnchor, constant: 44),
+            targetView.centerXAnchor.constraint(equalTo: previewView.centerXAnchor),
+            targetView.centerYAnchor.constraint(equalTo: previewView.centerYAnchor),
+            permissionLabel.topAnchor.constraint(equalTo: previewView.topAnchor, constant: 44),
+            permissionLabel.leftAnchor.constraint(equalTo: scanLabel.leftAnchor),
+            permissionLabel.widthAnchor.constraint(equalToConstant: 220),
+            scanLabel.topAnchor.constraint(equalTo: previewView.bottomAnchor, constant: 44),
+            scanLabel.leadingAnchor.constraint(equalTo: root.leadingAnchor, constant: 22),
+            scanLabel.centerXAnchor.constraint(equalTo: root.centerXAnchor),
+            scanLabel.bottomAnchor.constraint(equalTo: root.safeAreaLayoutGuide.bottomAnchor, constant: -44)
+        ])
         
         self.view = root
         
+        scanLabel.textAlignment = .center
         permissionLabel.isHidden = true
         previewView.backgroundColor = .steelGrey
         targetView.backgroundColor = .clear
@@ -132,13 +127,13 @@ class ScanViewController: UIViewController {
 
 extension ScanViewController: UIViewControllerTransitioningDelegate {
     
-    func animationController(forPresented presented: UIViewController, presenting: UIViewController, source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
-        if let presentingNc = presenting as? UINavigationController,
-            presentingNc.topViewController?.isKind(of: ScanViewController.self) ?? false,
-            let presentedNc = presented as? UINavigationController,
-            presentedNc.viewControllers.first?.isKind(of: LoadingViewController.self) ?? false {
-            return PresentLoadingAnimationController()
-        }
-        return nil
-    }
+//    func animationController(forPresented presented: UIViewController, presenting: UIViewController, source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+//        if let presentingNc = presenting as? UINavigationController,
+//            presentingNc.topViewController?.isKind(of: ScanViewController.self) ?? false,
+//            let presentedNc = presented as? UINavigationController,
+//            presentedNc.viewControllers.first?.isKind(of: LoadingViewController.self) ?? false {
+//            return PresentLoadingAnimationController()
+//        }
+//        return nil
+//    }
 }

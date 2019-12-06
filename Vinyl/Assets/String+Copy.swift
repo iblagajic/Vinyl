@@ -10,12 +10,18 @@ import Foundation
 
 extension String {
     
+    static let tapToScan = NSLocalizedString("Tap to scan barcode and find the release info", comment: "")
+    static let settings = NSLocalizedString("Settings", comment: "")
+    static let topResult = NSLocalizedString("Top result", comment: "")
+    static let otherResults = NSLocalizedString("Other results", comment: "")
+    static let search = NSLocalizedString("Search", comment: "")
+    
     static let welcome = NSLocalizedString("Welcome.", comment: "")
-    static let scan = NSLocalizedString("Scan album barcode\nto find out how much\nit’s worth", comment: "")
+    static let scan = NSLocalizedString("Scan album barcode to find out\nhow much it’s worth", comment: "")
     static let or = NSLocalizedString("or", comment: "")
-    static let search = NSLocalizedString("search album\nby code or title.", comment: "")
     static let cameraPermission = NSLocalizedString("Please allow camera access to be able to scan vinyls.", comment: "")
-    static let sellsFor = NSLocalizedString("From %@ on Discogs", comment: "")
+    static let buyOn = NSLocalizedString("Buy on Discogs", comment: "")
+    static let buyFrom = NSLocalizedString("From %@$ + shipping", comment: "")
     static let notAvailable = NSLocalizedString("Not available for sale on Discogs", comment: "")
     static let shipping = NSLocalizedString("shipping", comment: "")
     static let tracklist = NSLocalizedString("Tracklist", comment: "")
@@ -25,8 +31,8 @@ extension String {
     static let ok = NSLocalizedString("Ok", comment: "")
     static let searchPlaceholder = NSLocalizedString("Search album code or title", comment: "")
     static let thanks = NSLocalizedString("Thanks for using Vinyl", comment: "")
-    static let about = NSLocalizedString("Vinyl is my passion project which I decided to do because, as a vinyl collector, I needed it.\nIt uses %@ database to help you digging for vinyl records.", comment: "")
-    static let discogs = "Discogs"
+//    static let about = NSLocalizedString("Vinyl is my passion project which I decided to do because, as a vinyl collector, I needed it.\nIt uses %@ database to help you digging for vinyl records.", comment: "")
+     static let discogs = "Discogs"
     static let privacyTitle = NSLocalizedString("I care about your privacy", comment: "")
     static let privacyMessage = NSLocalizedString("I’m proud to say that the %@\nThis is why, if you find any issues, crashes or just want to send feedback, I kindly ask you to do that by sending an email to %@.", comment: "")
     static let privacyMessageHighlighted = NSLocalizedString("app doesn’t collect any user information or use any 3rd party services that do so.", comment: "")
@@ -64,5 +70,20 @@ extension String {
     static let band = NSLocalizedString("Band", comment: "")
     static let artist = NSLocalizedString("Artist", comment: "")
     static let members = NSLocalizedString("Members:", comment: "")
+    static let tracksCount = NSLocalizedString("%d tracks", comment: "")
+    static let details = NSLocalizedString("Details", comment: "")
+    static let released = NSLocalizedString("Released", comment: "")
+    static let byLabels = NSLocalizedString("by %@", comment: "")
+    static let inCountry = NSLocalizedString("in %@", comment: "")
+    
+    static let about = NSLocalizedString("About", comment: "")
+    static let generalInformation = NSLocalizedString("General Information", comment: "")
+    static let privacyPolicy = NSLocalizedString("Privacy Policy", comment: "")
+    static let rate = NSLocalizedString("Rate on AppStore", comment: "")
+    static let share = NSLocalizedString("Share", comment: "")
+    static let version = NSLocalizedString("App version", comment: "")
+    static let enjoyUsing = NSLocalizedString("Enjoy using \(String.brand)?", comment: "")
+    static let brand = "Disco"
+    static let other = NSLocalizedString("Other", comment: "")
 }
 

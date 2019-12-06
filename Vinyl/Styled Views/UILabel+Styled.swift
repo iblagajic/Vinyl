@@ -10,6 +10,46 @@ import UIKit
 
 extension UILabel {
     
+    static var bodyLight: UILabel {
+        let label = UILabel(forAutoLayout: ())
+        label.font = .body
+        label.textColor = .white
+        label.adjustsFontForContentSizeCategory = true
+        label.textAlignment = .center
+        label.numberOfLines = 0
+        return label
+    }
+    
+    static var body: UILabel {
+        let label = UILabel(forAutoLayout: ())
+        label.font = .body
+        label.textColor = .dark
+        label.numberOfLines = 0
+        return label
+    }
+    
+    static var headline: UILabel {
+        let label = UILabel(forAutoLayout: ())
+        label.font = .headline
+        label.textColor = .dark
+        label.numberOfLines = 0
+        return label
+    }
+
+    static var headlineLightCentered: UILabel {
+        let label = UILabel.headline
+        label.textColor = .white
+        label.textAlignment = .center
+        return label
+    }
+    
+    static var metadata: UILabel {
+        let label = UILabel(forAutoLayout: ())
+        label.font = .metadata
+        label.textColor = .mediumGrey
+        return label
+    }
+    
     static var block: UILabel {
         let label = UILabel(forAutoLayout: ())
         label.font = .block
@@ -27,7 +67,7 @@ extension UILabel {
     
     static var copyableHeader: CopyableLabel {
         let label = CopyableLabel(forAutoLayout: ())
-        label.font = .headerTimes
+        label.font = .header
         label.textColor = .dark
         label.numberOfLines = 0
         return label
@@ -65,21 +105,6 @@ extension UILabel {
         return label
     }
     
-    static var body: UILabel {
-        let label = UILabel(forAutoLayout: ())
-        label.font = .body
-        label.textColor = .dark
-        label.numberOfLines = 0
-        return label
-    }
-    
-    static var bodyLight: UILabel {
-        let label = UILabel(forAutoLayout: ())
-        label.font = .body
-        label.textColor = .steelGrey
-        return label
-    }
-    
     static var format: UILabel {
         let label = UILabel(forAutoLayout: ())
         label.font = .metadata
@@ -89,7 +114,7 @@ extension UILabel {
     
     static var position: UILabel {
         let label = UILabel(forAutoLayout: ())
-        label.font = .position
+        label.font = .headline
         label.textColor = .dark
         return label
     }
@@ -116,7 +141,7 @@ extension UILabel {
              boldPart: String? = nil,
              oneLine: Bool = false) {
         let paragraphStyle = NSMutableParagraphStyle()
-        paragraphStyle.lineSpacing = oneLine ? 0 : 12
+        paragraphStyle.lineSpacing = oneLine ? 0 : 4
         paragraphStyle.alignment = textAlignment
         paragraphStyle.lineBreakMode = .byWordWrapping
         let attributedTitle = NSMutableAttributedString(string: bodyText,

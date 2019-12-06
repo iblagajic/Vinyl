@@ -12,12 +12,12 @@ import RxCocoa
 
 public extension Reactive where Base: UIViewController {
     
-    public var viewDidLoad: ControlEvent<Void> {
+    var viewDidLoad: ControlEvent<Void> {
         let source = methodInvoked(#selector(Base.viewDidLoad)).mapVoid()
         return ControlEvent(events: source)
     }
     
-    public var viewDidAppear: ControlEvent<Void> {
+    var viewDidAppear: ControlEvent<Void> {
         let source = methodInvoked(#selector(Base.viewDidAppear)).mapVoid()
         return ControlEvent(events: source)
     }

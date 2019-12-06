@@ -12,72 +12,16 @@ import RxCocoa
 
 class LoadingViewController: UIViewController {
     
-    let activityIndicatorView = ActivityIndicatorView()
-    var activityIndicatorCenterY = NSLayoutConstraint()
-    let errorTitleLabel = UILabel.block
-    let errorMessageLabel = UITextView.header
-    let cancelButton = UIButton.cancel
-    private let bag = DisposeBag()
-    
-    init(code: String) {
-        super.init(nibName: nil, bundle: nil)
+    private let activityIndicatorView = ActivityIndicatorView()
+    private var activityIndicatorCenterY = NSLayoutConstraint()
+    private let errorTitleLabel = UILabel.block
+    private let errorMessageLabel = UITextView.header
+    private let cancelButton = UIButton.cancel
+    private var contentView = UIView(forAutoLayout: ())
+    private let loadingView = UIStackView(forAutoLayout: ())
+    let bag = DisposeBag()
         
-        let discogs = Discogs()
-        
-        let fetchRelease = discogs.search(query: code)
-            .flatMap { searchResults -> Observable<Release> in
-                guard let firstUrl = searchResults.first?.resourceUrl else {
-                    return Observable.error(DiscogsError.noResults)
-                }
-                return discogs.fetchRelease(for: firstUrl)
-            }
-        
-        handleObservable(observable: fetchRelease).subscribe(onNext: { [weak self] release in
-            let albumViewController = AlbumViewController(release: release)
-            self?.navigationController?.popViewController(animated: false)
-            self?.navigationController?.pushViewController(albumViewController, animated: true)
-        }).disposed(by: bag)
-    }
-    
-    init(resourceUrl: String) {
-        super.init(nibName: nil, bundle: nil)
-        
-        let discogs = Discogs()
-        
-        let fetchRelease = discogs.fetchRelease(for: resourceUrl)
-        
-        handleObservable(observable: fetchRelease).subscribe(onNext: { [weak self] release in
-            let albumViewController = AlbumViewController(release: release)
-            self?.navigationController?.popViewController(animated: false)
-            self?.navigationController?.pushViewController(albumViewController, animated: true)
-        }).disposed(by: bag)
-    }
-    
-    init(artistResourceUrl: String) {
-        super.init(nibName: nil, bundle: nil)
-        
-        let discogs = Discogs()
-        
-        let fetchRelease = discogs.fetchArtist(for: artistResourceUrl)
-        
-        handleObservable(observable: fetchRelease).flatMap { [weak self] artist -> ControlEvent<Void> in
-            let albumViewController = ArtistViewController(artist: artist)
-            self?.navigationController?.pushViewController(albumViewController, animated: true)
-            return albumViewController.rx.viewDidAppear
-        }.subscribe(onNext: { [weak self] in
-            guard let `self` = self,
-                let index = self.navigationController?.viewControllers.index(of: self) else {
-                    return
-            }
-            self.navigationController?.viewControllers.remove(at: index)
-        }).disposed(by: bag)
-    }
-    
-    required init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
-    }
-    
-    private func handleObservable<T>(observable: Observable<T>) -> Observable<T> {
+    func handleObservable<T>(observable: Observable<T>) -> Observable<T> {
         return rx.viewDidLoad.flatMap { observable.timeout(3, scheduler: MainScheduler.instance) }
             .catchError { error in
                 guard let rxError = error as? RxError else {
@@ -91,6 +35,11 @@ class LoadingViewController: UIViewController {
                 }
             }.observeOn(MainScheduler.instance)
             .retryWhen(errorHandler)
+            .do(onNext: { [weak self] _ in
+                self?.navigationItem.hidesBackButton = false
+                self?.contentView.isHidden = false
+                self?.loadingView.isHidden = true
+            })
     }
     
     private func errorHandler(errorObservable: Observable<Error>) -> Observable<Void> {
@@ -150,26 +99,28 @@ class LoadingViewController: UIViewController {
         cancelButton.rx.tap.subscribe(onNext: { [weak self] in
             self?.dismiss(animated: true)
         }).disposed(by: bag)
+        navigationItem.hidesBackButton = true
     }
     
     override func loadView() {
-        let root = UIView.background
-        let stackView = UIStackView(forAutoLayout: ())
-        stackView.axis = .vertical
-        stackView.spacing = 22
+        let root = UIView.whiteBackground
+        loadingView.axis = .vertical
+        loadingView.spacing = 22
         let activityAndClose = UIView(forAutoLayout: ())
         [activityIndicatorView, cancelButton].forEach(activityAndClose.addSubview)
-        [errorTitleLabel, errorMessageLabel, activityAndClose].forEach(stackView.addArrangedSubview)
+        [errorTitleLabel, errorMessageLabel, activityAndClose].forEach(loadingView.addArrangedSubview)
         
         errorTitleLabel.isHidden = true
         errorMessageLabel.isHidden = true
         
-        root.addSubview(stackView)
+        self.contentView = setupContentView()
         
-        stackView.centerXAnchor.constraint(equalTo: root.centerXAnchor).isActive = true
-        activityIndicatorCenterY = stackView.centerYAnchor.constraint(equalTo: root.centerYAnchor)
+        [contentView, loadingView].forEach(root.addSubview)
+        
+        loadingView.centerXAnchor.constraint(equalTo: root.centerXAnchor).isActive = true
+        activityIndicatorCenterY = loadingView.centerYAnchor.constraint(equalTo: root.centerYAnchor)
         activityIndicatorCenterY.isActive = true
-        stackView.leadingAnchor.constraint(equalTo: root.leadingAnchor, constant: 44).isActive = true
+        loadingView.leadingAnchor.constraint(equalTo: root.leadingAnchor, constant: 44).isActive = true
         activityAndClose.heightAnchor.constraint(equalToConstant: 99).isActive = true
         cancelButton.topAnchor.constraint(equalTo: activityAndClose.topAnchor, constant: 22).isActive = true
         cancelButton.bottomAnchor.constraint(equalTo: activityAndClose.bottomAnchor).isActive = true
@@ -178,6 +129,9 @@ class LoadingViewController: UIViewController {
         
         self.view = root
         
+        contentView.isHidden = true
         cancelButton.alpha = 0
     }
+    
+    func setupContentView() -> UIView { return UIView() }
 }

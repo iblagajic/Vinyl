@@ -13,7 +13,19 @@ extension UIView {
     
     static var background: UIView {
         let view = UIView(frame: UIScreen.main.bounds)
+        view.backgroundColor = .melon
+        return view
+    }
+    
+    static var whiteBackground: UIView {
+        let view = UIView(frame: UIScreen.main.bounds)
         view.backgroundColor = .white
+        return view
+    }
+    
+    static var empty: UIView {
+        let view = UIView(forAutoLayout: ())
+        view.backgroundColor = .clear
         return view
     }
     
@@ -24,4 +36,10 @@ extension UIView {
         return view
     }
     
+    func setShadow(color: CGColor = .mediumGrey, offset: CGSize = CGSize(width: 0, height: 2), radius: CGFloat = 11, opacity: Float = 0.2) {
+        layer.shadowColor = color
+        layer.shadowOffset = offset
+        layer.shadowRadius = radius
+        layer.shadowOpacity = opacity
+    }
 }

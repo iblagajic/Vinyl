@@ -16,9 +16,11 @@ extension UITextView {
         textView.textColor = .dark
         textView.isScrollEnabled = false
         textView.isEditable = false
-        textView.isSelectable = false
         textView.textContainerInset = .zero
         textView.textContainer.lineFragmentPadding = 0
+        textView.dataDetectorTypes = [.link]
+        textView.linkTextAttributes = [NSAttributedString.Key.underlineStyle : NSUnderlineStyle.single.rawValue,
+                                       NSAttributedString.Key.underlineColor : textView.textColor ?? .dark]
         return textView
     }
     
@@ -57,7 +59,8 @@ extension UITextView {
              underlineParts: [String] = [],
              highlightPart: String? = nil) {
         let paragraphStyle = NSMutableParagraphStyle()
-        paragraphStyle.lineSpacing = 12
+        paragraphStyle.lineSpacing = 7
+        paragraphStyle.paragraphSpacing = 12
         paragraphStyle.alignment = textAlignment
         paragraphStyle.lineBreakMode = .byWordWrapping
         let attributedTitle = NSMutableAttributedString(string: bodyText,

@@ -19,13 +19,23 @@ class Discogs {
     
     private let base = "https://api.discogs.com"
     
-    func search(query: String) -> Observable<[SearchResult]> {
+    func search(query: String) -> Observable<[SearchResultsSection]> {
         guard let query = query.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed) else {
             return Observable.error(DiscogsError.invalidUrl)
         }
         let path = base + "/database/search?q=" + query + "&type=release&format=Vinyl"
         let searchResults: Observable<SearchResults> = request(path: path)
-        return searchResults.map { $0.results }
+        return searchResults.map { searchResults -> [SearchResultsSection] in
+            var sections = [SearchResultsSection]()
+            if let first = searchResults.results.first {
+                sections.append(SearchResultsSection(items: [first], title: .topResult))
+            }
+            let other = Array(searchResults.results.dropFirst())
+            if !other.isEmpty {
+                sections.append(SearchResultsSection(items: other, title: .otherResults))
+            }
+            return sections
+        }
     }
     
     func fetchRelease(for path: String) -> Observable<Release> {

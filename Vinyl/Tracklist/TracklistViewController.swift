@@ -12,32 +12,22 @@ import RxCocoa
 
 class TracklistViewController: UIViewController {
     
-    let backgroundImageView = UIImageView(forAutoLayout: ())
-    let visualEffectView = UIVisualEffectView(forAutoLayout: ())
-    let backButton = UIButton.back
-    let titleLabel = UILabel.copyableHeader
-    let artistLabel = UILabel.subheader
-    let tracklistLabel = UILabel.header2
+    let tracklistLabel = UILabel.headline
     let firstSeparator = UIView.separator
-    let tracklistTableView = UITableView(forAutoLayout: ())
+    let tracklistTableView = UITableView(frame: UIScreen.main.bounds)
     private let bag = DisposeBag()
     
-    init(release: Release, image: Driver<UIImage?>) {
+    init(release: Release) {
         super.init(nibName: nil, bundle: nil)
+        
         Observable.just(release.tracklist).bind(to: tracklistTableView.rx.items).disposed(by: bag)
-        image.drive(backgroundImageView.rx.image).disposed(by: bag)
         
-        backButton.rx.tap.subscribe(onNext: { [weak self] in
-            self?.navigationController?.popViewController(animated: true)
-        }).disposed(by: bag)
-        
-        titleLabel.text = release.title
-        artistLabel.text = release.artistsSort.uppercased()
+        title = release.title
         tracklistLabel.text = .tracklist
     }
     
     required init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
+        fatalError("init(coder:) has not been implemented")
     }
     
     override func viewDidLoad() {
@@ -46,46 +36,31 @@ class TracklistViewController: UIViewController {
     }
     
     override func loadView() {
-        let root = UIView.background
-        
-        [backgroundImageView, visualEffectView, tracklistTableView].forEach(root.addSubview)
-        backgroundImageView.pinToSuperview()
-        visualEffectView.pinToSuperview()
-        tracklistTableView.pinToSuperview()
+        let root = tracklistTableView
         
         let header = UIView(forAutoLayout: ())
         
-        [backButton, titleLabel, artistLabel, tracklistLabel, firstSeparator].forEach(header.addSubview)
+        [tracklistLabel, firstSeparator].forEach(header.addSubview)
         
         NSLayoutConstraint.activate([
             header.widthAnchor.constraint(equalToConstant: root.frame.width),
-            backButton.topAnchor.constraint(equalTo: header.safeAreaLayoutGuide.topAnchor, constant: 33),
-            backButton.leadingAnchor.constraint(equalTo: header.leadingAnchor, constant: 35),
-            artistLabel.topAnchor.constraint(equalTo: backButton.bottomAnchor, constant: 33),
-            artistLabel.leadingAnchor.constraint(equalTo: header.leadingAnchor, constant: 44),
-            artistLabel.trailingAnchor.constraint(equalTo: header.trailingAnchor, constant: -22),
-            titleLabel.topAnchor.constraint(equalTo: artistLabel.bottomAnchor, constant: 6),
-            titleLabel.leadingAnchor.constraint(equalTo: artistLabel.leadingAnchor),
-            titleLabel.trailingAnchor.constraint(equalTo: artistLabel.trailingAnchor),
-            tracklistLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 33),
-            tracklistLabel.leadingAnchor.constraint(equalTo: titleLabel.leadingAnchor),
-            firstSeparator.topAnchor.constraint(equalTo: tracklistLabel.bottomAnchor, constant: 14),
-            firstSeparator.leadingAnchor.constraint(equalTo: tracklistLabel.leadingAnchor),
+            header.heightAnchor.constraint(equalToConstant: 55),
+            tracklistLabel.centerYAnchor.constraint(equalTo: header.centerYAnchor),
+            tracklistLabel.leadingAnchor.constraint(equalTo: header.leadingAnchor, constant: 22),
+            firstSeparator.topAnchor.constraint(equalTo: tracklistLabel.bottomAnchor, constant: 11),
+            firstSeparator.leadingAnchor.constraint(equalTo: header.leadingAnchor),
             firstSeparator.trailingAnchor.constraint(equalTo: header.trailingAnchor),
             firstSeparator.heightAnchor.constraint(equalToConstant: 1/UIScreen.main.scale),
             firstSeparator.bottomAnchor.constraint(equalTo: header.bottomAnchor)
         ])
         
         tracklistTableView.tableHeaderView = header
-        tracklistTableView.separatorInset = UIEdgeInsets(top: 0, left: 44, bottom: 0, right: 0)
+        tracklistTableView.separatorInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
         tracklistTableView.separatorColor = .veryLightPink
-        tracklistTableView.rowHeight = 65
+        tracklistTableView.rowHeight = 55
         tracklistTableView.backgroundColor = nil
         
-        backgroundImageView.contentMode = .scaleAspectFill
-        backgroundImageView.clipsToBounds = true
-        backgroundImageView.alpha = 0.3
-        visualEffectView.effect = UIBlurEffect(style: .extraLight)
+        tracklistTableView.backgroundColor = .white
         
         self.view = root
     }

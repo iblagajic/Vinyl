@@ -12,13 +12,15 @@ import RxCocoa
 
 class HomeViewController: UIViewController {
     
-    let infoButton = UIButton.info
-    let greetingLabel = UILabel.block
-    let scanLabel = UILabel.header
-    let orSearchLabel = UILabel.header
-    let cameraButton = UIButton.camera
-    private let navigationControllerDelegate = NavigationControllerDelegate()
+    private let scanButton = UIButton.scan
+    private let descriptionLabel = UILabel.headlineLightCentered
+    fileprivate let settingsButton = UIButton.settings
+    fileprivate let searchButton = UIButton.search
     private let bag = DisposeBag()
+    
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .lightContent
+    }
     
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
@@ -31,49 +33,54 @@ class HomeViewController: UIViewController {
     }
     
     private func setup() {
-        cameraButton.rx.tap.subscribe(onNext: { [weak self] in
+        scanButton.rx.tap.subscribe(onNext: { [weak self] in
             let scanViewController = ScanViewController()
             self?.navigationController?.pushViewController(scanViewController, animated: true)
         }).disposed(by: bag)
-        
-        let tapGesture = UITapGestureRecognizer()
-        tapGesture.rx.event.subscribe(onNext: { [weak self] _ in
-            let searchViewController = SearchViewController()
-            self?.navigationController?.pushViewController(searchViewController, animated: true)
-        }).disposed(by: bag)
-        orSearchLabel.addGestureRecognizer(tapGesture)
-        orSearchLabel.isUserInteractionEnabled = true
-        infoButton.rx.tap.subscribe(onNext: { [weak self] in
-            self?.navigationController?.pushViewController(InfoViewController(), animated: true)
-        }).disposed(by: bag)
+        navigationItem.titleView = UIImageView(image: .titleLogo)
+        navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
+        navigationController?.navigationBar.shadowImage = UIImage()
     }
     
     override func loadView() {
         let root = UIView.background
+        let centerContainer = UIView.empty
+        [scanButton, descriptionLabel].forEach(centerContainer.addSubview)
         
-        [infoButton, greetingLabel, scanLabel, orSearchLabel, cameraButton].forEach(root.addSubview)
-        
-        let scanCenter = scanLabel.centerYAnchor.constraint(equalTo: root.centerYAnchor, constant: -50)
-        scanCenter.priority = .defaultLow
-        NSLayoutConstraint.activate([
-            infoButton.topAnchor.constraint(equalTo: root.safeAreaLayoutGuide.topAnchor, constant: 33),
-            infoButton.leadingAnchor.constraint(equalTo: root.leadingAnchor, constant: 44),
-            greetingLabel.topAnchor.constraint(greaterThanOrEqualTo: infoButton.bottomAnchor, constant: 22),
-            greetingLabel.leadingAnchor.constraint(equalTo: scanLabel.leadingAnchor),
-            scanLabel.topAnchor.constraint(equalTo: greetingLabel.bottomAnchor, constant: 22),
-            scanLabel.leadingAnchor.constraint(equalTo: infoButton.leadingAnchor),
-            scanCenter,
-            orSearchLabel.topAnchor.constraint(equalTo: scanLabel.bottomAnchor, constant: 3),
-            orSearchLabel.leadingAnchor.constraint(equalTo: scanLabel.leadingAnchor),
-            cameraButton.bottomAnchor.constraint(equalTo: root.safeAreaLayoutGuide.bottomAnchor, constant: -66),
-            cameraButton.centerXAnchor.constraint(equalTo: root.centerXAnchor)
-        ])
+        [centerContainer].forEach(root.addSubview)
         
         self.view = root
+
+        centerContainer.centerInSuperview()
+        NSLayoutConstraint.activate([
+            scanButton.topAnchor.constraint(equalTo: centerContainer.topAnchor),
+            scanButton.centerXAnchor.constraint(equalTo: centerContainer.centerXAnchor),
+            descriptionLabel.topAnchor.constraint(equalTo: scanButton.bottomAnchor, constant: 33),
+            descriptionLabel.leadingAnchor.constraint(equalTo: centerContainer.leadingAnchor),
+            descriptionLabel.trailingAnchor.constraint(equalTo: centerContainer.trailingAnchor),
+            descriptionLabel.widthAnchor.constraint(equalToConstant: 240),
+            descriptionLabel.bottomAnchor.constraint(equalTo: centerContainer.bottomAnchor)
+        ])
         
-        greetingLabel.text = String.welcome.uppercased()
-        scanLabel.set(headerText: .scan)
-        let scanString = .or + " " + .search
-        orSearchLabel.set(headerText: scanString, highlightPart: .search)
+        view.backgroundColor = .dustyOrange
+        descriptionLabel.text = .tapToScan
+    }
+}
+
+enum HomeViewControllerButton {
+    case settings
+    case search
+}
+
+extension Reactive where Base: HomeViewController {
+    var tapped: Observable<HomeViewControllerButton> {
+        let settingsTap = base.settingsButton.rx.tap.map { HomeViewControllerButton.settings }
+        let searchTap = base.searchButton.rx.tap.map { HomeViewControllerButton.search }
+        return Observable.merge(settingsTap, searchTap)
     }
 }
