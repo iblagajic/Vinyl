@@ -10,10 +10,6 @@ import RxSwift
 import RxCocoa
 import MessageUI
 
-enum MailError: Error {
-    case notAvailable
-}
-
 class RxMailComposeViewControllerDelegateProxy
     : DelegateProxy<MFMailComposeViewController, MFMailComposeViewControllerDelegate>
     , DelegateProxyType

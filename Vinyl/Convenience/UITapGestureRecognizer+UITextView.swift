@@ -22,6 +22,9 @@ extension UITapGestureRecognizer {
         
         let locationOfTouchInLabel = location(in: textView)
         let indexOfCharacter = layoutManager.characterIndex(for: locationOfTouchInLabel, in: textView.textContainer, fractionOfDistanceBetweenInsertionPoints: nil)
+        let index = String.Index(utf16Offset: indexOfCharacter, in: attributedText.string)
+        let tappedCharacter = attributedText.string[index]
+        print(tappedCharacter)
         
         return rangesAndTexts.filter { (range, _) in
             return NSLocationInRange(indexOfCharacter, range)

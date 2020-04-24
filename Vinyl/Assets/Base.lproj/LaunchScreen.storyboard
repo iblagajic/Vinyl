@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14868" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" launchScreen="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="01J-lp-oVM">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16096" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" launchScreen="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="01J-lp-oVM">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14824"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16086"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -16,15 +16,14 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="launch" translatesAutoresizingMaskIntoConstraints="NO" id="sJR-EN-A98">
-                                <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="logo" translatesAutoresizingMaskIntoConstraints="NO" id="BEs-Gc-Wva">
+                                <rect key="frame" x="113" y="426" width="188" height="44"/>
                             </imageView>
                         </subviews>
+                        <color key="backgroundColor" red="1" green="0.38039215686274508" blue="0.20784313725490194" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstItem="sJR-EN-A98" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="Dsf-1S-GVS"/>
-                            <constraint firstItem="sJR-EN-A98" firstAttribute="top" secondItem="Ze5-6b-2t3" secondAttribute="top" id="hNm-ae-cIk"/>
-                            <constraint firstAttribute="bottom" secondItem="sJR-EN-A98" secondAttribute="bottom" id="qc9-A6-Ocr"/>
-                            <constraint firstItem="sJR-EN-A98" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="uyl-Y1-om0"/>
+                            <constraint firstItem="BEs-Gc-Wva" firstAttribute="centerY" secondItem="Ze5-6b-2t3" secondAttribute="centerY" id="7yk-zK-V4B"/>
+                            <constraint firstItem="BEs-Gc-Wva" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="i2j-Sd-w8f"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
@@ -35,6 +34,6 @@
         </scene>
     </scenes>
     <resources>
-        <image name="launch" width="375" height="812"/>
+        <image name="logo" width="188" height="44"/>
     </resources>
 </document>

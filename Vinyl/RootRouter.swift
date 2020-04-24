@@ -20,11 +20,11 @@ class RootRouter {
     
     init() {
         let homeViewController = HomeViewController()
-        let homeNavigationController = LargeWhiteTitleNavigationController (rootViewController: homeViewController)
+        let homeNavigationController = LargeTitleNavigationController (rootViewController: homeViewController)
         let settingsViewController = SettingsViewController(style: .grouped)
-        let settingsNavigationController = LargeWhiteTitleNavigationController(rootViewController: settingsViewController)
+        let settingsNavigationController = LargeTitleNavigationController(rootViewController: settingsViewController)
         let searchViewController = SearchViewController(collectionViewLayout: VerticalCardsLayout())
-        let searchNavigationController = LargeWhiteTitleNavigationController(rootViewController: searchViewController)
+        let searchNavigationController = LargeTitleNavigationController(rootViewController: searchViewController)
         let navigationControllers: [UINavigationController] = [settingsNavigationController, homeNavigationController, searchNavigationController]
         pageControllerDataSource = RootViewControllerDataSource(viewControllers: navigationControllers)
         pageController.dataSource = pageControllerDataSource
@@ -48,7 +48,7 @@ class RootRouter {
         }).disposed(by: bag)
 
         let currentPage = pageControllerDelegate.currentPage.share()
-        currentPage.map { [weak self] in
+        currentPage.map { [weak self] _ -> Int in
             if let navigationController = self?.pageController.viewControllers?.first as? UINavigationController,
                 let index = navigationControllers.firstIndex(of: navigationController) {
                 return index
@@ -56,6 +56,7 @@ class RootRouter {
                 return 0
             }
         }.subscribe(onNext: { [rootController] selectedIndex in
+            currentViewControllerIndex = selectedIndex
             rootController.floatingTabBar.select(index: selectedIndex, animated: true)
         }).disposed(by: bag)
     }

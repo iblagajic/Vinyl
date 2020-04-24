@@ -10,9 +10,8 @@ import UIKit
 
 extension UIColor {
     
-    var image: UIImage {
-        let scale = UIScreen.main.scale
-        let rect = CGRect(x: 0.0, y: 0.0, width: 1/scale, height: 1/scale)
+    func image(size: CGSize) -> UIImage {
+        let rect = CGRect(x: 0.0, y: 0.0, width: size.width, height: size.height)
         UIGraphicsBeginImageContextWithOptions(rect.size, false, 1.0)
         setFill()
         UIRectFill(rect)

@@ -10,6 +10,7 @@ import UIKit
 import RxSwift
 import RxCocoa
 import RxDataSources
+import StoreKit
 
 typealias SettingsSection = Section<SettingsCellType>
 
@@ -20,6 +21,7 @@ class SettingsViewController: UITableViewController {
     override func viewDidLoad() {
         title = .settings
         navigationItem.largeTitleDisplayMode = .always
+        navigationItem.backBarButtonItem = .empty
         tableView.dataSource = nil
         tableView.delegate = nil
         tableView.backgroundColor = .very
@@ -37,7 +39,7 @@ class SettingsViewController: UITableViewController {
             let cell = cv.dequeueReusableCell(withIdentifier: settingsCellReuseId, for: ip)
             cell.textLabel?.text = cellType.title
             cell.textLabel?.font = .body
-            cell.textLabel?.textColor = .dark
+            cell.textLabel?.textColor = cellType == .version ? .mediumGrey : .dark
             cell.selectionStyle = .none
             cell.backgroundColor = .white
             if cellType != .version {
@@ -54,23 +56,46 @@ class SettingsViewController: UITableViewController {
             SettingsSection(items: [.credits, .version], title: .other)
         ]).bind(to: tableView.rx.items(dataSource: dataSource)).disposed(by: bag)
         
-//        tableView.rx.modelSelected(SettingsCellType.self).subscribe(onNext: { cellType in
-//            switch cellType {
-//            case .general:
-//                <#code#>
-//            case .instructions:
-//                <#code#>
-//            case .privacy:
-//                <#code#>
-//            case .rate:
-//                <#code#>
-//            case .share:
-//                <#code#>
-//            case .credits:
-//                <#code#>
-//            case .version:
-//                <#code#>
-//            }
-//        }).disposed(by: bag)
+        tableView.rx.modelSelected(SettingsCellType.self).subscribe(onNext: { [unowned self, weak navigationController] cellType in
+            switch cellType {
+            case .general:
+                let generalInformationBody = String(format: .generalInformationText, String.discogs, String.reachOut)
+                let links = [Link(text: .discogs, path: "https://www.discogs.com"), Link(text: .reachOut, email: .email)].compactMap { $0 }
+                let generalViewController = SettingsTextViewController(with: generalInformationBody, tappableParts: links, boldPart: nil, title: .generalInformation)
+                navigationController?.pushViewController(generalViewController, animated: true)
+            case .instructions:
+                let instructionsBody = String(format: .instructionsMessage, String.catalogNumber, String.catalogNumber)
+                let links = [Link(text: .catalogNumber, path: "https://ourpastimes.com/catalog-numbers-vinyl-records-8518643.html")].compactMap { $0 }
+                let instructionsViewController = SettingsTextViewController(with: instructionsBody, tappableParts: links, boldPart: nil, title: .instructionsTitle)
+                navigationController?.pushViewController(instructionsViewController, animated: true)
+            case .privacy:
+                let privacyBody = String(format: .privacyMessage, String.privacyMessageHighlighted, String.email, String.github)
+                let links = [Link(text: .email, email: .email), Link(text: .github, path: "https://github.com/iblagajic/Vinyl")].compactMap { $0 }
+                let privacyViewController = SettingsTextViewController(with: privacyBody, tappableParts: links, boldPart: .privacyMessageHighlighted, title: .privacyTitle)
+                navigationController?.pushViewController(privacyViewController, animated: true)
+            case .rate:
+                SKStoreReviewController.requestReview()
+            case .share:
+                self.share()
+            case .credits:
+                let creditsBody = String(format: .vinylIcon + "\n" + .cameraIcon + "\n" + .appIcon, String.freepik, String.smashicons, String.alexanderKahlkopf)
+                let links = [Link(text: .freepik, path: "https://www.freepik.com"),
+                             Link(text: .smashicons, path: "https://smashicons.com"),
+                             Link(text: .alexanderKahlkopf, path: "https://iconmonstr.com")].compactMap { $0 }
+                let generalViewController = SettingsTextViewController(with: creditsBody, tappableParts: links, boldPart: nil, title: .credits)
+                navigationController?.pushViewController(generalViewController, animated: true)
+            case .version:
+                break
+            }
+        }).disposed(by: bag)
+    }
+
+    private func share(){
+        if let appStoreUrl = URL(string: "https://apps.apple.com/us/app/vinyl-scan-and-see-the-info/id1433818198") {
+            let objectsToShare = [String.shareTitle, appStoreUrl, UIImage.launch ?? UIImage()] as [Any]
+            let shareViewController = UIActivityViewController(activityItems: objectsToShare, applicationActivities: nil)
+            self.present(shareViewController, animated: true, completion: nil)
+        }
+
     }
 }

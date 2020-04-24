@@ -46,11 +46,7 @@ class SearchViewController: UICollectionViewController {
             }.drive(rx.sections)
             .disposed(by: bag)
         
-        rx.viewDidAppear.take(1).subscribe(onNext: { _ in
-            searchController.searchBar.becomeFirstResponder()
-        }).disposed(by: bag)
-        
-        navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
+        navigationItem.backBarButtonItem = .empty
         
         collectionView.rx.modelSelected(SearchResult.self).subscribe(onNext: { [weak self] searchResult in
             let albumViewController = AlbumViewController(resourceUrl: searchResult.resourceUrl)
@@ -58,7 +54,7 @@ class SearchViewController: UICollectionViewController {
         }).disposed(by: bag)
         
         collectionView.rx.willBeginDragging.subscribe(onNext: {
-            searchController.searchBar.resignFirstResponder()
+            searchController.resignFirstResponder()
         }).disposed(by: bag)
     }
 }

@@ -59,8 +59,7 @@ class AlbumViewController: LoadingViewController {
 
         vinylImageView.image = .realisticVinyl
         vinylImageView.isHidden = true
-        
-        albumImageView.image = .placeholder
+
         albumImageView.contentMode = .scaleAspectFill
         let imageDriver: Driver<UIImage?>
         let primaryImage = release.images.filter { $0.type == .primary }.first
@@ -69,9 +68,9 @@ class AlbumViewController: LoadingViewController {
         if let imageUrlString = image?.resourceUrl,
             let imageUrl = URL(string: imageUrlString) {
             let request = URLRequest(url: imageUrl)
-            imageDriver = URLSession.shared.rx.data(request: request).map(UIImage.init).asDriver(onErrorJustReturn: nil)
+            imageDriver = URLSession.shared.rx.data(request: request).map(UIImage.init).asDriver(onErrorJustReturn: .placeholder)
         } else {
-            imageDriver = Driver.just(nil)
+            imageDriver = Driver.just(.placeholder)
         }
         imageDriver.do(onNext: { [weak self] _ in
             self?.vinylImageView.isHidden = false
@@ -87,7 +86,20 @@ class AlbumViewController: LoadingViewController {
         }
         Observable.just([FormatsSection(items: formats)]).bind(to: formatsCollectionView.rx.sections).disposed(by: bag)
         
-//        vinylImageView.transform = CGAffineTransform(translationX: -44, y: 0).rotated(by: -CGFloat.pi/4)
+        vinylImageView.transform = CGAffineTransform(translationX: -44, y: 0).rotated(by: -CGFloat.pi/4)
+        UIView.animate(
+            withDuration: 0.5,
+            delay: 0.5,
+            options: .curveEaseOut,
+            animations: { [weak self] in
+                self?.vinylImageView.transform = .identity
+            },
+            completion: { completed in
+                if completed && UserDefaults.shouldShowRateDialog {
+                    SKStoreReviewController.requestReview()
+                }
+            }
+        )
         
         let infoCellReuseId = "InfoCellReuseId"
         infoTableView.register(AlbumInfoCell.self, forCellReuseIdentifier: infoCellReuseId)
@@ -95,9 +107,7 @@ class AlbumViewController: LoadingViewController {
         if let artist = release.artists.first {
             cells.insert(AlbumInfoCellType.artist(artist), at: 0)
         }
-        if let price = release.lowestPrice {
-            cells.append(.discogs(price))
-        }
+        cells.append(.discogs(release.lowestPrice))
         Observable.just(cells).bind(to: infoTableView.rx.items(cellIdentifier: infoCellReuseId)) { (_, albumInfoCellType, cell) in
             if let cell = cell as? AlbumInfoCell {
                 cell.update(with: albumInfoCellType)
@@ -132,18 +142,11 @@ class AlbumViewController: LoadingViewController {
             detailsTextView.set(bodyText: releasedString + detailsText)
         }
         
-        navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
+        navigationItem.backBarButtonItem = .empty
     }
     
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
-    }
-
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        if UserDefaults.shouldShowRateDialog {
-            SKStoreReviewController.requestReview()
-        }
     }
     
     override func setupContentView() -> UIView {

@@ -24,6 +24,8 @@ class TracklistViewController: UIViewController {
         
         title = release.title
         tracklistLabel.text = .tracklist
+
+        tracklistTableView.tableFooterView = UIView()
     }
     
     required init?(coder aDecoder: NSCoder) {

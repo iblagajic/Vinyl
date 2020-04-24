@@ -33,22 +33,25 @@ class HomeViewController: UIViewController {
     }
     
     private func setup() {
-        scanButton.rx.tap.subscribe(onNext: { [weak self] in
+        scanButton.rx.tap.subscribe(onNext: { [unowned self] in
+            guard let navigationController = self.navigationController else {
+                return
+            }
             let scanViewController = ScanViewController()
-            self?.navigationController?.pushViewController(scanViewController, animated: true)
+            navigationController.navigationBar.set(backgroundColor: .white)
+            navigationController.pushViewController(scanViewController, animated: true)
         }).disposed(by: bag)
         navigationItem.titleView = UIImageView(image: .titleLogo)
-        navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
+        navigationItem.backBarButtonItem = .empty
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
-        navigationController?.navigationBar.shadowImage = UIImage()
+        navigationController?.navigationBar.set(backgroundColor: .clear)
     }
     
     override func loadView() {
-        let root = UIView.background
+        let root = UIView(frame: UIScreen.main.bounds)
         let centerContainer = UIView.empty
         [scanButton, descriptionLabel].forEach(centerContainer.addSubview)
         

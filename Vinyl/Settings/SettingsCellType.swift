@@ -26,7 +26,7 @@ enum SettingsCellType {
         case .instructions:
             return .instructionsTitle
         case .privacy:
-            return .privacyPolicy
+            return .ethicalManifesto
         case .rate:
             return .rate
         case .share:

@@ -11,12 +11,9 @@ import UIKit
 extension UIColor {
     
     static let steelGrey = UIColor(red: 122.0 / 255.0, green: 125.0 / 255.0, blue: 125.0 / 255.0, alpha: 1.0)
-    static let melon =  UIColor(red: 1.0, green: 140.0 / 255.0, blue: 97.0 / 255.0, alpha: 1.0)
     static let veryLightPink = UIColor(white: 205.0 / 255.0, alpha: 1.0)
-    
     static let dark = UIColor(red: 12.0 / 255.0, green: 18.0 / 255.0, blue: 12.0 / 255.0, alpha: 1.0)
     static let dustyOrange = UIColor(red: 1.0, green: 97.0 / 255.0, blue: 53.0 / 255.0, alpha: 1.0)
-    static let dustyOrange2 = UIColor(red: 222.0 / 255.0, green: 105.0 / 255.0, blue: 40.0 / 255.0, alpha: 1.0)
     static let transparentWhite = UIColor.white.withAlphaComponent(0.2)
     static let lessTransparentWhite = UIColor.white.withAlphaComponent(0.8)
     static let mediumGrey = UIColor(red: 104.0 / 255.0, green: 105.0 / 255.0, blue: 99.0 / 255.0, alpha: 1.0)
@@ -26,11 +23,6 @@ extension UIColor {
 }
 
 extension CGColor {
-    
-    static let dark = UIColor.dark.cgColor
-    static let white = UIColor.white.cgColor
-    static let black = UIColor.black.cgColor
-    static let dustyOrange = UIColor.dustyOrange.cgColor
-    static let dustyOrange2 = UIColor.dustyOrange2.cgColor
+
     static let mediumGrey = UIColor.mediumGrey.cgColor
 }

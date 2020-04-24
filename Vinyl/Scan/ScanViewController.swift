@@ -15,16 +15,16 @@ class ScanViewController: UIViewController {
     
     private let captureSession = AVCaptureSession()
     private let scanLabel = UILabel.body
-    private let permissionLabel = UILabel.header
+    private let permissionLabel = UILabel.headline
     private let bag = DisposeBag()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         navigationItem.largeTitleDisplayMode = .never
-        navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
+        navigationItem.backBarButtonItem = .empty
         
-        scanLabel.set(headerText: .scan)
+        scanLabel.set(bodyText: .scan)
         permissionLabel.text = .cameraPermission
         
         if let device = AVCaptureDevice.default(for: .video),
@@ -123,17 +123,4 @@ class ScanViewController: UIViewController {
         targetView.layer.shadowOpacity = 0.9
         targetView.layer.shadowRadius = 3
     }
-}
-
-extension ScanViewController: UIViewControllerTransitioningDelegate {
-    
-//    func animationController(forPresented presented: UIViewController, presenting: UIViewController, source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
-//        if let presentingNc = presenting as? UINavigationController,
-//            presentingNc.topViewController?.isKind(of: ScanViewController.self) ?? false,
-//            let presentedNc = presented as? UINavigationController,
-//            presentedNc.viewControllers.first?.isKind(of: LoadingViewController.self) ?? false {
-//            return PresentLoadingAnimationController()
-//        }
-//        return nil
-//    }
 }

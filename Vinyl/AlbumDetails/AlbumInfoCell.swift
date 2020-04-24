@@ -11,7 +11,7 @@ import UIKit
 enum AlbumInfoCellType {
     case artist(ArtistLite)
     case tracks(count: Int, lenght: Int)
-    case discogs(Double)
+    case discogs(Double?)
     
     var subtitle: String? {
         switch self {
@@ -33,10 +33,11 @@ enum AlbumInfoCellType {
         case .tracks(let tracksCount, _):
             return String(format: .tracksCount, tracksCount)
         case .discogs(let price):
-            if let priceFormatted = NumberFormatter.currency.string(from: NSNumber(value: price)) {
+            if let price = price, let priceFormatted = NumberFormatter.currency.string(from: NSNumber(value: price)) {
                 return String(format: .buyFrom, priceFormatted)
+            } else {
+                return .notAvailable
             }
-            return nil
         }
     }
 }
