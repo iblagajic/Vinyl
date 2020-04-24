@@ -40,11 +40,9 @@ extension String {
     static let github = "GitHub"
     static let catalogNumber = NSLocalizedString("catalog number", comment: "")
     static let credits = NSLocalizedString("Credits", comment: "")
-    static let vinylIcon = NSLocalizedString("Vinyl loader and back icons by %@.", comment: "")
+    static let vinylIcon = NSLocalizedString("Vinyl loader icon by %@.", comment: "")
     static let freepik = "Freepik"
-    static let cameraIcon = NSLocalizedString("Camera icon by %@.", comment: "")
-    static let smashicons = "Smashicons"
-    static let appIcon = NSLocalizedString("App icon by %@.", comment: "")
+    static let appIcon = NSLocalizedString("Other icons by %@.", comment: "")
     static let alexanderKahlkopf = "Alexander Kahlkopf"
     static let emailErrorTitle = "¯\\_(ツ)_/¯"
     static let emailErrorMessage = NSLocalizedString("Unfortunately, there was an error.", comment: "")

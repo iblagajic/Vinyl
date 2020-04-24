@@ -78,9 +78,8 @@ class SettingsViewController: UITableViewController {
             case .share:
                 self.share()
             case .credits:
-                let creditsBody = String(format: .vinylIcon + "\n" + .cameraIcon + "\n" + .appIcon, String.freepik, String.smashicons, String.alexanderKahlkopf)
+                let creditsBody = String(format: .vinylIcon + "\n" + .appIcon, String.freepik, String.alexanderKahlkopf)
                 let links = [Link(text: .freepik, path: "https://www.freepik.com"),
-                             Link(text: .smashicons, path: "https://smashicons.com"),
                              Link(text: .alexanderKahlkopf, path: "https://iconmonstr.com")].compactMap { $0 }
                 let generalViewController = SettingsTextViewController(with: creditsBody, tappableParts: links, boldPart: nil, title: .credits)
                 navigationController?.pushViewController(generalViewController, animated: true)
