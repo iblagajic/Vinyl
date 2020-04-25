@@ -41,12 +41,6 @@ class SettingsTextViewController: UIViewController {
     required init(with bodyText: String, tappableParts: [Link], boldPart: String?, title: String) {
         super.init(nibName: nil, bundle: nil)
 
-        textView.isEditable = false
-        textView.isSelectable = false
-        textView.font = .body
-        textView.textColor = .dark
-        textView.contentInset = UIEdgeInsets(top: .margin*2, left: .margin*2, bottom: .margin*2, right: .margin*2)
-
         let tappableStrings = tappableParts.map { $0.text }
         textView.set(bodyText: bodyText, boldPart: boldPart, underlineParts: tappableStrings)
         textView.didTap(oneOf: tappableStrings)
@@ -97,7 +91,19 @@ class SettingsTextViewController: UIViewController {
     }
 
     override func loadView() {
-        self.view = textView
+        let root = UIView.whiteBackground
+        root.addSubview(textView)
+        textView.pinToSuperview()
+        self.view = root
+    }
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        textView.isEditable = false
+        textView.isSelectable = false
+        textView.font = .body
+        textView.textColor = .dark
+        textView.contentInset = UIEdgeInsets(top: 0, left: .margin*2, bottom: .margin*2, right: .margin*2)
     }
 
     private func showSendMailErrorAlert() {

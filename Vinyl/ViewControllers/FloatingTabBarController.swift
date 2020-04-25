@@ -44,7 +44,7 @@ class FloatingTabBarController: UIViewController {
     }
 
     override func viewDidLayoutSubviews() {
-        let bottomMargin = view.frame.height - floatingTabBar.frame.minY - .margin*2
+        let bottomMargin = view.frame.height - floatingTabBar.frame.minY + .margin*2
         pageViewController.additionalSafeAreaInsets = UIEdgeInsets(top: 0, left: 0, bottom: bottomMargin, right: 0)
         super.viewDidLayoutSubviews()
     }

@@ -19,7 +19,7 @@ extension UIView {
         guard let superview = superview else {
             fatalError("Can't set constraints to a view which has no superview")
         }
-        pin(anchors: anchors,to: superview, withInsets: insets)
+        pin(anchors: anchors, to: superview, withInsets: insets)
     }
     
     func pin(anchors: UIRectEdge = .all,to view: UIView, withInsets insets: UIEdgeInsets = .zero) {
